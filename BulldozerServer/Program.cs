@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using BulldozerServer.Domain;
 
 namespace BulldozerServer
 {
@@ -13,6 +15,20 @@ namespace BulldozerServer
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            var connection = String.Empty;
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
+                connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+            }
+            else
+            {
+                connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
+            }
+
+            builder.Services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(connection));
 
             var app = builder.Build();
 
