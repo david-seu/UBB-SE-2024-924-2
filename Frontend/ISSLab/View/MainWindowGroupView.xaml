@@ -34,7 +34,7 @@
                 <Border.Background>
                     <ImageBrush
                         x:Name="UserIconImageBrush"
-                        ImageSource="./Resources/Images/user-profile-picture.jpg"
+                        ImageSource="../Resources/Images/Dorian.jpeg"
                         Stretch="Fill" />
                 </Border.Background>
             </Border>

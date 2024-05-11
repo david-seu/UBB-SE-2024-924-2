@@ -34,8 +34,15 @@
                     <TextBlock Text="Username" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,10,0,0">
-                    <Image Source="./Resources/Images/Home.png" Width="20" Height="20" VerticalAlignment="Center"></Image>
-                    <TextBlock Text="Home" VerticalAlignment="Center" FontWeight="Bold" Margin="5,0,0,0"></TextBlock>
+                    <!--<Image Source="./Resources/Images/Home.png" Width="20" Height="20" VerticalAlignment="Center"></Image>
+                    <TextBlock Text="Home" VerticalAlignment="Center" FontWeight="Bold" Margin="5,0,0,0"></TextBlock>-->
+                    <Button x:Name="userGroupPage" Content="Back to group page" Margin="5,0,0,0" Background="White" FontWeight="Bold" Click="OnClickBackToGroupPage">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </Grid>

@@ -47,6 +47,11 @@ namespace ISSLab
             viewModel.ChangeToMarketPlace();
         }
 
+        private void OnClickBackToGroupPage(object sender, RoutedEventArgs e)
+        {
+            // NavigationService?.Navigate(new Uri("MainWindowGroupView.xaml", UriKind.Relative));
+        }
+
         private void OnClickedCreateMarketplacePost(object sender, RoutedEventArgs e)
         {
             createMarketplacePostButton.Background = Brushes.LightBlue;
