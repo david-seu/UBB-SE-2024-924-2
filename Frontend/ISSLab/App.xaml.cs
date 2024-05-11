@@ -51,16 +51,16 @@ namespace ISSLab
 
         private void AddHardcodedPosts(IPostRepository postRepository, User userOne, User userTwo, Guid groupId)
         {
-            DonationPost donationPost = new DonationPost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", "https://www.unicef.org/romania/ro", Constants.DONATION_POST_TYPE, true);
-            AuctionPost auctionPost = new AuctionPost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", 300, DateTime.Now.AddSeconds(80), "InPerson", Guid.Empty, Guid.Empty, 100, 105, true);
-            postRepository.AddPost(new FixedPricePost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", 300, DateTime.Now.AddMonths(2), "InPerson", Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, true));
+            DonationMarketplacePost donationMarketplacePost = new DonationMarketplacePost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", "https://www.unicef.org/romania/ro", Constants.DONATION_POST_TYPE, true);
+            AuctionMarketplacePost auctionMarketplacePost = new AuctionMarketplacePost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", 300, DateTime.Now.AddSeconds(80), "InPerson", Guid.Empty, Guid.Empty, 100, 105, true);
+            postRepository.AddPost(new FixedPriceMarketplacePost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", 300, DateTime.Now.AddMonths(2), "InPerson", Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, true));
 
-            FixedPricePost post1 = new FixedPricePost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", 300, DateTime.Now.AddMonths(2), "InPerson", Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, true);
+            FixedPriceMarketplacePost post1 = new FixedPriceMarketplacePost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", 300, DateTime.Now.AddMonths(2), "InPerson", Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, true);
             postRepository.AddPost(post1);
 
-            postRepository.AddPost(new FixedPricePost("../Resources/Images/catei.jpeg", userTwo.Id, groupId, "Bistrita", "Some great dogs", "Something else", "0222111333", 350, DateTime.Now.AddDays(6), "shipping", Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, true));
-            postRepository.AddPost(donationPost);
-            postRepository.AddPost(auctionPost);
+            postRepository.AddPost(new FixedPriceMarketplacePost("../Resources/Images/catei.jpeg", userTwo.Id, groupId, "Bistrita", "Some great dogs", "Something else", "0222111333", 350, DateTime.Now.AddDays(6), "shipping", Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, true));
+            postRepository.AddPost(donationMarketplacePost);
+            postRepository.AddPost(auctionMarketplacePost);
         }
     }
 }

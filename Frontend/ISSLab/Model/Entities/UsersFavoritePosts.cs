@@ -41,7 +41,7 @@ namespace ISSLab.Model.Entities
         {
             if (posts.Contains(post))
             {
-                throw new Exception("Post already in favorites");
+                throw new Exception("MarketplacePost already in favorites");
             }
             posts.Add(post);
         }
@@ -50,7 +50,7 @@ namespace ISSLab.Model.Entities
         {
             if (!posts.Contains(post))
             {
-                throw new Exception("Post not in favorites");
+                throw new Exception("MarketplacePost not in favorites");
             }
             posts.Remove(post);
         }

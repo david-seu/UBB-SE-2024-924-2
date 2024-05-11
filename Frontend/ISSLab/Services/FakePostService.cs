@@ -10,7 +10,7 @@ namespace ISSLab.Services
     public class FakePostService : IPostService
     {
         public bool GetPostsCalled;
-        public void AddPost(Post post)
+        public void AddPost(MarketplacePost marketplacePost)
         {
             throw new NotImplementedException();
         }
@@ -40,22 +40,22 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public Post CreateAuctionPost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice)
+        public MarketplacePost CreateAuctionPost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice)
         {
             throw new NotImplementedException();
         }
 
-        public Post CreateDonationPost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, string donationPageLink)
+        public MarketplacePost CreateDonationPost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, string donationPageLink)
         {
             throw new NotImplementedException();
         }
 
-        public Post CreateFixedPricePost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId)
+        public MarketplacePost CreateFixedPricePost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId)
         {
             throw new NotImplementedException();
         }
 
-        public Post CreatePost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, string type)
+        public MarketplacePost CreatePost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, string type)
         {
             throw new NotImplementedException();
         }
@@ -80,25 +80,25 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public Post GetPostById(Guid id)
+        public MarketplacePost GetPostById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Post> GetPosts()
+        public List<MarketplacePost> GetPosts()
         {
             GetPostsCalled = true;
             string expectedMediaContent = "expected Media Content";
-            Post dummyPost = new Post(expectedMediaContent, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            return new List<Post> { dummyPost };
+            MarketplacePost dummyMarketplacePost = new MarketplacePost(expectedMediaContent, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            return new List<MarketplacePost> { dummyMarketplacePost };
         }
 
-        public IEnumerable<Post> GetPostsByFavorites(List<Post> postsForGroup)
+        public IEnumerable<MarketplacePost> GetPostsByFavorites(List<MarketplacePost> postsForGroup)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Post> GetPostsMainMarketPage(List<Post> postsForGroup)
+        public IEnumerable<MarketplacePost> GetPostsMainMarketPage(List<MarketplacePost> postsForGroup)
         {
             throw new NotImplementedException();
         }
@@ -118,7 +118,7 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public void RemovePost(Post post)
+        public void RemovePost(MarketplacePost marketplacePost)
         {
             throw new NotImplementedException();
         }

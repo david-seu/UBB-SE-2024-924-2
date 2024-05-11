@@ -6,7 +6,7 @@ namespace ISSLab.ViewModel
     public interface IChatViewModel
     {
         ObservableCollection<Message> AllMessages { get; set; }
-        Post RefferedPost { get; set; }
+        MarketplacePost RefferedMarketplacePost { get; set; }
         User ChatUser { get; set; }
 
         void AddMessage(Message message);

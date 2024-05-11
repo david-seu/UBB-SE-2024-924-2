@@ -34,7 +34,7 @@ namespace ISSLab.View
 
         private void AddToFavouritesButton_Click(object sender, RoutedEventArgs e)
         {
-            // We can have for each user a list of favourites and add the post to that list
+            // We can have for each user a list of favourites and add the marketplacePost to that list
             var viewModel = this.DataContext as IPostContentViewModel;
             viewModel.AddPostToFavorites();
         }

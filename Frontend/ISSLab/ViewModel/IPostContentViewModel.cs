@@ -18,7 +18,7 @@ namespace ISSLab.ViewModel
         string Media { get; }
         string Price { get; }
         string ProfilePicture { get; }
-        Post Post { get; set; }
+        MarketplacePost MarketplacePost { get; set; }
         string TimePosted { get; }
         string Uninterests { get; }
         string Username { get; }
@@ -29,7 +29,7 @@ namespace ISSLab.ViewModel
         void AddPostToFavorites();
         void AddUninterests();
         void Donate();
-        Post GetPost();
+        MarketplacePost GetPost();
         void HidePost();
         void SendBuyingMessage();
         void UpdateBidPrice();

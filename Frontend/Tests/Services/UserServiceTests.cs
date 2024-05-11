@@ -149,15 +149,15 @@ namespace Tests.Services
             Guid idOfTheOnlyUser = theOnlyUser.Id;
             Guid groupForWhichTheUserHasFavoritePosts = Guid.NewGuid();
             List<Guid> expectedFavoritePostsIds = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
-            Post postAlwaysReturnedByRepositoryInGetPostById = new Post();
+            MarketplacePost marketplacePostAlwaysReturnedByRepositoryInGetMarketplacePostById = new MarketplacePost();
             theOnlyUser.AddFavorites(new UsersFavoritePosts(idOfTheOnlyUser, groupForWhichTheUserHasFavoritePosts, expectedFavoritePostsIds));
             mockedUserRepository.Setup(repository => repository.GetById(It.IsAny<Guid>())).Returns(theOnlyUser);
-            mockedPostRepository.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(postAlwaysReturnedByRepositoryInGetPostById);
+            mockedPostRepository.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(marketplacePostAlwaysReturnedByRepositoryInGetMarketplacePostById);
 
-            List<Post> actualFavoritePosts = userService.GetFavoritePosts(groupForWhichTheUserHasFavoritePosts, idOfTheOnlyUser);
+            List<MarketplacePost> actualFavoritePosts = userService.GetFavoritePosts(groupForWhichTheUserHasFavoritePosts, idOfTheOnlyUser);
 
             Assert.That(actualFavoritePosts,
-                Is.EquivalentTo(new List<Post> { postAlwaysReturnedByRepositoryInGetPostById, postAlwaysReturnedByRepositoryInGetPostById }));
+                Is.EquivalentTo(new List<MarketplacePost> { marketplacePostAlwaysReturnedByRepositoryInGetMarketplacePostById, marketplacePostAlwaysReturnedByRepositoryInGetMarketplacePostById }));
         }
 
         [Test]
@@ -177,15 +177,15 @@ namespace Tests.Services
             Guid idOfTheOnlyUser = theOnlyUser.Id;
             Guid groupForWhichTheUserHasCartedPosts = Guid.NewGuid();
             List<Guid> expectedCartedPostsIds = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
-            Post postAlwaysReturnedByRepositoryInGetPostById = new Post();
+            MarketplacePost marketplacePostAlwaysReturnedByRepositoryInGetMarketplacePostById = new MarketplacePost();
             theOnlyUser.AddCart(new Cart(idOfTheOnlyUser, groupForWhichTheUserHasCartedPosts, expectedCartedPostsIds));
             mockedUserRepository.Setup(repository => repository.GetById(It.IsAny<Guid>())).Returns(theOnlyUser);
-            mockedPostRepository.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(postAlwaysReturnedByRepositoryInGetPostById);
+            mockedPostRepository.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(marketplacePostAlwaysReturnedByRepositoryInGetMarketplacePostById);
 
-            List<Post> actualCartedPosts = userService.GetPostsFromCart(groupForWhichTheUserHasCartedPosts, idOfTheOnlyUser);
+            List<MarketplacePost> actualCartedPosts = userService.GetPostsFromCart(groupForWhichTheUserHasCartedPosts, idOfTheOnlyUser);
 
             Assert.That(actualCartedPosts,
-                Is.EquivalentTo(new List<Post> { postAlwaysReturnedByRepositoryInGetPostById, postAlwaysReturnedByRepositoryInGetPostById }));
+                Is.EquivalentTo(new List<MarketplacePost> { marketplacePostAlwaysReturnedByRepositoryInGetMarketplacePostById, marketplacePostAlwaysReturnedByRepositoryInGetMarketplacePostById }));
         }
     }
 }

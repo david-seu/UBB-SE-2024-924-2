@@ -75,14 +75,14 @@ namespace ISSLab.Services
             userRepository.RemoveFromFavorites(groupId, userId, postId);
         }
 
-        public List<Post> GetFavoritePosts(Guid groupId, Guid userId)
+        public List<MarketplacePost> GetFavoritePosts(Guid groupId, Guid userId)
         {
-            List<Post> favoritePosts = new List<Post>();
+            List<MarketplacePost> favoritePosts = new List<MarketplacePost>();
             UsersFavoritePosts favorites = userRepository.GetById(userId).Favorites.Find(checkedFavorite => checkedFavorite.GroupId == groupId);
             if (favorites == null)
             {
                 userRepository.GetById(userId).Favorites.Add(new UsersFavoritePosts(userId, groupId));
-                return new List<Post>();
+                return new List<MarketplacePost>();
             }
             foreach (Guid postId in favorites.Posts)
             {
@@ -91,14 +91,14 @@ namespace ISSLab.Services
             return favoritePosts;
         }
 
-        public List<Post> GetPostsFromCart(Guid userId, Guid groupId)
+        public List<MarketplacePost> GetPostsFromCart(Guid userId, Guid groupId)
         {
             Cart cart = userRepository.GetById(userId).Carts.Find(checkedCart => checkedCart.GroupId == groupId);
-            List<Post> cartedPosts = new List<Post>();
+            List<MarketplacePost> cartedPosts = new List<MarketplacePost>();
             if (cart == null)
             {
                 userRepository.GetById(userId).Carts.Add(new Cart(groupId, userId));
-                return new List<Post>();
+                return new List<MarketplacePost>();
             }
             foreach (Guid postId in cart.PostsSavedInCart)
             {

@@ -28,7 +28,7 @@ namespace Tests.ViewModel
         [Apartment(ApartmentState.STA)]
         public void OurChat_CreateChatHasBeenCalled_ReturnsAChat()
         {
-            chatFactory.CreateChat(new ChatViewModel(new ISSLab.Model.Entities.User(), new ISSLab.Model.Entities.Post()));
+            chatFactory.CreateChat(new ChatViewModel(new ISSLab.Model.Entities.User(), new ISSLab.Model.Entities.MarketplacePost()));
 
             Assert.That(chatFactory.OurChat, Is.InstanceOf<Chat>());
         }
@@ -37,7 +37,7 @@ namespace Tests.ViewModel
         [Apartment(ApartmentState.STA)]
         public void CreateChat_Any_ReturnsAChat()
         {
-            IChat returned = chatFactory.CreateChat(new ChatViewModel(new ISSLab.Model.Entities.User(), new ISSLab.Model.Entities.Post()));
+            IChat returned = chatFactory.CreateChat(new ChatViewModel(new ISSLab.Model.Entities.User(), new ISSLab.Model.Entities.MarketplacePost()));
 
             Assert.That(returned, Is.InstanceOf<Chat>());
         }
@@ -46,7 +46,7 @@ namespace Tests.ViewModel
         [Apartment(ApartmentState.STA)]
         public void CreateChat_Any_ChangesFactoriesChat()
         {
-            IChat returned = chatFactory.CreateChat(new ChatViewModel(new ISSLab.Model.Entities.User(), new ISSLab.Model.Entities.Post()));
+            IChat returned = chatFactory.CreateChat(new ChatViewModel(new ISSLab.Model.Entities.User(), new ISSLab.Model.Entities.MarketplacePost()));
 
             Assert.That(chatFactory.OurChat, Is.InstanceOf<Chat>());
         }

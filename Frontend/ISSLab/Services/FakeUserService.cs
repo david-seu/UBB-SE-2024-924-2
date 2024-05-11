@@ -62,16 +62,16 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public List<Post> GetFavoritePosts(Guid groupId, Guid userId)
+        public List<MarketplacePost> GetFavoritePosts(Guid groupId, Guid userId)
         {
             GetFavoritePostsCalled = true;
-            return new List<Post>();
+            return new List<MarketplacePost>();
         }
 
-        public List<Post> GetPostsFromCart(Guid userId, Guid groupId)
+        public List<MarketplacePost> GetPostsFromCart(Guid userId, Guid groupId)
         {
             GetItemsFromCartCalled = true;
-            return new List<Post>();
+            return new List<MarketplacePost>();
         }
 
         public User GetUserById(Guid id)

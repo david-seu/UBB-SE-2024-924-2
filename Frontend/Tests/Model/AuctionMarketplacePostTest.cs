@@ -7,11 +7,11 @@ using ISSLab.Model.Entities;
 
 namespace Tests.Model
 {
-    internal class AuctionPostTest
+    internal class AuctionMarketplacePostTest
     {
-        private AuctionPost postEmpty;
-        private AuctionPost postWithId;
-        private AuctionPost postWithoutId;
+        private AuctionMarketplacePost marketplacePostEmpty;
+        private AuctionMarketplacePost marketplacePostWithId;
+        private AuctionMarketplacePost marketplacePostWithoutId;
 
         private Guid currentPriceLeader;
         private double currentBidPrice;
@@ -26,180 +26,180 @@ namespace Tests.Model
             minimumBidPrice = 100;
             onGoing = true;
 
-            postEmpty = new AuctionPost();
-            postWithId = new AuctionPost(Guid.NewGuid(), new List<Guid>(), new List<Guid>(), string.Empty, DateTime.Now, Guid.NewGuid(), Guid.NewGuid(), true, new List<Guid>(), string.Empty, string.Empty, string.Empty, new List<InterestStatus>(), string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), currentPriceLeader, currentBidPrice, minimumBidPrice, false, 100, onGoing);
-            postWithoutId = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, 100, DateTime.Now, string.Empty, Guid.NewGuid(), currentPriceLeader, currentBidPrice, minimumBidPrice, true);
+            marketplacePostEmpty = new AuctionMarketplacePost();
+            marketplacePostWithId = new AuctionMarketplacePost(Guid.NewGuid(), new List<Guid>(), new List<Guid>(), string.Empty, DateTime.Now, Guid.NewGuid(), Guid.NewGuid(), true, new List<Guid>(), string.Empty, string.Empty, string.Empty, new List<InterestStatus>(), string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), currentPriceLeader, currentBidPrice, minimumBidPrice, false, 100, onGoing);
+            marketplacePostWithoutId = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, 100, DateTime.Now, string.Empty, Guid.NewGuid(), currentPriceLeader, currentBidPrice, minimumBidPrice, true);
         }
 
         [Test]
         public void OnGoingGet_FromPostInstantiatedWithoutId_ShouldBeTrue()
         {
-            Assert.That(postWithoutId.OnGoing, Is.True);
+            Assert.That(marketplacePostWithoutId.OnGoing, Is.True);
         }
 
         [Test]
         public void OnGoingSet_ForPostEmpty_OnGoingBecomesNewValue()
         {
             bool newOnGoing = true;
-            postEmpty.OnGoing = newOnGoing;
-            Assert.That(postEmpty.OnGoing, Is.EqualTo(newOnGoing));
+            marketplacePostEmpty.OnGoing = newOnGoing;
+            Assert.That(marketplacePostEmpty.OnGoing, Is.EqualTo(newOnGoing));
         }
 
         [Test]
         public void OnGoingSet_ForPostWithoutId_OnGoingBecomesNewValue()
         {
             bool newOnGoing = false;
-            postWithoutId.OnGoing = newOnGoing;
-            Assert.That(postWithoutId.OnGoing, Is.EqualTo(newOnGoing));
+            marketplacePostWithoutId.OnGoing = newOnGoing;
+            Assert.That(marketplacePostWithoutId.OnGoing, Is.EqualTo(newOnGoing));
         }
 
         [Test]
         public void OnGoingSet_ForPostWithId_OnGoingBecomesNewValue()
         {
             bool newOnGoing = false;
-            postWithId.OnGoing = newOnGoing;
-            Assert.That(postWithId.OnGoing, Is.EqualTo(newOnGoing));
+            marketplacePostWithId.OnGoing = newOnGoing;
+            Assert.That(marketplacePostWithId.OnGoing, Is.EqualTo(newOnGoing));
         }
 
         [Test]
         public void CurrentBidPrice_ForPostEmpty_ShouldBeZero()
         {
-            Assert.That(postEmpty.CurrentBidPrice, Is.EqualTo(0));
+            Assert.That(marketplacePostEmpty.CurrentBidPrice, Is.EqualTo(0));
         }
 
         [Test]
         public void CurrentBidPrice_ForPostWithId_ShouldBeEqualToCurrentBidPrice()
         {
-            Assert.That(postWithId.CurrentBidPrice, Is.EqualTo(currentBidPrice));
+            Assert.That(marketplacePostWithId.CurrentBidPrice, Is.EqualTo(currentBidPrice));
         }
 
         [Test]
         public void CurrentBidPrice_ForPostWithoutId_ShouldBeEqualToCurrentBidPrice()
         {
-            Assert.That(postWithId.CurrentBidPrice, Is.EqualTo(currentBidPrice));
+            Assert.That(marketplacePostWithId.CurrentBidPrice, Is.EqualTo(currentBidPrice));
         }
 
         [Test]
         public void CurrentBidPrice_ChangeForPostEmpty_ShouldBeEqualToNewValue()
         {
             double newValue = 140;
-            postEmpty.CurrentBidPrice = newValue;
-            Assert.That(postEmpty.CurrentBidPrice, Is.EqualTo(newValue));
+            marketplacePostEmpty.CurrentBidPrice = newValue;
+            Assert.That(marketplacePostEmpty.CurrentBidPrice, Is.EqualTo(newValue));
         }
 
         [Test]
         public void CurrentBidPrice_ChangeForPostWithId_ShouldBeEqualToNewValue()
         {
             double newValue = 140;
-            postWithId.CurrentBidPrice = newValue;
-            Assert.That(postWithId.CurrentBidPrice, Is.EqualTo(newValue));
+            marketplacePostWithId.CurrentBidPrice = newValue;
+            Assert.That(marketplacePostWithId.CurrentBidPrice, Is.EqualTo(newValue));
         }
 
         [Test]
         public void CurrentBidPrice_ChangeForPostWithoutId_ShouldBeEqualToNewValue()
         {
             double newValue = 140;
-            postWithoutId.CurrentBidPrice = newValue;
-            Assert.That(postWithoutId.CurrentBidPrice, Is.EqualTo(newValue));
+            marketplacePostWithoutId.CurrentBidPrice = newValue;
+            Assert.That(marketplacePostWithoutId.CurrentBidPrice, Is.EqualTo(newValue));
         }
 
         [Test]
         public void MinimumBidPrice_ChangeForPostEmpty_ShouldBeEqualToNewValue()
         {
             double newValue = 140;
-            postEmpty.MinimumBidPrice = newValue;
-            Assert.That(postEmpty.MinimumBidPrice, Is.EqualTo(newValue));
+            marketplacePostEmpty.MinimumBidPrice = newValue;
+            Assert.That(marketplacePostEmpty.MinimumBidPrice, Is.EqualTo(newValue));
         }
 
         [Test]
         public void MinimumBidPrice_ChangeForPostWithId_ShouldBeEqualToNewValue()
         {
             double newValue = 140;
-            postWithId.MinimumBidPrice = newValue;
-            Assert.That(postWithId.MinimumBidPrice, Is.EqualTo(newValue));
+            marketplacePostWithId.MinimumBidPrice = newValue;
+            Assert.That(marketplacePostWithId.MinimumBidPrice, Is.EqualTo(newValue));
         }
 
         [Test]
         public void MinimumBidPrice_ChangeForPostWithoutId_ShouldBeEqualToNewValue()
         {
             double newValue = 140;
-            postWithoutId.MinimumBidPrice = newValue;
-            Assert.That(postWithoutId.MinimumBidPrice, Is.EqualTo(newValue));
+            marketplacePostWithoutId.MinimumBidPrice = newValue;
+            Assert.That(marketplacePostWithoutId.MinimumBidPrice, Is.EqualTo(newValue));
         }
 
         [Test]
         public void MinimumBidPrice_ForPostEmpty_ShouldBeZero()
         {
-            Assert.That(postEmpty.MinimumBidPrice, Is.EqualTo(0));
+            Assert.That(marketplacePostEmpty.MinimumBidPrice, Is.EqualTo(0));
         }
         [Test]
         public void MinimumBidPrice_ForPostWithId_ShouldBeEqualToMinimumBidPrice()
         {
-            Assert.That(minimumBidPrice, Is.EqualTo(postWithId.MinimumBidPrice));
+            Assert.That(minimumBidPrice, Is.EqualTo(marketplacePostWithId.MinimumBidPrice));
         }
 
         [Test]
         public void MinimumBidPrice_ForPostWithoutId_ShouldBeEqualToMinimumBidPrice()
         {
-            Assert.That(minimumBidPrice, Is.EqualTo(postWithoutId.MinimumBidPrice));
+            Assert.That(minimumBidPrice, Is.EqualTo(marketplacePostWithoutId.MinimumBidPrice));
         }
 
         [Test]
         public void CurrentPriceLeader_ForPostEmpty_ShouldBeEmpty()
         {
-            Assert.That(postEmpty.CurrentPriceLeader, Is.EqualTo(Guid.Empty));
+            Assert.That(marketplacePostEmpty.CurrentPriceLeader, Is.EqualTo(Guid.Empty));
         }
         [Test]
         public void CurrentPriceLeader_ForPostWithoutId_ShouldBeEmpty()
         {
-            Assert.That(postWithoutId.CurrentPriceLeader, Is.EqualTo(Guid.Empty));
+            Assert.That(marketplacePostWithoutId.CurrentPriceLeader, Is.EqualTo(Guid.Empty));
         }
         [Test]
         public void CurrentPriceLeader_ForPostWithId_ShouldBeEqualToCurrentPriceLeader()
         {
-            Assert.That(postWithId.CurrentPriceLeader, Is.EqualTo(currentPriceLeader));
+            Assert.That(marketplacePostWithId.CurrentPriceLeader, Is.EqualTo(currentPriceLeader));
         }
 
         [Test]
         public void CurrentPriceLeader_ChangePriceLeaderForPostEmpty_ShouldBeEqualToNewValue()
         {
             Guid newValue = Guid.NewGuid();
-            postEmpty.CurrentPriceLeader = newValue;
-            Assert.That(postEmpty.CurrentPriceLeader, Is.EqualTo(newValue));
+            marketplacePostEmpty.CurrentPriceLeader = newValue;
+            Assert.That(marketplacePostEmpty.CurrentPriceLeader, Is.EqualTo(newValue));
         }
 
         [Test]
         public void CurrentPriceLeader_ChangePriceLeaderForPostWithoutId_ShouldBeEqualToNewValue()
         {
             Guid newValue = Guid.NewGuid();
-            postWithoutId.CurrentPriceLeader = newValue;
-            Assert.That(postWithoutId.CurrentPriceLeader, Is.EqualTo(newValue));
+            marketplacePostWithoutId.CurrentPriceLeader = newValue;
+            Assert.That(marketplacePostWithoutId.CurrentPriceLeader, Is.EqualTo(newValue));
         }
 
         [Test]
         public void CurrentPriceLeader_ChangePriceLeaderForPostWithId_ShouldBeEqualToNewValue()
         {
             Guid newValue = Guid.NewGuid();
-            postWithId.CurrentPriceLeader = newValue;
-            Assert.That(postWithId.CurrentPriceLeader, Is.EqualTo(newValue));
+            marketplacePostWithId.CurrentPriceLeader = newValue;
+            Assert.That(marketplacePostWithId.CurrentPriceLeader, Is.EqualTo(newValue));
         }
 
         [Test]
         public void Type_ForPostEmpty_ShouldBeAuction()
         {
-            Assert.That(postEmpty.Type, Is.EqualTo(Constants.AUCTION_POST_TYPE));
+            Assert.That(marketplacePostEmpty.Type, Is.EqualTo(Constants.AUCTION_POST_TYPE));
         }
 
         [Test]
         public void Type_ForPostWithoutId_ShouldBeAuction()
         {
-            Assert.That(postWithoutId.Type, Is.EqualTo(Constants.AUCTION_POST_TYPE));
+            Assert.That(marketplacePostWithoutId.Type, Is.EqualTo(Constants.AUCTION_POST_TYPE));
         }
 
         [Test]
         public void Type_ForPostWithId_ShouldBeAuction()
         {
-            Assert.That(postWithId.Type, Is.EqualTo(Constants.AUCTION_POST_TYPE));
+            Assert.That(marketplacePostWithId.Type, Is.EqualTo(Constants.AUCTION_POST_TYPE));
         }
 
         [Test]
@@ -207,8 +207,8 @@ namespace Tests.Model
         {
             DateTime expectedExpirationDate = DateTime.Now.AddSeconds(30);
 
-            postEmpty.SlightlyPostponeExpirationDate();
-            DateTime actualExpirationDate = postEmpty.ExpirationDate;
+            marketplacePostEmpty.SlightlyPostponeExpirationDate();
+            DateTime actualExpirationDate = marketplacePostEmpty.ExpirationDate;
             TimeSpan difference = actualExpirationDate - expectedExpirationDate;
             Assert.Less(difference.TotalSeconds, 1);
         }
@@ -216,30 +216,30 @@ namespace Tests.Model
         [Test]
         public void PlaceBid_ForAnyPostBidSmallerThanMinimum_ShouldThrowException()
         {
-            var exceptionMessage = Assert.Throws<Exception>(() => { postEmpty.PlaceBid(Guid.NewGuid(), -1000); });
+            var exceptionMessage = Assert.Throws<Exception>(() => { marketplacePostEmpty.PlaceBid(Guid.NewGuid(), -1000); });
             Assert.That(exceptionMessage.Message, Is.EqualTo("Bid price is lower than minimum bid price"));
         }
 
         [Test]
         public void PlaceBid_ForAnyPostBidIsHigherThanMinimumButLowerThanCurrent_CurrentBidPriceShouldRemainTheSame()
         {
-            double initialPrice = postWithoutId.CurrentBidPrice;
-            postWithoutId.PlaceBid(Guid.NewGuid(), 150);
-            Assert.That(postWithoutId.CurrentBidPrice, Is.EqualTo(initialPrice));
+            double initialPrice = marketplacePostWithoutId.CurrentBidPrice;
+            marketplacePostWithoutId.PlaceBid(Guid.NewGuid(), 150);
+            Assert.That(marketplacePostWithoutId.CurrentBidPrice, Is.EqualTo(initialPrice));
         }
 
         [Test]
         public void PlaceBid_ForAnyPostBidIsHigherThanCurrentPrice_CurrentBidPriceChangesToNewValue()
         {
-            postWithoutId.PlaceBid(new Guid(), 900);
-            Assert.That(postWithoutId.CurrentBidPrice, Is.EqualTo(900));
+            marketplacePostWithoutId.PlaceBid(new Guid(), 900);
+            Assert.That(marketplacePostWithoutId.CurrentBidPrice, Is.EqualTo(900));
         }
         [Test]
         public void PlaceBid_ForAnyPostBidIsHigherThanCurrentPrice_PriceLeaderChangesToNewValue()
         {
             Guid newPriceLeader = Guid.NewGuid();
-            postWithoutId.PlaceBid(newPriceLeader, 900);
-            Assert.That(postWithoutId.CurrentPriceLeader, Is.EqualTo(newPriceLeader));
+            marketplacePostWithoutId.PlaceBid(newPriceLeader, 900);
+            Assert.That(marketplacePostWithoutId.CurrentPriceLeader, Is.EqualTo(newPriceLeader));
         }
 
         [Test]
@@ -249,8 +249,8 @@ namespace Tests.Model
 
             DateTime expectedExpirationDate = DateTime.Now.AddSeconds(30);
 
-            postWithoutId.PlaceBid(newPriceLeader, 900);
-            DateTime actualExpirationDate = postEmpty.ExpirationDate;
+            marketplacePostWithoutId.PlaceBid(newPriceLeader, 900);
+            DateTime actualExpirationDate = marketplacePostEmpty.ExpirationDate;
             TimeSpan difference = actualExpirationDate - expectedExpirationDate;
             Assert.Less(difference.TotalSeconds, 1);
         }

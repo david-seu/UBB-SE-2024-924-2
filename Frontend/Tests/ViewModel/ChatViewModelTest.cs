@@ -15,14 +15,14 @@ namespace Tests.ViewModel
         private ChatViewModel chatViewModel;
         private ObservableCollection<Message>? otherMessages;
         private User user;
-        private Post post;
+        private MarketplacePost marketplacePost;
 
         [SetUp]
         public void SetUp()
         {
             user = new User();
-            post = new Post();
-            chatViewModel = new ChatViewModel(user, post);
+            marketplacePost = new MarketplacePost();
+            chatViewModel = new ChatViewModel(user, marketplacePost);
         }
 
         [Test]
@@ -42,15 +42,15 @@ namespace Tests.ViewModel
         [Test]
         public void GetPost_Any_PostIsEqualToLocalPost()
         {
-            Assert.AreEqual(chatViewModel.RefferedPost, post);
+            Assert.AreEqual(chatViewModel.RefferedMarketplacePost, marketplacePost);
         }
 
         [Test]
         public void SetPost_Any_PostIsEqualToNewPost()
         {
-            Post newPost = new Post();
-            chatViewModel.RefferedPost = newPost;
-            Assert.AreEqual(chatViewModel.RefferedPost, newPost);
+            MarketplacePost newMarketplacePost = new MarketplacePost();
+            chatViewModel.RefferedMarketplacePost = newMarketplacePost;
+            Assert.AreEqual(chatViewModel.RefferedMarketplacePost, newMarketplacePost);
         }
 
         public void AllMessages_GetAllMessages_CollectionIsEmpty()

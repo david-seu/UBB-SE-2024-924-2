@@ -272,18 +272,18 @@ namespace ISSLab.ViewModel
 
         public void CreateDonationPost()
         {
-            DonationPost donationPost = new DonationPost(Constants.EMPTY_STRING, accountId, groupId, Constants.EMPTY_STRING,
+            DonationMarketplacePost donationMarketplacePost = new DonationMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, Constants.EMPTY_STRING,
                 Description, Constants.EMPTY_STRING, phoneNumber, donationLink, Constants.DONATION_POST_TYPE, true);
-            postService.AddPost(donationPost);
+            postService.AddPost(donationMarketplacePost);
 
             ResetFields();
         }
 
         public void CreateFixedPricePost()
         {
-            FixedPricePost fixedPrice = new FixedPricePost(Constants.EMPTY_STRING, accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING,
+            FixedPriceMarketplacePost fixedPriceMarketplace = new FixedPriceMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING,
                 PhoneNumber, float.Parse(Price), DateTime.Now.AddMonths(3), Delivery, Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, false);
-            postService.AddPost(fixedPrice);
+            postService.AddPost(fixedPriceMarketplace);
 
             ResetFields();
         }

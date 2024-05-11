@@ -19,65 +19,65 @@ namespace ISSLab.Services
             this.postRepository = posts;
         }
 
-        public List<Post> GetPosts()
+        public List<MarketplacePost> GetPosts()
         {
             return postRepository.GetAllPosts();
         }
 
-        public void AddPost(Post post)
+        public void AddPost(MarketplacePost marketplacePost)
         {
-            postRepository.AddPost(post);
+            postRepository.AddPost(marketplacePost);
         }
-        public void RemovePost(Post post)
+        public void RemovePost(MarketplacePost marketplacePost)
         {
-            postRepository.RemovePost(post.Id);
+            postRepository.RemovePost(marketplacePost.Id);
         }
-        public Post GetPostById(Guid id)
+        public MarketplacePost GetPostById(Guid id)
         {
-            Post? postWithThatId = postRepository.GetPostById(id);
+            MarketplacePost? postWithThatId = postRepository.GetPostById(id);
             if (postWithThatId == null)
             {
-                throw new Exception("Post not found");
+                throw new Exception("MarketplacePost not found");
             }
             return postWithThatId;
         }
 
         public void RemoveConfirmation(Guid postID)
         {
-            Post? post = postRepository.GetPostById(postID);
+            MarketplacePost? post = postRepository.GetPostById(postID);
             if (post == null)
             {
-                throw new Exception("Post not found");
+                throw new Exception("MarketplacePost not found");
             }
             post.Confirmed = false;
         }
 
         public void ConfirmPost(Guid postID)
         {
-            Post? post = postRepository.GetPostById(postID);
+            MarketplacePost? post = postRepository.GetPostById(postID);
             if (post == null)
             {
-                throw new Exception("Post not found");
+                throw new Exception("MarketplacePost not found");
             }
             post.Confirmed = true;
         }
 
         public void FavoritePost(Guid postId, Guid userId)
         {
-            Post? post = postRepository.GetPostById(postId);
+            MarketplacePost? post = postRepository.GetPostById(postId);
             if (post == null)
             {
-                throw new Exception("Post not found");
+                throw new Exception("MarketplacePost not found");
             }
             post.UsersThatFavorited.Add(userId);
         }
 
         public void UnfavoritePost(Guid postId, Guid userId)
         {
-            Post? post = postRepository.GetPostById(postId);
+            MarketplacePost? post = postRepository.GetPostById(postId);
             if (post == null)
             {
-                throw new Exception("Post not found");
+                throw new Exception("MarketplacePost not found");
             }
             post.UsersThatFavorited.Remove(userId);
         }

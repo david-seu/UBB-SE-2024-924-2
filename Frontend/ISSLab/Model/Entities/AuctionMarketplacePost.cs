@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ISSLab.Model.Entities
 {
-    public class AuctionPost : FixedPricePost
+    public class AuctionMarketplacePost : FixedPriceMarketplacePost
     {
         private Guid currentPriceLeader;
         private double currentBidPrice;
         private double minimumBidPrice;
         private bool onGoing;
 
-        public AuctionPost(string mediaContent, Guid authorId, Guid groupId, string itemLocation, string description, string title, string phoneNumber, double price, DateTime expirationDate, string deliveryType, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed) : base(mediaContent, authorId, groupId, itemLocation, description, title, phoneNumber, price, expirationDate, deliveryType, buyerId, Constants.AUCTION_POST_TYPE, confirmed)
+        public AuctionMarketplacePost(string mediaContent, Guid authorId, Guid groupId, string itemLocation, string description, string title, string phoneNumber, double price, DateTime expirationDate, string deliveryType, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed) : base(mediaContent, authorId, groupId, itemLocation, description, title, phoneNumber, price, expirationDate, deliveryType, buyerId, Constants.AUCTION_POST_TYPE, confirmed)
         {
             this.currentPriceLeader = Guid.Empty;
             this.currentBidPrice = currentBidPrice;
@@ -21,7 +21,7 @@ namespace ISSLab.Model.Entities
             onGoing = true;
         }
 
-        public AuctionPost() : base()
+        public AuctionMarketplacePost() : base()
         {
             Type = Constants.AUCTION_POST_TYPE;
             currentPriceLeader = Guid.Empty;
@@ -29,7 +29,7 @@ namespace ISSLab.Model.Entities
             minimumBidPrice = 0;
         }
 
-        public AuctionPost(Guid postId, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string phoneNumber, double price, DateTime expirationDate, string deliveryType, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed, int viewCount, bool onGoing) : base(postId, usersThatShared, usersThatLiked, mediaContent, creationDate, authorId, groupId, promoted, usersThatFavorited, itemLocation, description, title, interestStatuses, phoneNumber, price, expirationDate, deliveryType, buyerId, Constants.AUCTION_POST_TYPE, confirmed, viewCount)
+        public AuctionMarketplacePost(Guid postId, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string phoneNumber, double price, DateTime expirationDate, string deliveryType, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed, int viewCount, bool onGoing) : base(postId, usersThatShared, usersThatLiked, mediaContent, creationDate, authorId, groupId, promoted, usersThatFavorited, itemLocation, description, title, interestStatuses, phoneNumber, price, expirationDate, deliveryType, buyerId, Constants.AUCTION_POST_TYPE, confirmed, viewCount)
         {
             this.currentPriceLeader = currentPriceLeader;
             this.currentBidPrice = currentBidPrice;

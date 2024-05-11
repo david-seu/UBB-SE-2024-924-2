@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ISSLab.Model.Entities
 {
-    public class Post
+    public class MarketplacePost
     {
         private Guid id;
         private int views;
@@ -26,7 +26,7 @@ namespace ISSLab.Model.Entities
         private string contacts;
         private string type;
 
-        public Post(string mediaContent, Guid authorId, Guid groupId, string itemLocation, string description, string title, string contacts, string type, bool confirmed)
+        public MarketplacePost(string mediaContent, Guid authorId, Guid groupId, string itemLocation, string description, string title, string contacts, string type, bool confirmed)
         {
             this.confirmed = confirmed;
             id = Guid.NewGuid();
@@ -47,7 +47,7 @@ namespace ISSLab.Model.Entities
             this.type = type;
         }
 
-        public Post(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string contacts, string type, bool confirmed, int views)
+        public MarketplacePost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string contacts, string type, bool confirmed, int views)
         {
             this.id = id;
             this.usersThatShared = usersThatShared;
@@ -68,7 +68,7 @@ namespace ISSLab.Model.Entities
             this.confirmed = confirmed;
         }
 
-        public Post()
+        public MarketplacePost()
         {
             id = Guid.NewGuid();
             usersThatShared = new List<Guid>();

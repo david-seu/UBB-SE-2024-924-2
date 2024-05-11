@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ISSLab.Model.Entities
 {
-    public class FixedPricePost : Post
+    public class FixedPriceMarketplacePost : MarketplacePost
     {
         private double price;
         private DateTime expirationDate;
         private string delivery;
         private Guid buyerId;
 
-        public FixedPricePost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId, string type, bool confirmed) : base(media, authorId, groupId, location, description, title, contacts, type, confirmed)
+        public FixedPriceMarketplacePost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId, string type, bool confirmed) : base(media, authorId, groupId, location, description, title, contacts, type, confirmed)
         {
             this.price = price;
             this.expirationDate = expirationDate;
@@ -21,7 +21,7 @@ namespace ISSLab.Model.Entities
             this.buyerId = buyerId;
         }
 
-        public FixedPricePost() : base()
+        public FixedPriceMarketplacePost() : base()
         {
             price = 0;
             expirationDate = DateTime.Now;
@@ -29,7 +29,7 @@ namespace ISSLab.Model.Entities
             buyerId = Guid.Empty;
         }
 
-        public FixedPricePost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string media, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string location, string description, string title, List<InterestStatus> interestStatuses, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId, string type, bool confirmed, int views) : base(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, type, confirmed, views)
+        public FixedPriceMarketplacePost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string media, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string location, string description, string title, List<InterestStatus> interestStatuses, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId, string type, bool confirmed, int views) : base(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, type, confirmed, views)
         {
             this.price = price;
             this.expirationDate = expirationDate;

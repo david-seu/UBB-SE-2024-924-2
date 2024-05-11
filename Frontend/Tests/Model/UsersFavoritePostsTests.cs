@@ -70,7 +70,7 @@ namespace Tests.Model
             favorites.AddPost(guidOfFirstFavorite);
 
             var exceptionMessage = Assert.Throws<Exception>(() => { favorites.AddPost(guidOfSecondFavorite); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post already in favorites"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost already in favorites"));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Tests.Model
             favorites.RemovePost(guidOfFirstFavorite);
 
             var exceptionMessage = Assert.Throws<Exception>(() => { favorites.RemovePost(guidOfFirstFavorite); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not in favorites"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost not in favorites"));
         }
     }
 }

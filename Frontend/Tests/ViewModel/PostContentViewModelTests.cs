@@ -18,23 +18,23 @@ namespace Tests.ViewModel
         private FakeUserService fakeUserService;
         private PostContentViewModel postViewModel;
         private string donationButtonVisible;
-        private Post ourPost;
+        private MarketplacePost ourMarketplacePost;
 
         [SetUp]
         public void SetUp()
         {
             fakeUserService = new FakeUserService();
-            ourPost = new Post();
-            ourPost.Type = Constants.DONATION_POST_TYPE;
-            postViewModel = new PostContentViewModel(ourPost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            ourMarketplacePost = new MarketplacePost();
+            ourMarketplacePost.Type = Constants.DONATION_POST_TYPE;
+            postViewModel = new PostContentViewModel(ourMarketplacePost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
             Assert.That(postViewModel.DonationButtonVisible, Is.EqualTo(Constants.VISIBLE_VISIBILITY));
-            ourPost = new Post();
-            ourPost.Type = Constants.FIXED_PRICE_POST_TYPE;
-            postViewModel = new PostContentViewModel(ourPost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
-            ourPost = new Post();
-            ourPost.Type = Constants.AUCTION_POST_TYPE;
-            postViewModel = new PostContentViewModel(ourPost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
-            postViewModel = new PostContentViewModel(new Post(), new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            ourMarketplacePost = new MarketplacePost();
+            ourMarketplacePost.Type = Constants.FIXED_PRICE_POST_TYPE;
+            postViewModel = new PostContentViewModel(ourMarketplacePost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            ourMarketplacePost = new MarketplacePost();
+            ourMarketplacePost.Type = Constants.AUCTION_POST_TYPE;
+            postViewModel = new PostContentViewModel(ourMarketplacePost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            postViewModel = new PostContentViewModel(new MarketplacePost(), new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
         }
 
         [Test]
@@ -85,9 +85,9 @@ namespace Tests.ViewModel
         public void AvailableFor_ForFixedPricePost_ReturnsCorrectString()
         {
             DateTime expirationDate = DateTime.Now.AddDays(10);
-            Post fixedPricePost = new FixedPricePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
+            MarketplacePost fixedPriceMarketplacePost = new FixedPriceMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
                 string.Empty, string.Empty, string.Empty, 0, expirationDate, string.Empty, Guid.NewGuid(), Constants.FIXED_PRICE_POST_TYPE, true);
-            postViewModel.Post = fixedPricePost;
+            postViewModel.MarketplacePost = fixedPriceMarketplacePost;
 
             TimeSpan timeLeft = expirationDate - DateTime.Now;
             string expectedResult = postViewModel.DisplayRemainingTime(timeLeft);
@@ -99,9 +99,9 @@ namespace Tests.ViewModel
         public void AvailableFor_ForAuctionPost_ReturnsCorrectString()
         {
             DateTime expirationDate = DateTime.Now.AddDays(10);
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 string.Empty, 0, expirationDate, string.Empty, Guid.NewGuid(), Guid.NewGuid(), 0, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             TimeSpan timeLeft = expirationDate - DateTime.Now;
             string expectedResult = postViewModel.DisplayRemainingTime(timeLeft);
@@ -112,8 +112,8 @@ namespace Tests.ViewModel
         [Test]
         public void AvailableFor_ForUnknownPostType_ReturnsEmptyString()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             string expectedResult = Constants.EMPTY_STRING;
 
@@ -139,9 +139,9 @@ namespace Tests.ViewModel
         public void Description_ForFixedPricePost_ReturnsCorrectValue()
         {
             string expectedDescription = "expected description";
-            Post fixedPricePost = new FixedPricePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
+            MarketplacePost fixedPriceMarketplacePost = new FixedPriceMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
                 expectedDescription, string.Empty, string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), string.Empty, true);
-            postViewModel.Post = fixedPricePost;
+            postViewModel.MarketplacePost = fixedPriceMarketplacePost;
 
             Assert.That(postViewModel.Description, Is.EqualTo(expectedDescription));
         }
@@ -149,9 +149,9 @@ namespace Tests.ViewModel
         public void Description_ForAuctionPost_ReturnsCorrectValue()
         {
             string expectedDescription = "expected description";
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, expectedDescription, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, expectedDescription, string.Empty,
                 string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), Guid.NewGuid(), 0, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             Assert.That(postViewModel.Description, Is.EqualTo(expectedDescription));
         }
@@ -159,8 +159,8 @@ namespace Tests.ViewModel
         public void Description_ForUnknownPostType_ReturnsCorrectValue()
         {
             string expectedDescription = "expected description";
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, expectedDescription, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, expectedDescription, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             Assert.That(postViewModel.Description, Is.EqualTo(expectedDescription));
         }
@@ -168,9 +168,9 @@ namespace Tests.ViewModel
         [Test]
         public void Description_ForFixedPricePost_SetsCorrectValue()
         {
-            Post fixedPricePost = new FixedPricePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
+            MarketplacePost fixedPriceMarketplacePost = new FixedPriceMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
                 string.Empty, string.Empty, string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), string.Empty, true);
-            postViewModel.Post = fixedPricePost;
+            postViewModel.MarketplacePost = fixedPriceMarketplacePost;
 
             string expectedDescription = "expected description";
             postViewModel.Description = expectedDescription;
@@ -179,9 +179,9 @@ namespace Tests.ViewModel
         [Test]
         public void Description_ForAuctionPost_SetsCorrectValue()
         {
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 string.Empty, 0, DateTime.Now, string.Empty,  Guid.NewGuid(), Guid.NewGuid(), 0, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             string expectedDescription = "expected description";
             postViewModel.Description = expectedDescription;
@@ -190,8 +190,8 @@ namespace Tests.ViewModel
         [Test]
         public void Description_ForUnknownPostType_SetsCorrectValue()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             string expectedDescription = "expected description";
             postViewModel.Description = expectedDescription;
@@ -202,9 +202,9 @@ namespace Tests.ViewModel
         public void Contact_ForFixedPricePost_ReturnsCorrectValue()
         {
             string expectedContacts = "expected contacts";
-            Post fixedPricePost = new FixedPricePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
+            MarketplacePost fixedPriceMarketplacePost = new FixedPriceMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
                 string.Empty, string.Empty, expectedContacts, 0, DateTime.Now, string.Empty, Guid.NewGuid(), string.Empty, true);
-            postViewModel.Post = fixedPricePost;
+            postViewModel.MarketplacePost = fixedPriceMarketplacePost;
 
             Assert.That(postViewModel.Contact, Is.EqualTo(expectedContacts));
         }
@@ -212,9 +212,9 @@ namespace Tests.ViewModel
         public void Contact_ForAuctionPost_ReturnsCorrectValue()
         {
             string expectedContacts = "expected contacts";
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 expectedContacts, 0, DateTime.Now, string.Empty, Guid.NewGuid(), Guid.NewGuid(), 0, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             Assert.That(postViewModel.Contact, Is.EqualTo(expectedContacts));
         }
@@ -222,8 +222,8 @@ namespace Tests.ViewModel
         public void Contact_ForUnknownPostType_ReturnsCorrectValue()
         {
             string expectedContacts = "expected contacts";
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, expectedContacts, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, expectedContacts, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             Assert.That(postViewModel.Contact, Is.EqualTo(expectedContacts));
         }
@@ -231,9 +231,9 @@ namespace Tests.ViewModel
         [Test]
         public void Contact_ForFixedPricePost_SetsCorrectValue()
         {
-            Post fixedPricePost = new FixedPricePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
+            MarketplacePost fixedPriceMarketplacePost = new FixedPriceMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
                 string.Empty, string.Empty, string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), string.Empty, true);
-            postViewModel.Post = fixedPricePost;
+            postViewModel.MarketplacePost = fixedPriceMarketplacePost;
 
             string expectedContacts = "expected contacts";
             postViewModel.Contact = expectedContacts;
@@ -242,9 +242,9 @@ namespace Tests.ViewModel
         [Test]
         public void Contact_ForAuctionPost_SetsCorrectValue()
         {
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty,
                 string.Empty, string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), Guid.NewGuid(), 0, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             string expectedContacts = "expected contacts";
             postViewModel.Contact = expectedContacts;
@@ -253,8 +253,8 @@ namespace Tests.ViewModel
         [Test]
         public void Contact_ForUnknownPostType_SetsCorrectValue()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             string expectedContacts = "expected contacts";
             postViewModel.Contact = expectedContacts;
@@ -265,9 +265,9 @@ namespace Tests.ViewModel
         public void Delivery_ForFixedPricePost_ReturnsCorrectValue()
         {
             string expectedDelivery = "expected delivery";
-            Post fixedPricePost = new FixedPricePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
+            MarketplacePost fixedPriceMarketplacePost = new FixedPriceMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
                 string.Empty, string.Empty, string.Empty, 0, DateTime.Now, expectedDelivery, Guid.NewGuid(), Constants.FIXED_PRICE_POST_TYPE, true);
-            postViewModel.Post = fixedPricePost;
+            postViewModel.MarketplacePost = fixedPriceMarketplacePost;
 
             Assert.That(postViewModel.Delivery, Is.EqualTo(expectedDelivery));
         }
@@ -275,9 +275,9 @@ namespace Tests.ViewModel
         public void Delivery_ForAuctionPost_ReturnsCorrectValue()
         {
             string expectedDelivery = "expected delivery";
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 string.Empty, 0, DateTime.Now, expectedDelivery, Guid.NewGuid(), Guid.NewGuid(), 0, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             Assert.That(postViewModel.Delivery, Is.EqualTo(expectedDelivery));
         }
@@ -285,14 +285,14 @@ namespace Tests.ViewModel
         public void Delivery_ForDonationOrUnknownPostType_ReturnsEmptyString()
         {
             string expectedDelivery = Constants.EMPTY_STRING;
-            Post donationPost = new DonationPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
-            postViewModel.Post = donationPost;
+            MarketplacePost donationMarketplacePost = new DonationMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
+            postViewModel.MarketplacePost = donationMarketplacePost;
 
             Assert.That(postViewModel.Delivery, Is.EqualTo(expectedDelivery));
 
             expectedDelivery = Constants.EMPTY_STRING;
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             Assert.That(postViewModel.Delivery, Is.EqualTo(expectedDelivery));
         }
@@ -300,9 +300,9 @@ namespace Tests.ViewModel
         [Test]
         public void Delivery_ForFixedPricePost_SetsCorrectValue()
         {
-            Post fixedPricePost = new FixedPricePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
+            MarketplacePost fixedPriceMarketplacePost = new FixedPriceMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
                 string.Empty, string.Empty, string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), Constants.FIXED_PRICE_POST_TYPE, true);
-            postViewModel.Post = fixedPricePost;
+            postViewModel.MarketplacePost = fixedPriceMarketplacePost;
 
             string expectedDelivery = "expected delivery";
             postViewModel.Delivery = expectedDelivery;
@@ -311,9 +311,9 @@ namespace Tests.ViewModel
         [Test]
         public void Delivery_ForAuctionPost_SetsCorrectValue()
         {
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), Guid.NewGuid(), 0, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             string expectedDelivery = "expected delivery";
             postViewModel.Delivery = expectedDelivery;
@@ -322,14 +322,14 @@ namespace Tests.ViewModel
         [Test]
         public void Delivery_ForDonationOrUnknownPost_ReturnsEmptyString()
         {
-            Post donationPost = new DonationPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
-            postViewModel.Post = donationPost;
+            MarketplacePost donationMarketplacePost = new DonationMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
+            postViewModel.MarketplacePost = donationMarketplacePost;
 
             string expectedDelivery = Constants.EMPTY_STRING;
             Assert.That(postViewModel.Delivery, Is.EqualTo(expectedDelivery));
 
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             Assert.That(postViewModel.Delivery, Is.EqualTo(expectedDelivery));
         }
@@ -408,8 +408,8 @@ namespace Tests.ViewModel
         public void Media_PostOfUnknownType_ReturnsCorrectValue()
         {
             string expectedMedia = "expected Media";
-            Post noTypePost = new Post(expectedMedia, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(expectedMedia, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             Assert.That(postViewModel.Media, Is.EqualTo(expectedMedia));
         }
@@ -418,8 +418,8 @@ namespace Tests.ViewModel
         public void Location_PostOfUnknownType_ReturnsCorrectValue()
         {
             string expectedLocation = "expected Location";
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), expectedLocation, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), expectedLocation, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             Assert.That(postViewModel.Location, Is.EqualTo(expectedLocation));
         }
@@ -437,10 +437,10 @@ namespace Tests.ViewModel
         [Test]
         public void TimePosted_AnyPost_ReturnsCorrectStringForTotalSecondsLessThan60()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
-            TimeSpan timePassed = DateTime.Now - noTypePost.CreationDate;
+            TimeSpan timePassed = DateTime.Now - noTypeMarketplacePost.CreationDate;
             string expectedResult = Math.Ceiling(timePassed.TotalSeconds).ToString() + PostContentViewModel.SECONDS_AGO;
             string actualResult = postViewModel.TimePosted;
 
@@ -451,9 +451,9 @@ namespace Tests.ViewModel
         public void TimePosted_AnyPost_ReturnsCorrectStringForTotalMinutesLessThan60()
         {
             DateTime creationDate = DateTime.Now.AddMinutes(-30);
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            typeof(Post).GetProperty("CreationDate").SetValue(noTypePost, creationDate);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            typeof(MarketplacePost).GetProperty("CreationDate").SetValue(noTypeMarketplacePost, creationDate);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             TimeSpan timePassed = DateTime.Now - creationDate;
             string expectedResult = Math.Ceiling(timePassed.TotalMinutes).ToString() + PostContentViewModel.MINUTES_AGO;
@@ -467,9 +467,9 @@ namespace Tests.ViewModel
         public void TimePosted_AnyPost_ReturnsCorrectStringForTotalHoursLessThan24()
         {
             DateTime creationDate = DateTime.Now.AddHours(-12);
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            typeof(Post).GetProperty("CreationDate").SetValue(noTypePost, creationDate);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            typeof(MarketplacePost).GetProperty("CreationDate").SetValue(noTypeMarketplacePost, creationDate);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             TimeSpan timePassed = DateTime.Now - creationDate;
             string expectedResult = Math.Ceiling(timePassed.TotalHours).ToString() + " hours ago";
@@ -483,9 +483,9 @@ namespace Tests.ViewModel
         public void TimePosted_AnyPost_ReturnsCorrectStringForTotalHoursMoreThan24()
         {
             DateTime creationDate = DateTime.Now.AddDays(-12);
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            typeof(Post).GetProperty("CreationDate").SetValue(noTypePost, creationDate);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            typeof(MarketplacePost).GetProperty("CreationDate").SetValue(noTypeMarketplacePost, creationDate);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             TimeSpan timePassed = DateTime.Now - creationDate;
             string expectedResult = Math.Ceiling(timePassed.TotalDays).ToString() + " days ago";
@@ -498,19 +498,19 @@ namespace Tests.ViewModel
         [Test]
         public void GetPost_AnyPost_PostIsCorrectlyReturned()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
-            Assert.That(postViewModel.GetPost, Is.EqualTo(noTypePost));
+            Assert.That(postViewModel.GetPost, Is.EqualTo(noTypeMarketplacePost));
         }
 
         [Test]
         public void Price_ForFixedPricePost_ReturnsCorrectValue()
         {
             double expectedPrice = 1234;
-            Post fixedPricePost = new FixedPricePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
+            MarketplacePost fixedPriceMarketplacePost = new FixedPriceMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty,
                 string.Empty, string.Empty, string.Empty, expectedPrice, DateTime.Now, string.Empty, Guid.NewGuid(), Constants.FIXED_PRICE_POST_TYPE, true);
-            postViewModel.Post = fixedPricePost;
+            postViewModel.MarketplacePost = fixedPriceMarketplacePost;
 
             string expectedResult = Constants.DOLLAR_SIGN + expectedPrice;
 
@@ -520,9 +520,9 @@ namespace Tests.ViewModel
         public void Price_ForAuctionPost_ReturnsCorrectValue()
         {
             double expectedPrice = 1234;
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 string.Empty, expectedPrice, DateTime.Now, string.Empty, Guid.NewGuid(), Guid.NewGuid(), 0, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             string expectedResult = Constants.DOLLAR_SIGN + expectedPrice;
 
@@ -532,14 +532,14 @@ namespace Tests.ViewModel
         public void Price_ForDonationOrUnknownPostType_ReturnsEmptyString()
         {
             string expectedPrice = Constants.EMPTY_STRING;
-            Post donationPost = new DonationPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
-            postViewModel.Post = donationPost;
+            MarketplacePost donationMarketplacePost = new DonationMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
+            postViewModel.MarketplacePost = donationMarketplacePost;
 
             Assert.That(postViewModel.Price, Is.EqualTo(expectedPrice));
 
             expectedPrice = Constants.EMPTY_STRING;
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             Assert.That(postViewModel.Price, Is.EqualTo(expectedPrice));
         }
@@ -550,16 +550,16 @@ namespace Tests.ViewModel
             double currentBidPrice = 1234;
             double currentMinimumBidPrice = 1000;
             DateTime expirationDate = DateTime.Now.AddSeconds(10);
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 string.Empty, 0, expirationDate, string.Empty, Guid.NewGuid(), Guid.NewGuid(), currentBidPrice, currentMinimumBidPrice, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             postViewModel.UpdateBidPrice();
             double expectedBidPrice = currentBidPrice + 5;
             double expectedMinimumBidPrice = currentMinimumBidPrice + 5;
-            Assert.That(((FixedPricePost)postViewModel.Post).ExpirationDate, Is.EqualTo(expirationDate.AddSeconds(30)));
-            Assert.That(((AuctionPost)postViewModel.Post).CurrentBidPrice, Is.EqualTo(expectedBidPrice));
-            Assert.That(((AuctionPost)postViewModel.Post).MinimumBidPrice, Is.EqualTo(expectedMinimumBidPrice));
+            Assert.That(((FixedPriceMarketplacePost)postViewModel.MarketplacePost).ExpirationDate, Is.EqualTo(expirationDate.AddSeconds(30)));
+            Assert.That(((AuctionMarketplacePost)postViewModel.MarketplacePost).CurrentBidPrice, Is.EqualTo(expectedBidPrice));
+            Assert.That(((AuctionMarketplacePost)postViewModel.MarketplacePost).MinimumBidPrice, Is.EqualTo(expectedMinimumBidPrice));
         }
         [Test]
         public void UpdateBidPrice_ForAuctionPostMoreThanThirtySeconds_UpdatesCorrectly()
@@ -567,31 +567,31 @@ namespace Tests.ViewModel
             double currentBidPrice = 1234;
             double currentMinimumBidPrice = 1000;
             DateTime expirationDate = DateTime.Now.AddSeconds(100);
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 string.Empty, 0, expirationDate, string.Empty, Guid.NewGuid(), Guid.NewGuid(), currentBidPrice, currentMinimumBidPrice, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             postViewModel.UpdateBidPrice();
             double expectedBidPrice = currentBidPrice + 5;
             double expectedMinimumBidPrice = currentMinimumBidPrice + 5;
-            Assert.That(((FixedPricePost)postViewModel.Post).ExpirationDate, Is.EqualTo(expirationDate));
-            Assert.That(((AuctionPost)postViewModel.Post).CurrentBidPrice, Is.EqualTo(expectedBidPrice));
-            Assert.That(((AuctionPost)postViewModel.Post).MinimumBidPrice, Is.EqualTo(expectedMinimumBidPrice));
+            Assert.That(((FixedPriceMarketplacePost)postViewModel.MarketplacePost).ExpirationDate, Is.EqualTo(expirationDate));
+            Assert.That(((AuctionMarketplacePost)postViewModel.MarketplacePost).CurrentBidPrice, Is.EqualTo(expectedBidPrice));
+            Assert.That(((AuctionMarketplacePost)postViewModel.MarketplacePost).MinimumBidPrice, Is.EqualTo(expectedMinimumBidPrice));
         }
         [Test]
         public void UpdateBidPrice_ForNotAuctionPost_ThrowsException()
         {
-            Post donationPost = new DonationPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
-            postViewModel.Post = donationPost;
+            MarketplacePost donationMarketplacePost = new DonationMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
+            postViewModel.MarketplacePost = donationMarketplacePost;
 
             var exceptionMessage = Assert.Throws<Exception>(() => { postViewModel.UpdateBidPrice(); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post is not of type AuctionPost!"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost is not of type AuctionMarketplacePost!"));
 
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             exceptionMessage = Assert.Throws<Exception>(() => { postViewModel.UpdateBidPrice(); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post is not of type AuctionPost!"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost is not of type AuctionMarketplacePost!"));
         }
 
         [Test]
@@ -601,7 +601,7 @@ namespace Tests.ViewModel
 
             Assert.That(fakeUserService.AddItemToFavoritesCalled, Is.EqualTo(true));
             Assert.That(fakeUserService.GroupId, Is.EqualTo(postViewModel.GroupId));
-            Assert.That(fakeUserService.PostId, Is.EqualTo(postViewModel.Post.Id));
+            Assert.That(fakeUserService.PostId, Is.EqualTo(postViewModel.MarketplacePost.Id));
             Assert.That(fakeUserService.AccountId, Is.EqualTo(postViewModel.AccountId));
         }
 
@@ -612,7 +612,7 @@ namespace Tests.ViewModel
 
             Assert.That(fakeUserService.AddItemToCartCalled, Is.EqualTo(true));
             Assert.That(fakeUserService.GroupId, Is.EqualTo(postViewModel.GroupId));
-            Assert.That(fakeUserService.PostId, Is.EqualTo(postViewModel.Post.Id));
+            Assert.That(fakeUserService.PostId, Is.EqualTo(postViewModel.MarketplacePost.Id));
             Assert.That(fakeUserService.AccountId, Is.EqualTo(postViewModel.AccountId));
         }
 
@@ -620,9 +620,9 @@ namespace Tests.ViewModel
         public void BidPrice_ForAuctionPost_ReturnsCorrectValue()
         {
             double currentBidPrice = 1234;
-            Post auctionPost = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
+            MarketplacePost auctionMarketplacePost = new AuctionMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty,
                 string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), Guid.NewGuid(), currentBidPrice, 0, true);
-            postViewModel.Post = auctionPost;
+            postViewModel.MarketplacePost = auctionMarketplacePost;
 
             string expectedResult = Constants.DOLLAR_SIGN + currentBidPrice;
             Assert.That(postViewModel.BidPrice, Is.EqualTo(expectedResult));
@@ -630,14 +630,14 @@ namespace Tests.ViewModel
         [Test]
         public void BidPrice_ForNotAuctionPost_ReturnsEmptyString()
         {
-            Post donationPost = new DonationPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
-            postViewModel.Post = donationPost;
+            MarketplacePost donationMarketplacePost = new DonationMarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, Constants.DONATION_POST_TYPE, true);
+            postViewModel.MarketplacePost = donationMarketplacePost;
 
             string expectedResult = Constants.EMPTY_STRING;
             Assert.That(postViewModel.BidPrice, Is.EqualTo(expectedResult));
 
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             Assert.That(postViewModel.BidPrice, Is.EqualTo(expectedResult));
         }
@@ -645,9 +645,9 @@ namespace Tests.ViewModel
         [Test]
         public void Interests_ForAnyPost_ReturnsCorrectValue()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            noTypePost.AddInterestStatus(new InterestStatus(Guid.NewGuid(), Guid.NewGuid(), true));
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            noTypeMarketplacePost.AddInterestStatus(new InterestStatus(Guid.NewGuid(), Guid.NewGuid(), true));
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             int expectedCount = 1;
             string expectedResult = expectedCount.ToString() + " interested";
@@ -657,38 +657,38 @@ namespace Tests.ViewModel
         [Test]
         public void AddInterests_NoPreviousInterest_AddsInterest()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
             User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
-            postViewModel.Post = noTypePost;
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
             postViewModel.AddInterests();
 
-            Assert.That(postViewModel.Post.InterestStatuses.Count, Is.EqualTo(1));
-            Assert.That(postViewModel.Post.InterestStatuses[0].PostId, Is.EqualTo(noTypePost.Id));
-            Assert.That(postViewModel.Post.InterestStatuses[0].InterestedUserId, Is.EqualTo(newUser.Id));
+            Assert.That(postViewModel.MarketplacePost.InterestStatuses.Count, Is.EqualTo(1));
+            Assert.That(postViewModel.MarketplacePost.InterestStatuses[0].PostId, Is.EqualTo(noTypeMarketplacePost.Id));
+            Assert.That(postViewModel.MarketplacePost.InterestStatuses[0].InterestedUserId, Is.EqualTo(newUser.Id));
         }
 
         [Test]
         public void AddInterests_InterestAlreadyExists_RemovesInterest()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
             User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
-            postViewModel.Post = noTypePost;
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
             postViewModel.AddInterests();
             postViewModel.AddInterests();
 
-            Assert.That(postViewModel.Post.InterestStatuses.Count, Is.EqualTo(0));
+            Assert.That(postViewModel.MarketplacePost.InterestStatuses.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void Uninterests_AnyPost_ReturnsUninterestedNumber()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
             User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
-            postViewModel.Post = noTypePost;
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
             int expectedCount = 0;
@@ -704,30 +704,30 @@ namespace Tests.ViewModel
         [Test]
         public void AddUninterests_NoPreviousUninterest_AddsUninterest()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
             User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
-            postViewModel.Post = noTypePost;
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
             postViewModel.AddUninterests();
 
-            Assert.That(postViewModel.Post.InterestStatuses.Count, Is.EqualTo(1));
-            Assert.That(postViewModel.Post.InterestStatuses[0].PostId, Is.EqualTo(noTypePost.Id));
-            Assert.That(postViewModel.Post.InterestStatuses[0].InterestedUserId, Is.EqualTo(newUser.Id));
+            Assert.That(postViewModel.MarketplacePost.InterestStatuses.Count, Is.EqualTo(1));
+            Assert.That(postViewModel.MarketplacePost.InterestStatuses[0].PostId, Is.EqualTo(noTypeMarketplacePost.Id));
+            Assert.That(postViewModel.MarketplacePost.InterestStatuses[0].InterestedUserId, Is.EqualTo(newUser.Id));
         }
 
         [Test]
         public void AddUninterests_UninterestAlreadyExists_RemovesUninterest()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
             User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
-            postViewModel.Post = noTypePost;
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
             postViewModel.AddUninterests();
             postViewModel.AddUninterests();
 
-            Assert.That(postViewModel.Post.InterestStatuses.Count, Is.EqualTo(0));
+            Assert.That(postViewModel.MarketplacePost.InterestStatuses.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -741,9 +741,9 @@ namespace Tests.ViewModel
         [Test]
         public void HidePost_ForAnyPost_ReturnsCorrectValue()
         {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            noTypePost.AddInterestStatus(new InterestStatus(Guid.NewGuid(), Guid.NewGuid(), true));
-            postViewModel.Post = noTypePost;
+            MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            noTypeMarketplacePost.AddInterestStatus(new InterestStatus(Guid.NewGuid(), Guid.NewGuid(), true));
+            postViewModel.MarketplacePost = noTypeMarketplacePost;
 
             postViewModel.HidePost();
             Assert.That(postViewModel.Visible, Is.EqualTo(Constants.COLLAPSED_VISIBILITY));

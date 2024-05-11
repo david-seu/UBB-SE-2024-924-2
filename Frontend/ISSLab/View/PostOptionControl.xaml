@@ -29,7 +29,7 @@
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Button.Resources>
-            Hide post
+            Hide marketplacePost
         </Button>
         <Button MaxWidth="150" MaxHeight="30" x:Name="deletePostButton" Grid.Row="2" Tag="DeletePost" Click="DeletePostButton_Click" Margin="15,5,15,5">
             <Button.Resources>
@@ -37,7 +37,7 @@
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Button.Resources>
-            Delete post
+            Delete marketplacePost
         </Button>
         <Button MaxWidth="150" MaxHeight="30" x:Name="reportPostButton" Grid.Row="3" Tag="ReportPost" Click="ReportPostButton_Click" Margin="15,5,15,5">
             <Button.Resources>
@@ -45,7 +45,7 @@
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Button.Resources>
-            Report post
+            Report marketplacePost
         </Button>
         <Button MaxWidth="150" MaxHeight="30" x:Name="addToCartButton" Grid.Row="4" Tag="AddToCart" Click="AddToCartButton_Click" Margin="15,5,15,5">
             <Button.Resources>

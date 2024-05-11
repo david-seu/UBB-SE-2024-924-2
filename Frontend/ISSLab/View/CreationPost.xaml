@@ -12,7 +12,7 @@
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <Border Background="GhostWhite" Grid.Row="0" Grid.RowSpan="30"></Border>
-        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="Create a Marketplace post"></Label>
+        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="Create a Marketplace marketplacePost"></Label>
         <Border Margin="0,0,10,0" BorderBrush="Black" BorderThickness="4" CornerRadius="30,30,30,30" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="60" Height="60" >
 
             <Button  Padding="10,0,10,0" Content="X" FontSize="30" Background="Transparent" BorderThickness="0"></Button>

@@ -65,26 +65,26 @@ namespace ISSLab.ViewModel
         }
         public void ChangeToFavorites()
         {
-            List<Post> favoritedPosts = userService.GetFavoritePosts(groupId, userId);
+            List<MarketplacePost> favoritedPosts = userService.GetFavoritePosts(groupId, userId);
             LoadPostsCommand(favoritedPosts);
         }
 
         public void ChangeToMarketPlace()
         {
-            List<Post> posts = postService.GetPosts();
+            List<MarketplacePost> posts = postService.GetPosts();
             LoadPostsCommand(posts);
         }
 
         public void ChangeToCart()
         {
-            List<Post> cart = userService.GetPostsFromCart(userId, groupId);
+            List<MarketplacePost> cart = userService.GetPostsFromCart(userId, groupId);
             LoadPostsCommand(cart);
         }
 
-        public void LoadPostsCommand(List<Post> postsToLoad)
+        public void LoadPostsCommand(List<MarketplacePost> postsToLoad)
         {
             shownPosts.Clear();
-            foreach (Post currentPostToLoad in postsToLoad)
+            foreach (MarketplacePost currentPostToLoad in postsToLoad)
             {
                 User originalPoster = userService.GetUserById(currentPostToLoad.AuthorId);
                 shownPosts.Add(new PostContentViewModel(currentPostToLoad, originalPoster, this.userId, this.groupId, this.userService, this.chatFactory));

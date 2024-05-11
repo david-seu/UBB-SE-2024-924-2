@@ -26,8 +26,8 @@ namespace Tests.Services
         [Test]
         public void GetPosts_OnePost_ReturnsListWithThatPost()
         {
-            var post = new Post();
-            var expectedPosts = new List<Post> { post };
+            var post = new MarketplacePost();
+            var expectedPosts = new List<MarketplacePost> { post };
             postRepositoryMock.Setup(repository => repository.GetAllPosts()).Returns(expectedPosts);
 
             var result = postService.GetPosts();
@@ -40,11 +40,11 @@ namespace Tests.Services
         {
             Guid authorId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
-            Post addedPost = new Post(string.Empty, authorId, groupId, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            MarketplacePost addedMarketplacePost = new MarketplacePost(string.Empty, authorId, groupId, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
 
-            postService.AddPost(addedPost);
+            postService.AddPost(addedMarketplacePost);
 
-            postRepositoryMock.Verify(repository => repository.AddPost(addedPost), Times.Once);
+            postRepositoryMock.Verify(repository => repository.AddPost(addedMarketplacePost), Times.Once);
         }
 
         [Test]
@@ -52,28 +52,28 @@ namespace Tests.Services
         {
             Guid authorId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
-            Post removedPost = new Post(string.Empty, authorId, groupId, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
+            MarketplacePost removedMarketplacePost = new MarketplacePost(string.Empty, authorId, groupId, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
 
-            postService.RemovePost(removedPost);
+            postService.RemovePost(removedMarketplacePost);
 
-            postRepositoryMock.Verify(repository => repository.RemovePost(removedPost.Id), Times.Once);
+            postRepositoryMock.Verify(repository => repository.RemovePost(removedMarketplacePost.Id), Times.Once);
         }
 
         [Test]
         public void GetPostById_PostDoesNotExist_ThrowsException()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { postService.GetPostById(Guid.NewGuid()); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost not found"));
         }
 
         [Test]
         public void GetPostById_PostExists_PostReturned()
         {
-            Post postToBeReturned = new Post();
+            MarketplacePost marketplacePostToBeReturned = new MarketplacePost();
 
-            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(postToBeReturned);
+            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(marketplacePostToBeReturned);
 
-            Assert.That(postService.GetPostById(Guid.NewGuid()), Is.EqualTo(postToBeReturned));
+            Assert.That(postService.GetPostById(Guid.NewGuid()), Is.EqualTo(marketplacePostToBeReturned));
         }
 
         [Test]
@@ -89,86 +89,86 @@ namespace Tests.Services
         {
             Guid guid = Guid.NewGuid();
             var exceptionMessage = Assert.Throws<Exception>(() => { postService.GetPostById(guid); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost not found"));
         }
 
         [Test]
         public void RemoveConfirmation_PostDoesNotExist_ExceptionThrown()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { postService.RemoveConfirmation(Guid.NewGuid()); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost not found"));
         }
 
         [Test]
         public void RemoveConfirmation_PostDoesExist_PostIsNoLongerConfirmed()
         {
-            Post theOnlyPost = new Post();
-            theOnlyPost.Confirmed = true;
-            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyPost);
+            MarketplacePost theOnlyMarketplacePost = new MarketplacePost();
+            theOnlyMarketplacePost.Confirmed = true;
+            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyMarketplacePost);
 
-            postService.RemoveConfirmation(theOnlyPost.Id);
+            postService.RemoveConfirmation(theOnlyMarketplacePost.Id);
 
-            Assert.That(theOnlyPost.Confirmed, Is.False);
+            Assert.That(theOnlyMarketplacePost.Confirmed, Is.False);
         }
 
         [Test]
         public void ConfirmPost_PostDoesNotExist_ExceptionThrown()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { postService.ConfirmPost(Guid.NewGuid()); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost not found"));
         }
 
         [Test]
         public void ConfirmPost_PostDoesExist_PostIsConfirmed()
         {
-            Post theOnlyPost = new Post();
-            theOnlyPost.Confirmed = false;
-            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyPost);
+            MarketplacePost theOnlyMarketplacePost = new MarketplacePost();
+            theOnlyMarketplacePost.Confirmed = false;
+            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyMarketplacePost);
 
-            postService.ConfirmPost(theOnlyPost.Id);
+            postService.ConfirmPost(theOnlyMarketplacePost.Id);
 
-            Assert.That(theOnlyPost.Confirmed, Is.True);
+            Assert.That(theOnlyMarketplacePost.Confirmed, Is.True);
         }
 
         [Test]
         public void FavoritePost_PostDoesNotExist_ExceptionThrown()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { postService.FavoritePost(Guid.NewGuid(), Guid.NewGuid()); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost not found"));
         }
 
         [Test]
         public void FavoritePost_PostDoesExist_UserIsAddedToPostsFavoritersUsers()
         {
-            Post theOnlyPost = new Post();
-            Guid idOfTheOnlyPost = theOnlyPost.Id;
-            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyPost);
+            MarketplacePost theOnlyMarketplacePost = new MarketplacePost();
+            Guid idOfTheOnlyPost = theOnlyMarketplacePost.Id;
+            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyMarketplacePost);
             Guid userId = Guid.NewGuid();
 
             postService.FavoritePost(idOfTheOnlyPost, userId);
 
-            Assert.That(theOnlyPost.UsersThatFavorited.Count, Is.EqualTo(1));
+            Assert.That(theOnlyMarketplacePost.UsersThatFavorited.Count, Is.EqualTo(1));
         }
 
         [Test]
         public void UnfavoritePost_PostDoesNotExist_ExceptionThrown()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { postService.UnfavoritePost(Guid.NewGuid(), Guid.NewGuid()); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost not found"));
         }
 
         [Test]
         public void UnfavoritePost_PostDoesExist_UserIsNotInPostsFavoritersUsers()
         {
-            Post theOnlyPost = new Post();
-            Guid idOfTheOnlyPost = theOnlyPost.Id;
-            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyPost);
+            MarketplacePost theOnlyMarketplacePost = new MarketplacePost();
+            Guid idOfTheOnlyPost = theOnlyMarketplacePost.Id;
+            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyMarketplacePost);
             Guid userId = Guid.NewGuid();
-            theOnlyPost.UsersThatFavorited.Add(userId);
+            theOnlyMarketplacePost.UsersThatFavorited.Add(userId);
 
             postService.UnfavoritePost(idOfTheOnlyPost, userId);
 
-            Assert.That(theOnlyPost.UsersThatFavorited, Is.Empty);
+            Assert.That(theOnlyMarketplacePost.UsersThatFavorited, Is.Empty);
         }
     }
 }

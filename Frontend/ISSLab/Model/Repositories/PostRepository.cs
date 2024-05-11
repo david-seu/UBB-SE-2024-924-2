@@ -13,16 +13,16 @@ namespace ISSLab.Model.Repositories
 {
     public class PostRepository : IPostRepository
     {
-        private List<Post> allPosts;
+        private List<MarketplacePost> allPosts;
 
         public PostRepository()
         {
-            this.allPosts = new List<Post>();
+            this.allPosts = new List<MarketplacePost>();
         }
 
-        public void AddPost(Post newPost)
+        public void AddPost(MarketplacePost newMarketplacePost)
         {
-            allPosts.Add(newPost);
+            allPosts.Add(newMarketplacePost);
         }
 
         public void RemovePost(Guid id)
@@ -37,12 +37,12 @@ namespace ISSLab.Model.Repositories
             }
         }
 
-        public List<Post> GetAllPosts()
+        public List<MarketplacePost> GetAllPosts()
         {
             return allPosts;
         }
 
-        public Post GetPostById(Guid postId)
+        public MarketplacePost GetPostById(Guid postId)
         {
             for (int i = 0; i < allPosts.Count; i++)
             {
@@ -52,7 +52,7 @@ namespace ISSLab.Model.Repositories
                 }
             }
 
-            throw new Exception("Post does not exist!");
+            throw new Exception("MarketplacePost does not exist!");
         }
     }
 }

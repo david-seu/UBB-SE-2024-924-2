@@ -15,13 +15,13 @@ namespace ISSLab.ViewModel
     {
         public ObservableCollection<Message> AllMessages { get; set; }
         public User ChatUser { get; set; }
-        public Post RefferedPost { get; set; }
+        public MarketplacePost RefferedMarketplacePost { get; set; }
 
-        public ChatViewModel(User user, Post post)
+        public ChatViewModel(User user, MarketplacePost marketplacePost)
         {
             AllMessages = new ObservableCollection<Message>();
             this.ChatUser = user;
-            this.RefferedPost = post;
+            this.RefferedMarketplacePost = marketplacePost;
         }
 
         public void AddMessage(Message message)

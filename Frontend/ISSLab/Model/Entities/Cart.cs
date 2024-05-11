@@ -41,7 +41,7 @@ namespace ISSLab.Model.Entities
         {
             if (postsSavedInCart.Contains(postToSave))
             {
-                throw new Exception("Post already in cart");
+                throw new Exception("MarketplacePost already in cart");
             }
             postsSavedInCart.Add(postToSave);
         }
@@ -50,7 +50,7 @@ namespace ISSLab.Model.Entities
         {
             if (!postsSavedInCart.Contains(postToSave))
             {
-                throw new Exception("Post not in cart");
+                throw new Exception("MarketplacePost not in cart");
             }
             postsSavedInCart.Remove(postToSave);
         }

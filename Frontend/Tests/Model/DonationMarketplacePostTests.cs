@@ -9,10 +9,10 @@ using Moq;
 
 namespace Tests.Model
 {
-    internal class DonationPostTests
+    internal class DonationMarketplacePostTests
     {
-        private DonationPost donationPostSimpleConstructor;
-        private DonationPost donationPost;
+        private DonationMarketplacePost donationMarketplacePostSimpleConstructor;
+        private DonationMarketplacePost donationMarketplacePost;
         private Guid id;
         private List<Guid> usersThatShared;
         private List<Guid> usersThatLiked;
@@ -36,8 +36,8 @@ namespace Tests.Model
         [SetUp]
         public void SetUp()
         {
-            donationPost = new DonationPost();
-            donationPostSimpleConstructor = new DonationPost(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, currentDonationAmount, donationPageLink, type, confirmed, views);
+            donationMarketplacePost = new DonationMarketplacePost();
+            donationMarketplacePostSimpleConstructor = new DonationMarketplacePost(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, currentDonationAmount, donationPageLink, type, confirmed, views);
             id = Guid.NewGuid();
             usersThatShared = new List<Guid>();
             usersThatLiked = new List<Guid>();
@@ -62,17 +62,17 @@ namespace Tests.Model
         [Test]
         public void DonationAmount_AnyDonationPost_ReturnsDonationAmount()
         {
-            donationPost.DonationAmount = 10.6f;
+            donationMarketplacePost.DonationAmount = 10.6f;
 
-            Assert.That(donationPost.DonationAmount, Is.EqualTo(10.6f));
+            Assert.That(donationMarketplacePost.DonationAmount, Is.EqualTo(10.6f));
         }
 
         [Test]
         public void DonationPageLink_AnyDonationPost_ReturnsDonationPageLink()
         {
-            donationPost.DonationPageLink = "/1";
+            donationMarketplacePost.DonationPageLink = "/1";
 
-            Assert.That(donationPost.DonationPageLink, Is.EqualTo("/1"));
+            Assert.That(donationMarketplacePost.DonationPageLink, Is.EqualTo("/1"));
         }
     }
 }

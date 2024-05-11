@@ -97,7 +97,7 @@ namespace Tests.Model
         {
             cartInitializedWithGroupUserPosts.AddPostToCart(postToSave);
             var exceptionMessage = Assert.Throws<Exception>(() => { cartInitializedWithGroupUserPosts.AddPostToCart(postToSave); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post already in cart"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost already in cart"));
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Tests.Model
         public void RemovePostFromCart_PostThatDoesntExist_ShouldThrowException()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { cartInitializedWithGroupUserPosts.RemovePostFromCart(postToSave); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not in cart"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("MarketplacePost not in cart"));
         }
     }
 }
