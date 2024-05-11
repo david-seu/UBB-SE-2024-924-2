@@ -87,7 +87,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Group Code: " />
+                    <TextBlock Text="GroupMarketplace Code: " />
                     <TextBlock
                         x:Name="GroupCodeTextBlock"
                         Grid.Column="1"
@@ -282,7 +282,7 @@
                         <ComboBoxItem Content="cute-girls" />
                         <ComboBoxItem Content="football-team" />
                         <ComboBoxItem Content="friendship-rocks" />
-                        <ComboBoxItem Content="robotics-group" />
+                        <ComboBoxItem Content="robotics-groupMarketplace" />
                         <ComboBoxItem Content="smiley-fingers" />
                         <ComboBoxItem Content="tech-research" />
                         <ComboBoxItem Content="tennis-club" />

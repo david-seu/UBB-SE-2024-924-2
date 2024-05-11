@@ -6,14 +6,14 @@ namespace ISSLab.Services
     {
         void AddPostToCart(Guid groupId, Guid postId, Guid userId);
         void AddPostToFavorites(Guid groupId, Guid postId, Guid userId);
-        void AddUser(User user);
+        void AddUser(UserMarketplace user);
         List<MarketplacePost> GetFavoritePosts(Guid groupId, Guid userId);
-        User GetUserById(Guid id);
-        List<User> GetUsers();
+        UserMarketplace GetUserById(Guid id);
+        List<UserMarketplace> GetUsers();
         bool IsUserInGroup(Guid userId, Guid groupId);
         void RemovePostFromCart(Guid groupId, Guid postId, Guid userId);
         void RemovePostFromFavorites(Guid groupId, Guid postId, Guid userId);
-        void RemoveUser(User user);
+        void RemoveUser(UserMarketplace user);
         void UpdateUserUsername(Guid user, string username);
         List<MarketplacePost> GetPostsFromCart(Guid userId, Guid groupId);
     }

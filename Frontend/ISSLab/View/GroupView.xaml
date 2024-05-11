@@ -63,7 +63,7 @@
                         <Setter Property="CornerRadius" Value="10" />
                     </Style>
                 </Button.Resources>
-                Group Posts
+                GroupMarketplace Posts
             </Button>
             <Button
                 x:Name="GroupPollsButton"
@@ -78,7 +78,7 @@
                         <Setter Property="CornerRadius" Value="10" />
                     </Style>
                 </Button.Resources>
-                Group Polls
+                GroupMarketplace Polls
             </Button>
             <Button
                 x:Name="GroupSettingsButton"
@@ -93,7 +93,7 @@
                         <Setter Property="CornerRadius" Value="10" />
                     </Style>
                 </Button.Resources>
-                Group Settings
+                GroupMarketplace Settings
             </Button>
             <Button
                 x:Name="CreatePostButton"

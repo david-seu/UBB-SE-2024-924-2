@@ -14,19 +14,19 @@ namespace ISSLab.Model.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private List<User> allUsers;
+        private List<UserMarketplace> allUsers;
 
         public UserRepository()
         {
-            allUsers = new List<User>();
+            allUsers = new List<UserMarketplace>();
         }
 
-        public List<User> GetAll()
+        public List<UserMarketplace> GetAll()
         {
             return allUsers;
         }
 
-        public User GetById(Guid userId)
+        public UserMarketplace GetById(Guid userId)
         {
             for (int i = 0; i < allUsers.Count; i++)
             {
@@ -38,7 +38,7 @@ namespace ISSLab.Model.Repositories
             throw new Exception("User does not exist");
         }
 
-        public void AddUser(User newUser)
+        public void AddUser(UserMarketplace newUser)
         {
             allUsers.Add(newUser);
         }
@@ -117,7 +117,7 @@ namespace ISSLab.Model.Repositories
 
         public void AddPostToCart(Guid groupId, Guid userId, Guid postId)
         {
-            User? user = allUsers.Find(user => user.Id == userId);
+            UserMarketplace? user = allUsers.Find(user => user.Id == userId);
             if (user == null)
             {
                 throw new Exception("No such user");
@@ -144,7 +144,7 @@ namespace ISSLab.Model.Repositories
 
         public void AddToFavorites(Guid groupId, Guid userId, Guid postId)
         {
-            User? user = allUsers.Find(user => user.Id == userId);
+            UserMarketplace? user = allUsers.Find(user => user.Id == userId);
 
             if (user == null)
             {

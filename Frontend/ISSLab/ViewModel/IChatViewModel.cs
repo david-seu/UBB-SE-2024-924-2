@@ -7,7 +7,7 @@ namespace ISSLab.ViewModel
     {
         ObservableCollection<Message> AllMessages { get; set; }
         MarketplacePost RefferedMarketplacePost { get; set; }
-        User ChatUser { get; set; }
+        UserMarketplace ChatUser { get; set; }
 
         void AddMessage(Message message);
         void SendBuyingMessage(string imagePath);

@@ -28,19 +28,19 @@ namespace Tests.Model.Repositories
         [Test]
         public void FindAllUsers_AtLeastOneUser_ReturnsTheUsers()
         {
-            User firstAddedUser = new User();
-            User secondAddedUser = new User();
+            UserMarketplace firstAddedUser = new UserMarketplace();
+            UserMarketplace secondAddedUser = new UserMarketplace();
             userRepository.AddUser(firstAddedUser);
             userRepository.AddUser(secondAddedUser);
 
-            Assert.That(userRepository.GetAll(), Is.EquivalentTo(new List<User> { firstAddedUser, secondAddedUser }));
+            Assert.That(userRepository.GetAll(), Is.EquivalentTo(new List<UserMarketplace> { firstAddedUser, secondAddedUser }));
         }
 
         [Test]
         public void FindById_IdExists_TheUserIsReturned()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
@@ -51,31 +51,31 @@ namespace Tests.Model.Repositories
         public void FindById_IdDoesNotExist_ExceptionThrown()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
             var exceptionMessage = Assert.Throws<Exception>(() => { userRepository.GetById(Guid.NewGuid()); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("User does not exist"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("UserMarketplace does not exist"));
         }
 
         [Test]
         public void AddUser_AnyUser_UserAppearsInGetAll()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
 
             userRepository.AddUser(addedUser);
 
-            Assert.That(userRepository.GetAll(), Is.EqualTo(new List<User> { addedUser }));
+            Assert.That(userRepository.GetAll(), Is.EqualTo(new List<UserMarketplace> { addedUser }));
         }
 
         [Test]
         public void UpdateUserUsername_ExistingUser_UsersUsernameIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newUsername = "newName";
             userRepository.AddUser(addedUser);
@@ -90,7 +90,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             string usernameWhichShouldRemain = "shouldremain";
-            User addedUser = new User(addedUserId, usernameWhichShouldRemain, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, usernameWhichShouldRemain, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newUsername = "newName";
             userRepository.AddUser(addedUser);
@@ -104,7 +104,7 @@ namespace Tests.Model.Repositories
         public void UpdateUserDateOfBirth_ExistingUser_UsersDateOfBirthIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             DateOnly newDateOfBirth = DateOnly.FromDateTime(DateTime.Now);
             userRepository.AddUser(addedUser);
@@ -119,7 +119,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             DateOnly dateOfBirthWhichShouldRemain = DateOnly.Parse("10.10.2020");
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, dateOfBirthWhichShouldRemain, string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, dateOfBirthWhichShouldRemain, string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             DateOnly newDateOfBirth = DateOnly.FromDateTime(DateTime.Now);
             userRepository.AddUser(addedUser);
@@ -133,7 +133,7 @@ namespace Tests.Model.Repositories
         public void UpdateUserProfilePicture_ExistingUser_UsersProfilePictureIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newProfilePicture = "pic";
             userRepository.AddUser(addedUser);
@@ -148,7 +148,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             string profilePictureWhichShouldRemain = "profilepic";
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), profilePictureWhichShouldRemain, string.Empty,
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), profilePictureWhichShouldRemain, string.Empty,
                 DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newProfilePicture = "pic";
@@ -163,7 +163,7 @@ namespace Tests.Model.Repositories
         public void UpdateUserPassword_ExistingUser_UsersPasswordIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newPassword = "pass";
             userRepository.AddUser(addedUser);
@@ -178,7 +178,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             string passwordWhichShouldRemain = "originalpass";
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, passwordWhichShouldRemain, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, passwordWhichShouldRemain, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newPassword = "pass";
             userRepository.AddUser(addedUser);
@@ -192,7 +192,7 @@ namespace Tests.Model.Repositories
         public void UpdateUserNumberOfSells_ExistingUser_UsersNumberOfSellsIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             int newNumberOfSells = 123;
             userRepository.AddUser(addedUser);
@@ -207,7 +207,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             int numberOfSellsWhichShouldRemain = 99;
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(),
                 numberOfSellsWhichShouldRemain);
             int newNumberOfSells = 123;
@@ -222,7 +222,7 @@ namespace Tests.Model.Repositories
         public void DeleteUser_ExistingUser_TheUserDoesNotAppearInGetAll()
         {
             Guid addedThenRemovedUserId = Guid.NewGuid();
-            User addedThenRemovedUser = new User(addedThenRemovedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedThenRemovedUser = new UserMarketplace(addedThenRemovedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedThenRemovedUser);
 
@@ -235,13 +235,13 @@ namespace Tests.Model.Repositories
         public void DeleteUser_NonexistingUser_NoUserIsDeleted()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
             userRepository.DeleteUser(Guid.NewGuid());
 
-            Assert.That(userRepository.GetAll(), Is.EqualTo(new List<User>() { addedUser }));
+            Assert.That(userRepository.GetAll(), Is.EqualTo(new List<UserMarketplace>() { addedUser }));
         }
 
         [Test]
@@ -257,7 +257,7 @@ namespace Tests.Model.Repositories
         public void AddPostToCart_NonexistingCart_CartIsCreated()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
@@ -270,7 +270,7 @@ namespace Tests.Model.Repositories
         public void AddPostToCart_PostAlreadySaved_NoPostIsAddedToCart()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid postId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
@@ -286,7 +286,7 @@ namespace Tests.Model.Repositories
         public void AddPostToCart_PostNotAlreadySaved_PostIsAddedToCart()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid postId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
@@ -301,7 +301,7 @@ namespace Tests.Model.Repositories
         public void RemoveFromCart_ExistingUserAndGroup_PostIsRemovedFromUsersPostsSavedInCart()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid groupId = Guid.NewGuid();
             addedUser.AddGroup(groupId);
@@ -338,7 +338,7 @@ namespace Tests.Model.Repositories
         public void AddToFavorites_NonexistingGroupFavorites_CartIsCreated()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
@@ -351,7 +351,7 @@ namespace Tests.Model.Repositories
         public void AddToFavorites_PostAlreadySaved_NoPostIsAddedToFavorites()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid postId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
@@ -367,7 +367,7 @@ namespace Tests.Model.Repositories
         public void AddToFavorites_PostNotAlreadySaved_PostIsAddedToFavorites()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid postId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
@@ -382,7 +382,7 @@ namespace Tests.Model.Repositories
         public void RemoveFromFavorites_ExistingUserAndGroup_PostIsRemovedFromUsersFavorites()
         {
             Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid groupId = Guid.NewGuid();
             addedUser.AddGroup(groupId);

@@ -14,13 +14,13 @@ namespace Tests.ViewModel
     {
         private ChatViewModel chatViewModel;
         private ObservableCollection<Message>? otherMessages;
-        private User user;
+        private UserMarketplace user;
         private MarketplacePost marketplacePost;
 
         [SetUp]
         public void SetUp()
         {
-            user = new User();
+            user = new UserMarketplace();
             marketplacePost = new MarketplacePost();
             chatViewModel = new ChatViewModel(user, marketplacePost);
         }
@@ -34,7 +34,7 @@ namespace Tests.ViewModel
         [Test]
         public void SetUser_Any_UserIsEqualToNewUser()
         {
-            User newUser = new User();
+            UserMarketplace newUser = new UserMarketplace();
             chatViewModel.ChatUser = newUser;
             Assert.AreEqual(chatViewModel.ChatUser, newUser);
         }

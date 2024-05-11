@@ -27,9 +27,9 @@ namespace ISSLab
             IUserRepository userRepository = new UserRepository();
             IChatFactory chatFactory = new ChatFactory();
 
-            User connectedUser = new User(userId, "Soundboard1", "Dorian", DateOnly.Parse("11.12.2003"), "../Resources/Images/Dorian.jpeg", "fsdgfd", DateTime.Parse("10.04.2024"), new List<Guid>(), new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
-            User userOne = new User("Vini", "Vinicius Junior", DateOnly.Parse("11.12.2003"), "../Resources/Images/Vini.png", "fdsfsdfds");
-            User userTwo = new User("DDoorian", "Pop Dorian", DateOnly.Parse("12.12.2003"), "../Resources/Images/Dorian.jpeg", "bcvbc");
+            UserMarketplace connectedUser = new UserMarketplace(userId, "Soundboard1", "Dorian", DateOnly.Parse("11.12.2003"), "../Resources/Images/Dorian.jpeg", "fsdgfd", DateTime.Parse("10.04.2024"), new List<Guid>(), new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
+            UserMarketplace userOne = new UserMarketplace("Vini", "Vinicius Junior", DateOnly.Parse("11.12.2003"), "../Resources/Images/Vini.png", "fdsfsdfds");
+            UserMarketplace userTwo = new UserMarketplace("DDoorian", "Pop Dorian", DateOnly.Parse("12.12.2003"), "../Resources/Images/Dorian.jpeg", "bcvbc");
 
             AddHardcodedUsers(userRepository, connectedUser, userOne, userTwo);
             AddHardcodedPosts(postRepository, userOne, userTwo, groupId);
@@ -42,14 +42,14 @@ namespace ISSLab
             mainWindow.Show();
         }
 
-        private void AddHardcodedUsers(IUserRepository userRepo, User connectedUser, User userOne, User userTwo)
+        private void AddHardcodedUsers(IUserRepository userRepo, UserMarketplace connectedUser, UserMarketplace userOne, UserMarketplace userTwo)
         {
             userRepo.AddUser(connectedUser);
             userRepo.AddUser(userOne);
             userRepo.AddUser(userTwo);
         }
 
-        private void AddHardcodedPosts(IPostRepository postRepository, User userOne, User userTwo, Guid groupId)
+        private void AddHardcodedPosts(IPostRepository postRepository, UserMarketplace userOne, UserMarketplace userTwo, Guid groupId)
         {
             DonationMarketplacePost donationMarketplacePost = new DonationMarketplacePost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", "https://www.unicef.org/romania/ro", Constants.DONATION_POST_TYPE, true);
             AuctionMarketplacePost auctionMarketplacePost = new AuctionMarketplacePost("../Resources/Images/catei.jpeg", userOne.Id, groupId, "Oradea", "A bunch of great dogssdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Dogs", "077333999", 300, DateTime.Now.AddSeconds(80), "InPerson", Guid.Empty, Guid.Empty, 100, 105, true);

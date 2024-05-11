@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace ISSLab.Model.Entities
 {
-    public class User
+    public class UserMarketplace
     {
         private Guid id;
         private string username;
@@ -25,7 +25,7 @@ namespace ISSLab.Model.Entities
         private List<UsersFavoritePosts> favorites;
         private List<Guid> groups;
 
-        public User(string username, string realName, DateOnly dateOfBirth, string profilePicture, string password)
+        public UserMarketplace(string username, string realName, DateOnly dateOfBirth, string profilePicture, string password)
         {
             id = Guid.NewGuid();
             this.username = username;
@@ -41,7 +41,7 @@ namespace ISSLab.Model.Entities
             groups = new List<Guid>();
             numberOfSales = 0;
         }
-        public User(Guid id, string username, string realName, DateOnly dateOfBirth, string profilePicture, string password, DateTime creationDate, List<Guid> groupsWithSellingPrivelage, List<Guid> groupsWithActiveRequestToSell, List<Cart> carts, List<UsersFavoritePosts> favorites, List<Guid> groups, int nrOfSells)
+        public UserMarketplace(Guid id, string username, string realName, DateOnly dateOfBirth, string profilePicture, string password, DateTime creationDate, List<Guid> groupsWithSellingPrivelage, List<Guid> groupsWithActiveRequestToSell, List<Cart> carts, List<UsersFavoritePosts> favorites, List<Guid> groups, int nrOfSells)
         {
             this.id = id;
             this.username = username;
@@ -61,7 +61,7 @@ namespace ISSLab.Model.Entities
             this.groups = groups;
         }
 
-        public User()
+        public UserMarketplace()
         {
             id = Guid.NewGuid();
             username = Constants.EMPTY_STRING;
@@ -130,11 +130,11 @@ namespace ISSLab.Model.Entities
         {
             if (groupsWithActiveRequestToSell.Contains(groupId))
             {
-                throw new Exception("Already requested access to sell in this group");
+                throw new Exception("Already requested access to sell in this groupMarketplace");
             }
             if (groupsWithSellingPrivilege.Contains(groupId))
             {
-                throw new Exception("Already have access to sell in this group");
+                throw new Exception("Already have access to sell in this groupMarketplace");
             }
             groupsWithActiveRequestToSell.Add(groupId);
         }
@@ -142,7 +142,7 @@ namespace ISSLab.Model.Entities
         {
             if (!groupsWithActiveRequestToSell.Contains(groupId))
             {
-                throw new Exception("No active request to sell in this group");
+                throw new Exception("No active request to sell in this groupMarketplace");
             }
             groupsWithActiveRequestToSell = groupsWithActiveRequestToSell.FindAll(testedGroupId => testedGroupId != groupId);
         }
@@ -150,7 +150,7 @@ namespace ISSLab.Model.Entities
         {
             if (!groupsWithSellingPrivilege.Contains(groupId))
             {
-                throw new Exception("No access to sell in this group");
+                throw new Exception("No access to sell in this groupMarketplace");
             }
             groupsWithSellingPrivilege = groupsWithSellingPrivilege.FindAll(testedGroupId => testedGroupId != groupId);
         }
@@ -159,7 +159,7 @@ namespace ISSLab.Model.Entities
         {
             if (groupsWithSellingPrivilege.Contains(groupId))
             {
-                throw new Exception("You can already sell in this group");
+                throw new Exception("You can already sell in this groupMarketplace");
             }
             groupsWithActiveRequestToSell = groupsWithActiveRequestToSell.FindAll(testedGroupId => testedGroupId != groupId);
             groupsWithSellingPrivilege.Add(groupId);

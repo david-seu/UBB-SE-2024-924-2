@@ -103,6 +103,9 @@
     <Compile Update="View\GroupPostView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\MainWindowGroupView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\PollCreationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

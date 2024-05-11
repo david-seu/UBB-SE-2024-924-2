@@ -19,19 +19,19 @@ namespace ISSLab.Services
             this.postRepository = posts;
         }
 
-        public void AddUser(User user)
+        public void AddUser(UserMarketplace user)
         {
             userRepository.AddUser(user);
         }
 
-        public void RemoveUser(User user)
+        public void RemoveUser(UserMarketplace user)
         {
             userRepository.DeleteUser(user.Id);
         }
 
-        public User GetUserById(Guid id)
+        public UserMarketplace GetUserById(Guid id)
         {
-            User? user = userRepository.GetById(id);
+            UserMarketplace? user = userRepository.GetById(id);
             if (user == null)
             {
                 throw new Exception("User not found");
@@ -39,14 +39,14 @@ namespace ISSLab.Services
             return user;
         }
 
-        public List<User> GetUsers()
+        public List<UserMarketplace> GetUsers()
         {
             return userRepository.GetAll();
         }
 
         public bool IsUserInGroup(Guid userId, Guid groupId)
         {
-            User user = GetUserById(userId);
+            UserMarketplace user = GetUserById(userId);
             return user.Groups.Contains(groupId);
         }
 

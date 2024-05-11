@@ -21,7 +21,7 @@ namespace ISSLab.ViewModel
         public Guid GroupId { get; set; }
         private MarketplacePost OurMarketplacePost { get; set; }
         public Guid AccountId { get; set; }
-        public User OurUser;
+        public UserMarketplace OurUser;
         private string visible;
         private string donationButtonVisible;
         private string buyButtonVisible;
@@ -29,7 +29,7 @@ namespace ISSLab.ViewModel
         private string bidPriceVisible;
         private DispatcherTimer timer;
         public IChatFactory OurChatFactory { get; }
-        public PostContentViewModel(MarketplacePost marketplacePost, User user, Guid accountId, Guid groupId, IUserService userService, IChatFactory chatFactory) : base()
+        public PostContentViewModel(MarketplacePost marketplacePost, UserMarketplace user, Guid accountId, Guid groupId, IUserService userService, IChatFactory chatFactory) : base()
         {
             this.userService = userService;
             this.GroupId = groupId;

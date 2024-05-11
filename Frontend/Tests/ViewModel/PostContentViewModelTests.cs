@@ -26,15 +26,15 @@ namespace Tests.ViewModel
             fakeUserService = new FakeUserService();
             ourMarketplacePost = new MarketplacePost();
             ourMarketplacePost.Type = Constants.DONATION_POST_TYPE;
-            postViewModel = new PostContentViewModel(ourMarketplacePost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            postViewModel = new PostContentViewModel(ourMarketplacePost, new UserMarketplace(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
             Assert.That(postViewModel.DonationButtonVisible, Is.EqualTo(Constants.VISIBLE_VISIBILITY));
             ourMarketplacePost = new MarketplacePost();
             ourMarketplacePost.Type = Constants.FIXED_PRICE_POST_TYPE;
-            postViewModel = new PostContentViewModel(ourMarketplacePost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            postViewModel = new PostContentViewModel(ourMarketplacePost, new UserMarketplace(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
             ourMarketplacePost = new MarketplacePost();
             ourMarketplacePost.Type = Constants.AUCTION_POST_TYPE;
-            postViewModel = new PostContentViewModel(ourMarketplacePost, new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
-            postViewModel = new PostContentViewModel(new MarketplacePost(), new User(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            postViewModel = new PostContentViewModel(ourMarketplacePost, new UserMarketplace(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
+            postViewModel = new PostContentViewModel(new MarketplacePost(), new UserMarketplace(), Guid.NewGuid(), Guid.NewGuid(), fakeUserService, new FakeChatFactory());
         }
 
         [Test]
@@ -398,7 +398,7 @@ namespace Tests.ViewModel
         public void Username_AnyUser_ReturnsCorrectValue()
         {
             string expectedUsername = "expected Username";
-            User user = new User(expectedUsername, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
+            UserMarketplace user = new UserMarketplace(expectedUsername, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
             postViewModel.OurUser = user;
 
             Assert.That(postViewModel.Username, Is.EqualTo(expectedUsername));
@@ -428,7 +428,7 @@ namespace Tests.ViewModel
         public void ProfilePicture_AnyUser_ReturnsCorrectValue()
         {
             string expectedProfilePicture = "expected Profile Picture Path";
-            User user = new User(string.Empty, string.Empty, DateOnly.MaxValue, expectedProfilePicture, string.Empty);
+            UserMarketplace user = new UserMarketplace(string.Empty, string.Empty, DateOnly.MaxValue, expectedProfilePicture, string.Empty);
             postViewModel.OurUser = user;
 
             Assert.That(postViewModel.ProfilePicture, Is.EqualTo(expectedProfilePicture));
@@ -658,7 +658,7 @@ namespace Tests.ViewModel
         public void AddInterests_NoPreviousInterest_AddsInterest()
         {
             MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
+            UserMarketplace newUser = new UserMarketplace(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
             postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
@@ -673,7 +673,7 @@ namespace Tests.ViewModel
         public void AddInterests_InterestAlreadyExists_RemovesInterest()
         {
             MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
+            UserMarketplace newUser = new UserMarketplace(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
             postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
@@ -687,7 +687,7 @@ namespace Tests.ViewModel
         public void Uninterests_AnyPost_ReturnsUninterestedNumber()
         {
             MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
+            UserMarketplace newUser = new UserMarketplace(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
             postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
@@ -705,7 +705,7 @@ namespace Tests.ViewModel
         public void AddUninterests_NoPreviousUninterest_AddsUninterest()
         {
             MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
+            UserMarketplace newUser = new UserMarketplace(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
             postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 
@@ -720,7 +720,7 @@ namespace Tests.ViewModel
         public void AddUninterests_UninterestAlreadyExists_RemovesUninterest()
         {
             MarketplacePost noTypeMarketplacePost = new MarketplacePost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            User newUser = new User(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
+            UserMarketplace newUser = new UserMarketplace(string.Empty, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
             postViewModel.MarketplacePost = noTypeMarketplacePost;
             postViewModel.OurUser = newUser;
 

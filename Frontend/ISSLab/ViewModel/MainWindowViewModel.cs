@@ -86,11 +86,88 @@ namespace ISSLab.ViewModel
             shownPosts.Clear();
             foreach (MarketplacePost currentPostToLoad in postsToLoad)
             {
-                User originalPoster = userService.GetUserById(currentPostToLoad.AuthorId);
+                UserMarketplace originalPoster = userService.GetUserById(currentPostToLoad.AuthorId);
                 shownPosts.Add(new PostContentViewModel(currentPostToLoad, originalPoster, this.userId, this.groupId, this.userService, this.chatFactory));
             }
 
             OnPropertyChanged(nameof(ShownPosts));
+        }
+
+        // main window view model from the other project
+        public ObservableCollection<GroupNonMarketplace> CollectionOfActiveGroups { get; set; }
+
+        public MainWindowViewModel()
+        {
+            // string connection = "your connection string goes here";
+            // SqlConnection sqlConnection = new SqlConnection(connection);
+            // GroupMemberRepository groupMemberRepository = new GroupMemberRepository(sqlConnection);
+            // GroupRepository groupRepository = new GroupRepository(sqlConnection);
+            // GroupMembershipRepository groupMembershipRepository = new GroupMembershipRepository(sqlConnection);
+            // RequestsRepository requestsRepository = new RequestsRepository(sqlConnection);
+            Guid idOfCurrentMockUser = new Guid("44d5aa9a-b0f4-4e36-a21e-bdc33b97b5a5");
+            GroupMember mockGroupMember = new GroupMember(idOfCurrentMockUser, "Dorian", "admin", "dorian@ubb.ro", "0725702312", "No paper, no pencil but I am still drawing attention.");
+            CurrentActiveUser = mockGroupMember;
+
+            // TODO: Replace this with a call to the repository
+            CollectionOfActiveGroups = new ObservableCollection<GroupNonMarketplace>
+            {
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 5", "Description 5", "robotics-GroupNonMarketplace", "woman", 50, true, true, "5481f5"),
+                // groups created with the Renewals GroupMarketplace entity
+                // new GroupMarketplace("name1", "description1", "type1", "path1"),
+                // new GroupMarketplace("name1", "description1", "type1", "path1"),
+                // new GroupMarketplace("name1", "description1", "type1", "path1"),
+                // new GroupMarketplace("name1", "description1", "type1", "path1"),
+                // new GroupMarketplace("name1", "description1", "type1", "path1"),
+            };
+
+            CurrentlySelectedGroupMarketplace = CollectionOfActiveGroups[0];
+        }
+
+        private GroupMember currentActiveUser;
+
+        public GroupMember CurrentActiveUser
+        {
+            get
+            {
+                return this.currentActiveUser;
+            }
+            set
+            {
+                this.currentActiveUser = value;
+                OnPropertyChanged(nameof(CurrentActiveUser));
+            }
+        }
+
+        private GroupNonMarketplace currentlySelectedGroupMarketplace;
+        public GroupNonMarketplace CurrentlySelectedGroupMarketplace
+        {
+            get
+            {
+                return this.currentlySelectedGroupMarketplace;
+            }
+            set
+            {
+                this.currentlySelectedGroupMarketplace = value;
+                OnPropertyChanged(nameof(CurrentlySelectedGroupMarketplace));
+            }
+        }
+
+        private GroupViewModel viewModelCorrespondingToTheCurrentlySelectedGroup;
+        public GroupViewModel ViewModelCorrespondingToTheCurrentlySelectedGroup
+        {
+            get
+            {
+                return this.viewModelCorrespondingToTheCurrentlySelectedGroup;
+            }
+            set
+            {
+                this.viewModelCorrespondingToTheCurrentlySelectedGroup = value;
+                OnPropertyChanged(nameof(ViewModelCorrespondingToTheCurrentlySelectedGroup));
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ISSLab.Model.Entities
 {
-    public class Group
+    public class GroupMarketplace
     {
         private Guid groupId;
         private string name;
@@ -23,7 +23,7 @@ namespace ISSLab.Model.Entities
         private string bannerPath;
         private DateTime creationDate;
 
-        public Group(string name, string description, string type, string bannerPath)
+        public GroupMarketplace(string name, string description, string type, string bannerPath)
         {
             groupId = Guid.NewGuid();
             this.name = name;
@@ -40,7 +40,7 @@ namespace ISSLab.Model.Entities
             usersRequestingToSell = new List<Guid>();
         }
 
-        public Group()
+        public GroupMarketplace()
         {
             groupId = Guid.NewGuid();
             name = Constants.EMPTY_STRING;
@@ -57,7 +57,7 @@ namespace ISSLab.Model.Entities
             sellingUsers = new List<Guid>();
             usersRequestingToSell = new List<Guid>();
         }
-        public Group(Guid id, string name, int memberCount, List<Guid> members, List<Guid> posts, List<Guid> admins, List<Guid> sellingUsers, string description, string type, string banner, DateTime creationDate, List<Guid> topSellers, List<Guid> usersRequestingToSell)
+        public GroupMarketplace(Guid id, string name, int memberCount, List<Guid> members, List<Guid> posts, List<Guid> admins, List<Guid> sellingUsers, string description, string type, string banner, DateTime creationDate, List<Guid> topSellers, List<Guid> usersRequestingToSell)
         {
             groupId = id;
             this.name = name;
@@ -117,7 +117,7 @@ namespace ISSLab.Model.Entities
             }
             else
             {
-                throw new Exception("User is already a member of this group");
+                throw new Exception("User is already a member of this groupMarketplace");
             }
         }
         public void RemoveMember(Guid user)
@@ -129,7 +129,7 @@ namespace ISSLab.Model.Entities
             }
             else
             {
-                throw new Exception("User is not a member of this group");
+                throw new Exception("User is not a member of this groupMarketplace");
             }
         }
         public void AddPost(Guid post)
@@ -144,11 +144,11 @@ namespace ISSLab.Model.Entities
         {
             if (!members.Contains(user))
             {
-                throw new Exception("User is not a member of this group");
+                throw new Exception("User is not a member of this groupMarketplace");
             }
             if (admins.Contains(user))
             {
-                throw new Exception("User is already an admin of this group");
+                throw new Exception("User is already an admin of this groupMarketplace");
             }
             admins.Add(user);
         }
@@ -156,11 +156,11 @@ namespace ISSLab.Model.Entities
         {
             if (!members.Contains(user))
             {
-                throw new Exception("User is not a member of this group");
+                throw new Exception("User is not a member of this groupMarketplace");
             }
             if (!admins.Contains(user))
             {
-                throw new Exception("User is not an admin of this group");
+                throw new Exception("User is not an admin of this groupMarketplace");
             }
             admins.Remove(user);
         }
@@ -168,11 +168,11 @@ namespace ISSLab.Model.Entities
         {
             if (!members.Contains(user))
             {
-                throw new Exception("User is not a member of this group");
+                throw new Exception("User is not a member of this groupMarketplace");
             }
             if (sellingUsers.Contains(user))
             {
-                throw new Exception("User is already a selling user of this group");
+                throw new Exception("User is already a selling user of this groupMarketplace");
             }
             sellingUsers.Add(user);
         }
@@ -180,11 +180,11 @@ namespace ISSLab.Model.Entities
         {
             if (!members.Contains(user))
             {
-                throw new Exception("User is not a member of this group");
+                throw new Exception("User is not a member of this groupMarketplace");
             }
             if (!sellingUsers.Contains(user))
             {
-                throw new Exception("User is not a selling user of this group");
+                throw new Exception("User is not a selling user of this groupMarketplace");
             }
             sellingUsers.Remove(user);
         }
@@ -193,11 +193,11 @@ namespace ISSLab.Model.Entities
         {
             if (!members.Contains(user))
             {
-                throw new Exception("User is not a member of this group");
+                throw new Exception("User is not a member of this groupMarketplace");
             }
             if (sellingUsers.Contains(user))
             {
-                throw new Exception("User is already a selling user of this group");
+                throw new Exception("User is already a selling user of this groupMarketplace");
             }
             sellingUsers.Add(user);
         }
@@ -205,11 +205,11 @@ namespace ISSLab.Model.Entities
         {
             if (!members.Contains(user))
             {
-                throw new Exception("User is not a member of this group");
+                throw new Exception("User is not a member of this groupMarketplace");
             }
             if (!sellingUsers.Contains(user))
             {
-                throw new Exception("User is not a selling user of this group");
+                throw new Exception("User is not a selling user of this groupMarketplace");
             }
             sellingUsers.Remove(user);
         }

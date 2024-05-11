@@ -12,19 +12,19 @@ namespace ISSLab.Model.Repositories
 {
     public class GroupRepository : IGroupRepository
     {
-        private List<Group> allGroups;
+        private List<GroupMarketplace> allGroups;
 
         public GroupRepository()
         {
-            allGroups = new List<Group>();
+            allGroups = new List<GroupMarketplace>();
         }
 
-        public List<Group> FindAll()
+        public List<GroupMarketplace> FindAll()
         {
             return allGroups;
         }
 
-        public Group FindById(Guid id)
+        public GroupMarketplace FindById(Guid id)
         {
             for (int i = 0; i < allGroups.Count; i++)
             {
@@ -33,7 +33,7 @@ namespace ISSLab.Model.Repositories
                     return allGroups[i];
                 }
             }
-            throw new Exception("Group does not exist");
+            throw new Exception("GroupMarketplace does not exist");
         }
         public void RemoveGroup(Guid id)
         {
@@ -47,9 +47,9 @@ namespace ISSLab.Model.Repositories
             }
         }
 
-        public void AddGroup(Group newGroup)
+        public void AddGroup(GroupMarketplace newGroupMarketplace)
         {
-            allGroups.Add(newGroup);
+            allGroups.Add(newGroupMarketplace);
         }
     }
 }

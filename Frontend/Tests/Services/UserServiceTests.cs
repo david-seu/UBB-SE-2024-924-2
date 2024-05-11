@@ -29,7 +29,7 @@ namespace Tests.Services
         public void AddUser_AnyUser_UserRepositoryAddUserIsCalled()
         {
             Guid userId = Guid.NewGuid();
-            User addedUser = new User(userId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
+            UserMarketplace addedUser = new UserMarketplace(userId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
 
             userService.AddUser(addedUser);
@@ -40,7 +40,7 @@ namespace Tests.Services
         [Test]
         public void RemoveUser_AnyUser_UserRepositoryRemoveUserIsCalled()
         {
-            User toBeRemoved = new User();
+            UserMarketplace toBeRemoved = new UserMarketplace();
 
             userService.RemoveUser(toBeRemoved);
 
@@ -51,13 +51,13 @@ namespace Tests.Services
         public void GetUserById_UserDoesNotExist_ThrowsException()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { userService.GetUserById(Guid.NewGuid()); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("User not found"));
+            Assert.That(exceptionMessage.Message, Is.EqualTo("UserMarketplace not found"));
         }
 
         [Test]
         public void GetUserById_UserExists_ReturnsUser()
         {
-            User userToBeReturned = new User();
+            UserMarketplace userToBeReturned = new UserMarketplace();
 
             mockedUserRepository.Setup(repository => repository.GetById(It.IsAny<Guid>())).Returns(userToBeReturned);
 
@@ -115,7 +115,7 @@ namespace Tests.Services
         [Test]
         public void IsUserInGroup_UserBelongsToTheGroup_ReturnsTrue()
         {
-            User userToBeReturnedByRepositoryGetById = new User();
+            UserMarketplace userToBeReturnedByRepositoryGetById = new UserMarketplace();
             Guid groupWhichUserBelongsToId = Guid.NewGuid();
             userToBeReturnedByRepositoryGetById.AddGroup(groupWhichUserBelongsToId);
             mockedUserRepository.Setup(repository => repository.GetById(It.IsAny<Guid>())).Returns(userToBeReturnedByRepositoryGetById);
@@ -126,7 +126,7 @@ namespace Tests.Services
         [Test]
         public void IsUserInGroup_UserDoesNotBelongToTheGroup_ReturnsFalse()
         {
-            User userToBeReturnedByRepositoryGetById = new User();
+            UserMarketplace userToBeReturnedByRepositoryGetById = new UserMarketplace();
             mockedUserRepository.Setup(repository => repository.GetById(It.IsAny<Guid>())).Returns(userToBeReturnedByRepositoryGetById);
 
             Assert.That(userService.IsUserInGroup(userToBeReturnedByRepositoryGetById.Id, Guid.NewGuid()), Is.False);
@@ -135,7 +135,7 @@ namespace Tests.Services
         [Test]
         public void GetFavoritePosts_NoFavoritePostsForThatUserAndGroup_ReturnsEmptyList()
         {
-            User theOnlyUser = new User();
+            UserMarketplace theOnlyUser = new UserMarketplace();
             Guid idOfTheOnlyUser = theOnlyUser.Id;
             mockedUserRepository.Setup(repository => repository.GetById(It.IsAny<Guid>())).Returns(theOnlyUser);
 
@@ -145,7 +145,7 @@ namespace Tests.Services
         [Test]
         public void GetFavoritePosts_AtLeastOneFavoritePostForThatUserAndGroup_ReturnsTheFavoritePosts()
         {
-            User theOnlyUser = new User();
+            UserMarketplace theOnlyUser = new UserMarketplace();
             Guid idOfTheOnlyUser = theOnlyUser.Id;
             Guid groupForWhichTheUserHasFavoritePosts = Guid.NewGuid();
             List<Guid> expectedFavoritePostsIds = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
@@ -163,7 +163,7 @@ namespace Tests.Services
         [Test]
         public void GetPostsFromCart_NoCartedPostsForThatUserAndGroup_ReturnsEmptyList()
         {
-            User theOnlyUser = new User();
+            UserMarketplace theOnlyUser = new UserMarketplace();
             Guid idOfTheOnlyUser = theOnlyUser.Id;
             mockedUserRepository.Setup(repository => repository.GetById(It.IsAny<Guid>())).Returns(theOnlyUser);
 
@@ -173,7 +173,7 @@ namespace Tests.Services
         [Test]
         public void GetPostsFromCart_AtLeastOneCartedPostForThatUserAndGroup_ReturnsTheCartedPosts()
         {
-            User theOnlyUser = new User();
+            UserMarketplace theOnlyUser = new UserMarketplace();
             Guid idOfTheOnlyUser = theOnlyUser.Id;
             Guid groupForWhichTheUserHasCartedPosts = Guid.NewGuid();
             List<Guid> expectedCartedPostsIds = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };

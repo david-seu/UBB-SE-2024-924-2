@@ -42,17 +42,17 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public void AddUser(User user)
+        public void AddUser(UserMarketplace user)
         {
             throw new NotImplementedException();
         }
 
-        public void AddUserToGroup(User user, Group group)
+        public void AddUserToGroup(UserMarketplace user, GroupMarketplace groupMarketplace)
         {
             throw new NotImplementedException();
         }
 
-        public User CreateUser(string username, string realName, DateOnly dateOfBirth, string profilePicture, string password)
+        public UserMarketplace CreateUser(string username, string realName, DateOnly dateOfBirth, string profilePicture, string password)
         {
             throw new NotImplementedException();
         }
@@ -74,14 +74,14 @@ namespace ISSLab.Services
             return new List<MarketplacePost>();
         }
 
-        public User GetUserById(Guid id)
+        public UserMarketplace GetUserById(Guid id)
         {
             string expectedUsername = "expected Username";
-            User dummyUser = new User(expectedUsername, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
+            UserMarketplace dummyUser = new UserMarketplace(expectedUsername, string.Empty, DateOnly.MaxValue, string.Empty, string.Empty);
             return dummyUser;
         }
 
-        public List<User> GetUsers()
+        public List<UserMarketplace> GetUsers()
         {
             throw new NotImplementedException();
         }
@@ -96,7 +96,7 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public bool IsUserInGroup(User user, Group group)
+        public bool IsUserInGroup(UserMarketplace user, GroupMarketplace groupMarketplace)
         {
             throw new NotImplementedException();
         }
@@ -116,7 +116,7 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public void RemoveUser(User user)
+        public void RemoveUser(UserMarketplace user)
         {
             throw new NotImplementedException();
         }
@@ -156,7 +156,7 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public bool UserIsMemberInGroup(User userId, Guid groupId)
+        public bool UserIsMemberInGroup(UserMarketplace userId, Guid groupId)
         {
             throw new NotImplementedException();
         }

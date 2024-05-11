@@ -11,16 +11,16 @@ namespace Tests.Model
     {
         private const string TEST_STRING = "Test";
         private const string OTHER_TEST_STRING = "Test2";
-        private User userEmptyConstructor;
+        private UserMarketplace userEmptyConstructor;
 
-        private User userSimpleConstructor;
+        private UserMarketplace userSimpleConstructor;
         private string usernameSimpleConstructor;
         private string realNameSimpleConstructor;
         private DateOnly dateOfBirthSimpleConstructor;
         private string profilePictureSimpleConstructor;
         private string passwordSimpleConstructor;
 
-        private User userFullConstructor;
+        private UserMarketplace userFullConstructor;
         private Guid idFullConstructor;
         private string usernameFullConstructor;
         private string realNameFullConstructor;
@@ -40,7 +40,7 @@ namespace Tests.Model
         [SetUp]
         public void Setup()
         {
-            userEmptyConstructor = new User();
+            userEmptyConstructor = new UserMarketplace();
 
             usernameSimpleConstructor = TEST_STRING;
             realNameSimpleConstructor = TEST_STRING;
@@ -48,7 +48,7 @@ namespace Tests.Model
             profilePictureSimpleConstructor = TEST_STRING;
             passwordSimpleConstructor = TEST_STRING;
 
-            userSimpleConstructor = new User(usernameSimpleConstructor, realNameSimpleConstructor, dateOfBirthSimpleConstructor, profilePictureSimpleConstructor, passwordSimpleConstructor);
+            userSimpleConstructor = new UserMarketplace(usernameSimpleConstructor, realNameSimpleConstructor, dateOfBirthSimpleConstructor, profilePictureSimpleConstructor, passwordSimpleConstructor);
 
             idFullConstructor = new Guid();
             usernameFullConstructor = TEST_STRING;
@@ -64,7 +64,7 @@ namespace Tests.Model
             groupsFullConstructor = new List<Guid>();
             numberOfSalesFullConstructor = 0;
 
-            userFullConstructor = new User(idFullConstructor, usernameFullConstructor, realNameFullConstructor, dateOfBirthFullConstructor, profilePictureFullConstructor, passwordFullConstructor, creationDateFullConstructor, groupsWithSellingPrivilegeFullConstructor, groupsWithActiveRequestToSellFullConstructor, cartsFullConstructor, favoritesFullConstructor, groupsFullConstructor, numberOfSalesFullConstructor);
+            userFullConstructor = new UserMarketplace(idFullConstructor, usernameFullConstructor, realNameFullConstructor, dateOfBirthFullConstructor, profilePictureFullConstructor, passwordFullConstructor, creationDateFullConstructor, groupsWithSellingPrivilegeFullConstructor, groupsWithActiveRequestToSellFullConstructor, cartsFullConstructor, favoritesFullConstructor, groupsFullConstructor, numberOfSalesFullConstructor);
 
             groupToUseForAccessTests = new Guid();
         }
@@ -246,7 +246,7 @@ namespace Tests.Model
             }
             catch (Exception exception)
             {
-                Assert.That(exception.Message, Is.EqualTo("Already requested access to sell in this group"));
+                Assert.That(exception.Message, Is.EqualTo("Already requested access to sell in this groupMarketplace"));
             }
         }
 
@@ -268,7 +268,7 @@ namespace Tests.Model
             }
             catch (Exception exception)
             {
-                Assert.That(exception.Message, Is.EqualTo("You can already sell in this group"));
+                Assert.That(exception.Message, Is.EqualTo("You can already sell in this groupMarketplace"));
             }
         }
 
@@ -284,7 +284,7 @@ namespace Tests.Model
             }
             catch (Exception exception)
             {
-                Assert.That(exception.Message, Is.EqualTo("Already have access to sell in this group"));
+                Assert.That(exception.Message, Is.EqualTo("Already have access to sell in this groupMarketplace"));
             }
         }
 
@@ -321,7 +321,7 @@ namespace Tests.Model
             }
             catch (Exception exception)
             {
-                Assert.That(exception.Message, Is.EqualTo("No access to sell in this group"));
+                Assert.That(exception.Message, Is.EqualTo("No access to sell in this groupMarketplace"));
             }
         }
 
@@ -335,7 +335,7 @@ namespace Tests.Model
             }
             catch (Exception exception)
             {
-                Assert.That(exception.Message, Is.EqualTo("No active request to sell in this group"));
+                Assert.That(exception.Message, Is.EqualTo("No active request to sell in this groupMarketplace"));
             }
         }
 
