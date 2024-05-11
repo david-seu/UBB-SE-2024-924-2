@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 
 namespace Tests.Model
 {

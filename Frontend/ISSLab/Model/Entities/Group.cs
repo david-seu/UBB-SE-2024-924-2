@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class Group
     {
@@ -25,41 +25,41 @@ namespace ISSLab.Model
 
         public Group(string name, string description, string type, string bannerPath)
         {
-            this.groupId = Guid.NewGuid();
+            groupId = Guid.NewGuid();
             this.name = name;
-            this.memberCount = 0;
-            this.members = new List<Guid>();
-            this.posts = new List<Guid>();
-            this.admins = new List<Guid>();
-            this.sellingUsers = new List<Guid>();
+            memberCount = 0;
+            members = new List<Guid>();
+            posts = new List<Guid>();
+            admins = new List<Guid>();
+            sellingUsers = new List<Guid>();
             this.description = description;
             this.type = type;
             this.bannerPath = bannerPath;
-            this.creationDate = DateTime.Now;
-            this.topSellers = new List<Guid>();
-            this.usersRequestingToSell = new List<Guid>();
+            creationDate = DateTime.Now;
+            topSellers = new List<Guid>();
+            usersRequestingToSell = new List<Guid>();
         }
 
         public Group()
         {
-            this.groupId = Guid.NewGuid();
-            this.name = Constants.EMPTY_STRING;
-            this.memberCount = 0;
-            this.members = new List<Guid>();
-            this.posts = new List<Guid>();
-            this.admins = new List<Guid>();
-            this.sellingUsers = new List<Guid>();
-            this.description = Constants.EMPTY_STRING;
-            this.type = Constants.EMPTY_STRING;
-            this.bannerPath = Constants.EMPTY_STRING;
-            this.creationDate = DateTime.Now;
-            this.topSellers = new List<Guid>();
-            this.sellingUsers = new List<Guid>();
-            this.usersRequestingToSell = new List<Guid>();
+            groupId = Guid.NewGuid();
+            name = Constants.EMPTY_STRING;
+            memberCount = 0;
+            members = new List<Guid>();
+            posts = new List<Guid>();
+            admins = new List<Guid>();
+            sellingUsers = new List<Guid>();
+            description = Constants.EMPTY_STRING;
+            type = Constants.EMPTY_STRING;
+            bannerPath = Constants.EMPTY_STRING;
+            creationDate = DateTime.Now;
+            topSellers = new List<Guid>();
+            sellingUsers = new List<Guid>();
+            usersRequestingToSell = new List<Guid>();
         }
         public Group(Guid id, string name, int memberCount, List<Guid> members, List<Guid> posts, List<Guid> admins, List<Guid> sellingUsers, string description, string type, string banner, DateTime creationDate, List<Guid> topSellers, List<Guid> usersRequestingToSell)
         {
-            this.groupId = id;
+            groupId = id;
             this.name = name;
             this.memberCount = memberCount;
             this.members = members;
@@ -68,30 +68,30 @@ namespace ISSLab.Model
             this.sellingUsers = sellingUsers;
             this.description = description;
             this.type = type;
-            this.bannerPath = banner;
+            bannerPath = banner;
             this.creationDate = creationDate;
             this.topSellers = topSellers;
             this.usersRequestingToSell = usersRequestingToSell;
         }
 
-        public List<Guid> UsersWithSellRequests { get => this.sellingUsers; set => this.sellingUsers = value; }
+        public List<Guid> UsersWithSellRequests { get => sellingUsers; set => sellingUsers = value; }
         public void AddUserWithSellRequest(Guid userID)
         {
-            this.sellingUsers.Add(userID);
+            sellingUsers.Add(userID);
         }
         public void RemoveUserWithSellRequest(Guid userID)
         {
-            this.sellingUsers.Remove(userID);
+            sellingUsers.Remove(userID);
         }
 
-        public List<Guid> TopSellers { get => this.topSellers; set => this.topSellers = value; }
+        public List<Guid> TopSellers { get => topSellers; set => topSellers = value; }
         public void AddTopSeller(Guid userID)
         {
-            this.topSellers.Add(userID);
+            topSellers.Add(userID);
         }
         public void RemoveTopSeller(Guid userID)
         {
-            this.topSellers.Remove(userID);
+            topSellers.Remove(userID);
         }
 
         public Guid GroupId { get => groupId; }

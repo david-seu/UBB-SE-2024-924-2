@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class User
     {
@@ -29,21 +29,21 @@ namespace ISSLab.Model
 
         public User(string username, string realName, DateOnly dateOfBirth, string profilePicture, string password)
         {
-            this.id = Guid.NewGuid();
+            id = Guid.NewGuid();
             this.username = username;
             this.realName = realName;
             this.dateOfBirth = dateOfBirth;
             this.profilePicture = profilePicture;
             this.password = password;
-            this.creationDate = DateTime.Now;
-            this.groupsWithSellingPrivilege = new List<Guid>();
-            this.groupsWithActiveRequestToSell = new List<Guid>();
-            this.userScores = new List<SellingUserScore>();
-            this.carts = new List<Cart>();
-            this.favorites = new List<UsersFavoritePosts>();
-            this.groups = new List<Guid>();
-            this.receivedReviews = new List<Review>();
-            this.numberOfSales = 0;
+            creationDate = DateTime.Now;
+            groupsWithSellingPrivilege = new List<Guid>();
+            groupsWithActiveRequestToSell = new List<Guid>();
+            userScores = new List<SellingUserScore>();
+            carts = new List<Cart>();
+            favorites = new List<UsersFavoritePosts>();
+            groups = new List<Guid>();
+            receivedReviews = new List<Review>();
+            numberOfSales = 0;
         }
         public User(Guid id, string username, string realName, DateOnly dateOfBirth, string profilePicture, string password, DateTime creationDate, List<Guid> groupsWithSellingPrivelage, List<Guid> groupsWithActiveRequestToSell, List<SellingUserScore> userScores, List<Cart> carts, List<UsersFavoritePosts> favorites, List<Guid> groups, List<Review> receivedReviews, int nrOfSells)
         {
@@ -54,14 +54,14 @@ namespace ISSLab.Model
             this.profilePicture = profilePicture;
             this.password = password;
             this.creationDate = creationDate;
-            this.groupsWithSellingPrivilege = groupsWithSellingPrivelage;
+            groupsWithSellingPrivilege = groupsWithSellingPrivelage;
             this.groupsWithActiveRequestToSell = groupsWithActiveRequestToSell;
             this.userScores = userScores;
             this.receivedReviews = receivedReviews;
             this.carts = carts;
             this.favorites = favorites;
             this.groups = groups;
-            this.numberOfSales = nrOfSells;
+            numberOfSales = nrOfSells;
             this.carts = carts;
             this.favorites = favorites;
             this.groups = groups;
@@ -70,21 +70,21 @@ namespace ISSLab.Model
 
         public User()
         {
-            this.id = Guid.NewGuid();
-            this.username = Constants.EMPTY_STRING;
-            this.realName = Constants.EMPTY_STRING;
-            this.dateOfBirth = new DateOnly();
-            this.profilePicture = Constants.EMPTY_STRING;
-            this.password = Constants.EMPTY_STRING;
-            this.creationDate = DateTime.Now;
-            this.groupsWithSellingPrivilege = new List<Guid>();
-            this.groupsWithActiveRequestToSell = new List<Guid>();
-            this.userScores = new List<SellingUserScore>();
-            this.numberOfSales = 0;
-            this.carts = new List<Cart>();
-            this.favorites = new List<UsersFavoritePosts>();
-            this.groups = new List<Guid>();
-            this.receivedReviews = new List<Review>();
+            id = Guid.NewGuid();
+            username = Constants.EMPTY_STRING;
+            realName = Constants.EMPTY_STRING;
+            dateOfBirth = new DateOnly();
+            profilePicture = Constants.EMPTY_STRING;
+            password = Constants.EMPTY_STRING;
+            creationDate = DateTime.Now;
+            groupsWithSellingPrivilege = new List<Guid>();
+            groupsWithActiveRequestToSell = new List<Guid>();
+            userScores = new List<SellingUserScore>();
+            numberOfSales = 0;
+            carts = new List<Cart>();
+            favorites = new List<UsersFavoritePosts>();
+            groups = new List<Guid>();
+            receivedReviews = new List<Review>();
         }
 
         public List<SellingUserScore> SellingUserScores { get => userScores; set => userScores = value; }
@@ -142,14 +142,14 @@ namespace ISSLab.Model
         }
         public void AddNewUserScore(SellingUserScore userScore)
         {
-            this.userScores.Add(userScore);
+            userScores.Add(userScore);
         }
 
         public int NumberOfSales { get => numberOfSales; set => numberOfSales = value; }
 
         public void RemoveUserScore(SellingUserScore userScore)
         {
-            this.userScores = this.userScores.FindAll(score => score.GroupId != userScore.GroupId);
+            userScores = userScores.FindAll(score => score.GroupId != userScore.GroupId);
         }
 
         public void RequestSellingAccess(Guid groupId)

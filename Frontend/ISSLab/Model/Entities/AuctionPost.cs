@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class AuctionPost : FixedPricePost
     {
@@ -18,18 +18,18 @@ namespace ISSLab.Model
             this.currentPriceLeader = Guid.Empty;
             this.currentBidPrice = currentBidPrice;
             this.minimumBidPrice = minimumBidPrice;
-            this.onGoing = true;
+            onGoing = true;
         }
 
         public AuctionPost() : base()
         {
-            this.Type = Constants.AUCTION_POST_TYPE;
-            this.currentPriceLeader = Guid.Empty;
-            this.currentBidPrice = 0;
-            this.minimumBidPrice = 0;
+            Type = Constants.AUCTION_POST_TYPE;
+            currentPriceLeader = Guid.Empty;
+            currentBidPrice = 0;
+            minimumBidPrice = 0;
         }
 
-        public AuctionPost(Guid postId, List<Guid> usersThatShared, List<Guid> usersThatLiked, List<Comment> comments, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string phoneNumber, List<Report> reports, double price, DateTime expirationDate, string deliveryType, List<Review> reviews, float reviewScore, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed, int viewCount, bool onGoing) : base(postId, usersThatShared, usersThatLiked, comments, mediaContent, creationDate, authorId, groupId, promoted, usersThatFavorited, itemLocation, description, title, interestStatuses, phoneNumber, reports, price, expirationDate, deliveryType, reviews, reviewScore, buyerId, Constants.AUCTION_POST_TYPE, confirmed, viewCount)
+        public AuctionPost(Guid postId, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string phoneNumber, List<Report> reports, double price, DateTime expirationDate, string deliveryType, List<Review> reviews, float reviewScore, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed, int viewCount, bool onGoing) : base(postId, usersThatShared, usersThatLiked, mediaContent, creationDate, authorId, groupId, promoted, usersThatFavorited, itemLocation, description, title, interestStatuses, phoneNumber, reports, price, expirationDate, deliveryType, reviews, reviewScore, buyerId, Constants.AUCTION_POST_TYPE, confirmed, viewCount)
         {
             this.currentPriceLeader = currentPriceLeader;
             this.currentBidPrice = currentBidPrice;
@@ -62,7 +62,7 @@ namespace ISSLab.Model
         public void SlightlyPostponeExpirationDate()
         {
             DateTime now = DateTime.Now;
-            this.ExpirationDate = this.ExpirationDate.AddSeconds(Constants.EXPIRATION_DATE_SLIGHT_PROLONGMENT_THRESHOLD_IN_SECONDS);
+            ExpirationDate = ExpirationDate.AddSeconds(Constants.EXPIRATION_DATE_SLIGHT_PROLONGMENT_THRESHOLD_IN_SECONDS);
         }
     }
 }

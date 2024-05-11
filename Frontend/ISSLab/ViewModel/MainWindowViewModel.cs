@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 using ISSLab.Services;
 using ISSLab.View;
 

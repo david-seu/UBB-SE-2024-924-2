@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ISSLab.Model;
+using ISSLab.Model.Entities;
 using ISSLab.Model.Repositories;
 namespace ISSLab.Services
 {

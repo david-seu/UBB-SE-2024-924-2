@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class InterestStatus
     {
@@ -17,16 +17,16 @@ namespace ISSLab.Model
         {
             this.interestedUserId = interestedUserId;
             this.postId = postId;
-            this.interestStatusId = new Guid();
+            interestStatusId = new Guid();
             this.interested = interested;
         }
 
         public InterestStatus()
         {
-            this.interestedUserId = Guid.NewGuid();
-            this.postId = Guid.NewGuid();
-            this.interestStatusId = Guid.NewGuid();
-            this.interested = false;
+            interestedUserId = Guid.NewGuid();
+            postId = Guid.NewGuid();
+            interestStatusId = Guid.NewGuid();
+            interested = false;
         }
 
         public Guid InterestedUserId { get => interestedUserId; }

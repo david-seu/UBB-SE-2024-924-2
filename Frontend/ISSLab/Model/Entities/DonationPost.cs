@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class DonationPost : Post
     {
@@ -17,19 +17,19 @@ namespace ISSLab.Model
 
         public DonationPost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, string donationPageLink, string type, bool confirmed) : base(media, authorId, groupId, location, description, title, contacts, type, confirmed)
         {
-            this.currentDonationAmount = 0;
+            currentDonationAmount = 0;
             this.donationPageLink = donationPageLink;
-            this.reviewScore = 0;
+            reviewScore = 0;
         }
 
         public DonationPost() : base()
         {
-            this.currentDonationAmount = 0;
-            this.donationPageLink = Constants.EMPTY_STRING;
-            this.reviewScore = 0;
+            currentDonationAmount = 0;
+            donationPageLink = Constants.EMPTY_STRING;
+            reviewScore = 0;
         }
 
-        public DonationPost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, List<Comment> comments, string media, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string location, string description, string title, List<InterestStatus> interestStatuses, string contacts, List<Report> reports, float reviewScore, double currentDonationAmount, string donationPageLink, string type, bool confirmed, int views) : base(id, usersThatShared, usersThatLiked, comments, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, reports, type, confirmed, views)
+        public DonationPost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string media, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string location, string description, string title, List<InterestStatus> interestStatuses, string contacts, List<Report> reports, float reviewScore, double currentDonationAmount, string donationPageLink, string type, bool confirmed, int views) : base(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, reports, type, confirmed, views)
         {
             this.reviewScore = reviewScore;
             this.currentDonationAmount = currentDonationAmount;

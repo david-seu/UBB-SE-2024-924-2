@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 using ISSLab.Services;
 using ISSLab.View;
 
@@ -403,14 +403,6 @@ namespace ISSLab.ViewModel
                 OurPost.InterestStatuses.Add(new InterestStatus(OurUser.Id, OurPost.Id, false));
             }
             OnPropertyChanged(nameof(Uninterests));
-        }
-
-        public string Comments
-        {
-            get
-            {
-                return OurPost.Comments.Count + " comments";
-            }
         }
 
         public void SendBuyingMessage()

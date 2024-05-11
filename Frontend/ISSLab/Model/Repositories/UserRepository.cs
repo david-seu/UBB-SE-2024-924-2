@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ISSLab.Model.Entities;
 using ISSLab.Services;
 
 namespace ISSLab.Model.Repositories

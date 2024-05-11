@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
-using Lab3_1;
+using ISSLab.Model.Entities;
 using ISSLab.Services;
 
 namespace ISSLab.Model.Repositories

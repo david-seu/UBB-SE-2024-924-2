@@ -1,4 +1,6 @@
-﻿namespace ISSLab.Model.Repositories
+﻿using ISSLab.Model.Entities;
+
+namespace ISSLab.Model.Repositories
 {
     public interface IUserRepository
     {

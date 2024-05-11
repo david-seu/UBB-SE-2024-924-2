@@ -1,5 +1,5 @@
 ﻿using System;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 using ISSLab.Model.Repositories;
 
 namespace Tests.Model.Repositories

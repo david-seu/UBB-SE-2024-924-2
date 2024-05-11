@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 
 namespace Tests.Model
 {

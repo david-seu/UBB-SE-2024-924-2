@@ -1,4 +1,4 @@
-﻿using ISSLab.Model;
+﻿using ISSLab.Model.Entities;
 
 namespace ISSLab.ViewModel
 {
@@ -9,7 +9,6 @@ namespace ISSLab.ViewModel
         string BidPrice { get; }
         string BidPriceVisible { get; set; }
         string BuyButtonVisible { get; set; }
-        string Comments { get; }
         string Contact { get; set; }
         string Delivery { get; set; }
         string Description { get; set; }

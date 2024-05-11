@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class Cart
     {
@@ -21,16 +21,16 @@ namespace ISSLab.Model
 
         public Cart()
         {
-            this.groupId = Guid.NewGuid();
-            this.userId = Guid.NewGuid();
-            this.postsSavedInCart = new List<Guid>();
+            groupId = Guid.NewGuid();
+            userId = Guid.NewGuid();
+            postsSavedInCart = new List<Guid>();
         }
 
         public Cart(Guid groupId, Guid userId)
         {
             this.groupId = groupId;
             this.userId = userId;
-            this.postsSavedInCart = new List<Guid>();
+            postsSavedInCart = new List<Guid>();
         }
 
         public Guid GroupId { get => groupId; }
@@ -39,7 +39,7 @@ namespace ISSLab.Model
 
         public void AddPostToCart(Guid postToSave)
         {
-            if (this.postsSavedInCart.Contains(postToSave))
+            if (postsSavedInCart.Contains(postToSave))
             {
                 throw new Exception("Post already in cart");
             }
@@ -48,7 +48,7 @@ namespace ISSLab.Model
 
         public void RemovePostFromCart(Guid postToSave)
         {
-            if (!this.postsSavedInCart.Contains(postToSave))
+            if (!postsSavedInCart.Contains(postToSave))
             {
                 throw new Exception("Post not in cart");
             }

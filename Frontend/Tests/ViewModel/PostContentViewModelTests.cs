@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
-using ISSLab.Model;
 using ISSLab.Services;
 using ISSLab.View;
 using ISSLab.ViewModel;
 using Moq;
+using ISSLab.Model.Entities;
 
 namespace Tests.ViewModel
 {
@@ -750,17 +750,6 @@ namespace Tests.ViewModel
             postViewModel.AddUninterests();
 
             Assert.That(postViewModel.Post.InterestStatuses.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void Comments_ForAnyPost_ReturnsCorrectValue()
-        {
-            Post noTypePost = new Post(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            noTypePost.AddInterestStatus(new InterestStatus(Guid.NewGuid(), Guid.NewGuid(), true));
-            postViewModel.Post = noTypePost;
-
-            string expectedResult = noTypePost.Comments.Count + " comments";
-            Assert.That(postViewModel.Comments, Is.EqualTo(expectedResult));
         }
 
         [Test]

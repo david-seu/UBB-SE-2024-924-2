@@ -1,4 +1,4 @@
-﻿using ISSLab.Model;
+﻿using ISSLab.Model.Entities;
 using ISSLab.Services;
 
 namespace ISSLab.ViewModel

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class FixedPricePost : Post
     {
@@ -27,15 +27,15 @@ namespace ISSLab.Model
 
         public FixedPricePost() : base()
         {
-            this.price = 0;
-            this.expirationDate = DateTime.Now;
-            this.reviewScore = 0;
-            this.reviews = new List<Review>();
-            this.delivery = Constants.EMPTY_STRING;
-            this.buyerId = Guid.Empty;
+            price = 0;
+            expirationDate = DateTime.Now;
+            reviewScore = 0;
+            reviews = new List<Review>();
+            delivery = Constants.EMPTY_STRING;
+            buyerId = Guid.Empty;
         }
 
-        public FixedPricePost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, List<Comment> comments, string media, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string location, string description, string title, List<InterestStatus> interestStatuses, string contacts, List<Report> reports, double price, DateTime expirationDate, string delivery, List<Review> reviews, float reviewScore, Guid buyerId, string type, bool confirmed, int views) : base(id, usersThatShared, usersThatLiked, comments, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, reports, type, confirmed, views)
+        public FixedPricePost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string media, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string location, string description, string title, List<InterestStatus> interestStatuses, string contacts, List<Report> reports, double price, DateTime expirationDate, string delivery, List<Review> reviews, float reviewScore, Guid buyerId, string type, bool confirmed, int views) : base(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, reports, type, confirmed, views)
         {
             this.price = price;
             this.expirationDate = expirationDate;

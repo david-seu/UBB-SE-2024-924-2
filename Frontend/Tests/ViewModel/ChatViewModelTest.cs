@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 using ISSLab.ViewModel;
 namespace Tests.ViewModel
 {

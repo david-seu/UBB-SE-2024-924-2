@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 
 namespace Tests.Model
 {

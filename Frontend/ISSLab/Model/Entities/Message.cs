@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class Message
     {

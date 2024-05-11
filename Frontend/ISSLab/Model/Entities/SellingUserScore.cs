@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class SellingUserScore
     {
@@ -16,14 +16,14 @@ namespace ISSLab.Model
         {
             this.userId = userId;
             this.groupId = groupId;
-            this.score = 0;
+            score = 0;
         }
 
         public SellingUserScore()
         {
-            this.userId = Guid.NewGuid();
-            this.groupId = Guid.NewGuid();
-            this.score = 0;
+            userId = Guid.NewGuid();
+            groupId = Guid.NewGuid();
+            score = 0;
         }
 
         public SellingUserScore(Guid userId, Guid groupId, int score)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class UsersFavoritePosts
     {
@@ -16,7 +16,7 @@ namespace ISSLab.Model
         {
             this.userId = userId;
             this.groupId = groupId;
-            this.posts = new List<Guid>();
+            posts = new List<Guid>();
         }
 
         public UsersFavoritePosts(Guid userId, Guid groupId, List<Guid> posts)
@@ -28,9 +28,9 @@ namespace ISSLab.Model
 
         public UsersFavoritePosts()
         {
-            this.userId = Guid.NewGuid();
-            this.groupId = Guid.NewGuid();
-            this.posts = new List<Guid>();
+            userId = Guid.NewGuid();
+            groupId = Guid.NewGuid();
+            posts = new List<Guid>();
         }
 
         public Guid UserId { get => userId; }
@@ -39,7 +39,7 @@ namespace ISSLab.Model
 
         public void AddPost(Guid post)
         {
-            if (this.posts.Contains(post))
+            if (posts.Contains(post))
             {
                 throw new Exception("Post already in favorites");
             }
@@ -48,7 +48,7 @@ namespace ISSLab.Model
 
         public void RemovePost(Guid post)
         {
-            if (!this.posts.Contains(post))
+            if (!posts.Contains(post))
             {
                 throw new Exception("Post not in favorites");
             }

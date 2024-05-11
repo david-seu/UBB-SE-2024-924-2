@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class Post
     {
@@ -12,7 +12,6 @@ namespace ISSLab.Model
         private int views;
         private List<Guid> usersThatShared;
         private List<Guid> usersThatLiked;
-        private List<Comment> comments;
         private string mediaContent;
         private DateTime creationDate;
         private Guid authorId;
@@ -31,32 +30,30 @@ namespace ISSLab.Model
         public Post(string mediaContent, Guid authorId, Guid groupId, string itemLocation, string description, string title, string contacts, string type, bool confirmed)
         {
             this.confirmed = confirmed;
-            this.id = Guid.NewGuid();
-            this.usersThatShared = new List<Guid>();
-            this.usersThatLiked = new List<Guid>();
-            this.comments = new List<Comment>();
+            id = Guid.NewGuid();
+            usersThatShared = new List<Guid>();
+            usersThatLiked = new List<Guid>();
             this.mediaContent = mediaContent;
-            this.creationDate = DateTime.Now;
+            creationDate = DateTime.Now;
             this.authorId = authorId;
             this.groupId = groupId;
-            this.promoted = false;
-            this.usersThatFavorited = new List<Guid>();
+            promoted = false;
+            usersThatFavorited = new List<Guid>();
             this.itemLocation = itemLocation;
             this.description = description;
             this.title = title;
-            this.views = 0;
-            this.interestStatuses = new List<InterestStatus>();
+            views = 0;
+            interestStatuses = new List<InterestStatus>();
             this.contacts = contacts;
-            this.reports = new List<Report>();
+            reports = new List<Report>();
             this.type = type;
         }
 
-        public Post(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, List<Comment> comments, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string contacts, List<Report> reports, string type, bool confirmed, int views)
+        public Post(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string contacts, List<Report> reports, string type, bool confirmed, int views)
         {
             this.id = id;
             this.usersThatShared = usersThatShared;
             this.usersThatLiked = usersThatLiked;
-            this.comments = comments;
             this.mediaContent = mediaContent;
             this.creationDate = creationDate;
             this.authorId = authorId;
@@ -76,24 +73,23 @@ namespace ISSLab.Model
 
         public Post()
         {
-            this.id = Guid.NewGuid();
-            this.usersThatShared = new List<Guid>();
-            this.usersThatLiked = new List<Guid>();
-            this.comments = new List<Comment>();
-            this.reports = new List<Report>();
-            this.mediaContent = Constants.EMPTY_STRING;
-            this.creationDate = DateTime.Now;
-            this.authorId = Guid.NewGuid();
-            this.groupId = Guid.NewGuid();
-            this.promoted = false;
-            this.usersThatFavorited = new List<Guid>();
-            this.itemLocation = Constants.EMPTY_STRING;
-            this.description = Constants.EMPTY_STRING;
-            this.title = Constants.EMPTY_STRING;
-            this.interestStatuses = new List<InterestStatus>();
-            this.contacts = Constants.EMPTY_STRING;
-            this.type = Constants.DEFAULT_POST_TYPE;
-            this.confirmed = false;
+            id = Guid.NewGuid();
+            usersThatShared = new List<Guid>();
+            usersThatLiked = new List<Guid>();
+            reports = new List<Report>();
+            mediaContent = Constants.EMPTY_STRING;
+            creationDate = DateTime.Now;
+            authorId = Guid.NewGuid();
+            groupId = Guid.NewGuid();
+            promoted = false;
+            usersThatFavorited = new List<Guid>();
+            itemLocation = Constants.EMPTY_STRING;
+            description = Constants.EMPTY_STRING;
+            title = Constants.EMPTY_STRING;
+            interestStatuses = new List<InterestStatus>();
+            contacts = Constants.EMPTY_STRING;
+            type = Constants.DEFAULT_POST_TYPE;
+            confirmed = false;
         }
 
         public int Views { get => views; set => views = value; }
@@ -102,7 +98,6 @@ namespace ISSLab.Model
         public Guid Id { get => id; }
         public List<Guid> UsersThatShared { get => usersThatShared; }
         public List<Guid> UsersThatLiked { get => usersThatLiked; }
-        public List<Comment> Comments { get => comments; }
         public string MediaContent { get => mediaContent; set => mediaContent = value; }
         public DateTime CreationDate { get => creationDate; set => creationDate = value; }
         public Guid AuthorId { get => authorId; }
@@ -161,16 +156,6 @@ namespace ISSLab.Model
             {
                 usersThatShared.Add(userId);
             }
-        }
-
-        public void AddComment(Comment comment)
-        {
-            comments.Add(comment);
-        }
-
-        public void RemoveComment(Comment comment)
-        {
-            comments.Remove(comment);
         }
 
         public int InterestLevel()

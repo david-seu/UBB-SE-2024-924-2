@@ -4,24 +4,21 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 
 namespace Tests.Model
 {
     internal class PostTests
     {
-        private ISSLab.Model.Post firstConstructorPost;
-        private ISSLab.Model.Post secondConstructorPost;
-        private ISSLab.Model.Post thirdConstructorPost;
+        private Post firstConstructorPost;
+        private Post secondConstructorPost;
+        private Post thirdConstructorPost;
         private Report reportToAdd;
         private Guid idUserToLike;
         private Guid idUserToFavorite;
         private Guid idUserToShare;
         private Guid idUserInterested1;
         private Guid idUserInterested2;
-        private Comment? commentToAdd1;
-        private Comment? commentToAdd2;
-        private Comment? commentToAdd3;
         private InterestStatus interestStatusToAdd1;
         private InterestStatus interestStatusToAdd2;
         private InterestStatus interestStatusToAdd3;
@@ -36,10 +33,9 @@ namespace Tests.Model
             idUserInterested1 = Guid.NewGuid();
             idUserInterested2 = Guid.NewGuid();
             idUserToShare = Guid.NewGuid();
-            commentToAdd1 = new Comment();
             firstConstructorPost = new Post("./cat.jpg", Guid.NewGuid(), Guid.NewGuid(), "Cluj", "description1", "title1", "contacts1", string.Empty, true);
             secondConstructorPost = new Post(Guid.NewGuid(), new List<Guid>(), new List<Guid>(),
-                new List<Comment>(), "./cat.jpg", DateTime.Parse("Jan 1, 2024"), Guid.NewGuid(), Guid.NewGuid(), false, new List<Guid>(), "Cluj", "description2", "title2",
+                "./cat.jpg", DateTime.Parse("Jan 1, 2024"), Guid.NewGuid(), Guid.NewGuid(), false, new List<Guid>(), "Cluj", "description2", "title2",
                 new List<InterestStatus>(), "0744444444", new List<Report>(), "type2", false, 100);
             thirdConstructorPost = new Post();
             interestStatusToAdd1 = new InterestStatus(idUserInterested1, firstConstructorPost.Id, true);
@@ -132,24 +128,6 @@ namespace Tests.Model
         public void UsersThatFavoritedGet_getUsersThatFavoritedOfPostThirdConstructor_ShouldBeListGuid()
         {
             Assert.IsInstanceOf<List<Guid>>(thirdConstructorPost.UsersThatFavorited);
-        }
-
-        [Test]
-        public void CommentsGet_getCommentOfPostFirstConstructor_ShouldBeListComment()
-        {
-            Assert.IsInstanceOf<List<Comment>>(firstConstructorPost.Comments);
-        }
-
-        [Test]
-        public void CommentsGet_getCommentsOfPostSecondConstructor_ShouldBeListComment()
-        {
-            Assert.IsInstanceOf<List<Comment>>(secondConstructorPost.Comments);
-        }
-
-        [Test]
-        public void CommentsGet_getUsersThatFavoritedOfPostThirdConstructor_ShouldBeListComment()
-        {
-            Assert.IsInstanceOf<List<Comment>>(thirdConstructorPost.Comments);
         }
 
         [Test]
@@ -416,48 +394,6 @@ namespace Tests.Model
             thirdConstructorPost.ToggleShare(idUserToShare);
             thirdConstructorPost.ToggleShare(idUserToShare);
             Assert.That(thirdConstructorPost.UsersThatShared, Has.Count.EqualTo(0));
-        }
-
-        [Test]
-        public void AddComment_CommentIsAddedToPostFirstConstructor_ThereShouldBeOneCommentInPostFirstConstructor()
-        {
-            firstConstructorPost.AddComment(commentToAdd1);
-            Assert.That(firstConstructorPost.Comments, Has.Count.EqualTo(1));
-        }
-        [Test]
-        public void AddComment_CommentIsAddedToPostSecondConstructor_ThereShouldBeOneCommentInPostSecondConstructor()
-        {
-            secondConstructorPost.AddComment(commentToAdd2);
-            Assert.That(secondConstructorPost.Comments, Has.Count.EqualTo(1));
-        }
-        [Test]
-        public void AddComment_CommentIsAddedToPostThirdConstructor_ThereShouldBeOneCommentInPostThirdConstructor()
-        {
-            thirdConstructorPost.AddComment(commentToAdd3);
-            Assert.That(thirdConstructorPost.Comments, Has.Count.EqualTo(1));
-        }
-
-        [Test]
-        public void RemoveComment_SingularCommentIsRemovedFromPostFirstConstructor_NoMoreCommentsInPostFirstConstructor()
-        {
-            firstConstructorPost.AddComment(commentToAdd1);
-            firstConstructorPost.RemoveComment(commentToAdd1);
-            Assert.That(firstConstructorPost.Comments, Has.Count.EqualTo(0));
-        }
-        [Test]
-        public void RemoveComment_SingularCommentIsRemovedFromSecondConstructor_NoMoreCommentsInPostSecondConstructor()
-        {
-            secondConstructorPost.AddComment(commentToAdd2);
-            secondConstructorPost.RemoveComment(commentToAdd2);
-            Assert.That(secondConstructorPost.Comments, Has.Count.EqualTo(0));
-        }
-
-        [Test]
-        public void RemoveComment_SingularCommentIsRemovedFromThirdConstructor_NoMoreCommentsInPostThirdConstructor()
-        {
-            thirdConstructorPost.AddComment(commentToAdd3);
-            thirdConstructorPost.RemoveComment(commentToAdd3);
-            Assert.That(thirdConstructorPost.Comments, Has.Count.EqualTo(0));
         }
 
         [Test]

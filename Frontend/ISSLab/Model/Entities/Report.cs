@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class Report
     {
@@ -16,16 +16,16 @@ namespace ISSLab.Model
 
         public Report(Guid userId, Guid postId, string reasonForReporting)
         {
-            this.reportId = Guid.NewGuid();
+            reportId = Guid.NewGuid();
             this.userId = userId;
             this.postId = postId;
             this.reasonForReporting = reasonForReporting;
-            this.dateOfReport = DateTime.Now;
+            dateOfReport = DateTime.Now;
         }
 
         public Report(Guid id, Guid userId, Guid postId, string reasonForReporting, DateTime dateOfReport)
         {
-            this.reportId = id;
+            reportId = id;
             this.userId = userId;
             this.postId = postId;
             this.reasonForReporting = reasonForReporting;
@@ -34,11 +34,11 @@ namespace ISSLab.Model
 
         public Report()
         {
-            this.reportId = Guid.NewGuid();
-            this.userId = Guid.NewGuid();
-            this.postId = Guid.NewGuid();
-            this.reasonForReporting = Constants.EMPTY_STRING;
-            this.dateOfReport = DateTime.Now;
+            reportId = Guid.NewGuid();
+            userId = Guid.NewGuid();
+            postId = Guid.NewGuid();
+            reasonForReporting = Constants.EMPTY_STRING;
+            dateOfReport = DateTime.Now;
         }
 
         public Guid ReportId { get => reportId; }

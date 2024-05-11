@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ISSLab.Model;
+using ISSLab.Model.Entities;
 using Moq;
 
 namespace Tests.Model
@@ -15,7 +16,6 @@ namespace Tests.Model
         private Guid id;
         private List<Guid> usersThatShared;
         private List<Guid> usersThatLiked;
-        private List<Comment> comments;
         private string media;
         private DateTime creationDate;
         private Guid authorId;
@@ -39,11 +39,10 @@ namespace Tests.Model
         public void SetUp()
         {
             donationPost = new DonationPost();
-            donationPostSimpleConstructor = new DonationPost(id, usersThatShared, usersThatLiked, comments, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, reports, reviewScore, currentDonationAmount, donationPageLink, type, confirmed, views);
+            donationPostSimpleConstructor = new DonationPost(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, reports, reviewScore, currentDonationAmount, donationPageLink, type, confirmed, views);
             id = Guid.NewGuid();
             usersThatShared = new List<Guid>();
             usersThatLiked = new List<Guid>();
-            comments = new List<Comment>();
             media = " ";
             creationDate = new DateTime();
             authorId = Guid.NewGuid();

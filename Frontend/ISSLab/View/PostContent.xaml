@@ -81,15 +81,6 @@
                     </Button>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="2" Grid.Column="2" Margin="0,0,10,10">
-                <Button Content="Trimite mesaj" Height="30" Background="#d4ccc2" FontWeight="Bold">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </Grid>
             <Grid Grid.Row="3" Grid.Column="3" Margin="0,0,10,10">
                 <Label Content="Promoted" HorizontalAlignment="Center" Background="Yellow" FontWeight="Bold">
                     <Label.Resources>
@@ -109,14 +100,6 @@
                         <Image Source="../Resources/Images/dislike.png"></Image>
                     </Button>
                     <TextBlock Text="{Binding Uninterests}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
-                    <Button Width="25" Height="20" Margin="10,0,0,0" Background="Transparent" BorderThickness="0">
-                        <Image Source="../Resources/Images/comments.png"></Image>
-                    </Button>
-                    <TextBlock Text="{Binding Comments}" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
-                    <Button Width="25" Height="20" Margin="10,0,0,0" Background="Transparent" BorderThickness="0">
-                        <Image Source="../Resources/Images/share.png"></Image>
-                    </Button>
-                    <TextBlock Text="share" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
                 </StackPanel>
             </Grid>
 

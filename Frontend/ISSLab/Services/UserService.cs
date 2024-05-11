@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 using ISSLab.Model.Repositories;
 namespace ISSLab.Services
 {

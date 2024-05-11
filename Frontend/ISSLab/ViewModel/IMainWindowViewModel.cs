@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 
 namespace ISSLab.ViewModel
 {

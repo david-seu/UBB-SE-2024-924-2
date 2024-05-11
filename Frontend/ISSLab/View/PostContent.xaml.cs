@@ -32,7 +32,6 @@ namespace ISSLab.View
         public static readonly DependencyProperty PriceProperty = DependencyProperty.Register("Price", typeof(string), typeof(PostContent));
         public static readonly DependencyProperty InterestsProperty = DependencyProperty.Register("Interests", typeof(string), typeof(PostContent));
         public static readonly DependencyProperty UninterestsProperty = DependencyProperty.Register("Uninterests", typeof(string), typeof(PostContent));
-        public static readonly DependencyProperty CommentsProperty = DependencyProperty.Register("Comments", typeof(string), typeof(PostContent));
         public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(PostContent));
         public static readonly DependencyProperty ContactProperty = DependencyProperty.Register("Contact", typeof(string), typeof(PostContent));
         public static readonly DependencyProperty DeliveryProperty = DependencyProperty.Register("Delivery", typeof(string), typeof(PostContent));
@@ -129,12 +128,6 @@ namespace ISSLab.View
             get { return (string)GetValue(UninterestsProperty); }
             set { SetValue(UninterestsProperty, value); }
         }
-        public string Comments
-        {
-            get { return (string)GetValue(CommentsProperty); }
-            set { SetValue(CommentsProperty, value); }
-        }
-
         public string Description
         {
             get { return (string)GetValue(DescriptionProperty); }

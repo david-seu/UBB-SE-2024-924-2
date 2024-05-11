@@ -2,7 +2,7 @@
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Windows;
-using ISSLab.Model;
+using ISSLab.Model.Entities;
 using ISSLab.Model.Repositories;
 using ISSLab.Services;
 using ISSLab.ViewModel;

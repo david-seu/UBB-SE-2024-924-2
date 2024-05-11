@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model
+namespace ISSLab.Model.Entities
 {
     public class Review
     {
@@ -18,7 +18,7 @@ namespace ISSLab.Model
 
         public Review(Guid reviewerId, Guid sellerId, Guid groupId, string content, DateTime dateOfReview, int rating)
         {
-            this.reviewId = Guid.NewGuid();
+            reviewId = Guid.NewGuid();
             this.reviewerId = reviewerId;
             this.groupId = groupId;
             this.sellerId = sellerId;
@@ -29,7 +29,7 @@ namespace ISSLab.Model
 
         public Review(Guid id, Guid reviewerId, Guid sellerId, Guid groupId, string content, DateTime dateOfReview, int rating)
         {
-            this.reviewId = id;
+            reviewId = id;
             this.reviewerId = reviewerId;
             this.sellerId = sellerId;
             this.groupId = groupId;
@@ -39,13 +39,13 @@ namespace ISSLab.Model
         }
         public Review()
         {
-            this.reviewId = Guid.NewGuid();
-            this.groupId = Guid.NewGuid();
-            this.reviewerId = Guid.NewGuid();
-            this.sellerId = Guid.NewGuid();
-            this.content = Constants.EMPTY_STRING;
-            this.dateOfReview = DateTime.Now;
-            this.rating = 0;
+            reviewId = Guid.NewGuid();
+            groupId = Guid.NewGuid();
+            reviewerId = Guid.NewGuid();
+            sellerId = Guid.NewGuid();
+            content = Constants.EMPTY_STRING;
+            dateOfReview = DateTime.Now;
+            rating = 0;
         }
 
         public Guid Id { get => reviewId; }
