@@ -30,7 +30,7 @@ namespace Tests.Services
         {
             Guid userId = Guid.NewGuid();
             User addedUser = new User(userId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
+                new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
 
             userService.AddUser(addedUser);
 

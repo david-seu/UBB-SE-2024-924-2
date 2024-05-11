@@ -30,13 +30,11 @@ namespace Tests.Model
         private DateTime creationDateFullConstructor;
         private List<Guid> groupsWithSellingPrivilegeFullConstructor;
         private List<Guid> groupsWithActiveRequestToSellFullConstructor;
-        private List<SellingUserScore> userScoresFullConstructor;
         private List<Cart> cartsFullConstructor;
         private List<UsersFavoritePosts> favoritesFullConstructor;
         private List<Guid> groupsFullConstructor;
         private int numberOfSalesFullConstructor;
 
-        private SellingUserScore scoreToAddAndRemove;
         private Guid groupToUseForAccessTests;
 
         [SetUp]
@@ -61,15 +59,13 @@ namespace Tests.Model
             creationDateFullConstructor = DateTime.Now;
             groupsWithSellingPrivilegeFullConstructor = new List<Guid>();
             groupsWithActiveRequestToSellFullConstructor = new List<Guid>();
-            userScoresFullConstructor = new List<SellingUserScore>();
             cartsFullConstructor = new List<Cart>();
             favoritesFullConstructor = new List<UsersFavoritePosts>();
             groupsFullConstructor = new List<Guid>();
             numberOfSalesFullConstructor = 0;
 
-            userFullConstructor = new User(idFullConstructor, usernameFullConstructor, realNameFullConstructor, dateOfBirthFullConstructor, profilePictureFullConstructor, passwordFullConstructor, creationDateFullConstructor, groupsWithSellingPrivilegeFullConstructor, groupsWithActiveRequestToSellFullConstructor, userScoresFullConstructor, cartsFullConstructor, favoritesFullConstructor, groupsFullConstructor, numberOfSalesFullConstructor);
+            userFullConstructor = new User(idFullConstructor, usernameFullConstructor, realNameFullConstructor, dateOfBirthFullConstructor, profilePictureFullConstructor, passwordFullConstructor, creationDateFullConstructor, groupsWithSellingPrivilegeFullConstructor, groupsWithActiveRequestToSellFullConstructor, cartsFullConstructor, favoritesFullConstructor, groupsFullConstructor, numberOfSalesFullConstructor);
 
-            scoreToAddAndRemove = new SellingUserScore();
             groupToUseForAccessTests = new Guid();
         }
 
@@ -151,12 +147,6 @@ namespace Tests.Model
         }
 
         [Test]
-        public void UserSellingUserScoresGet_GetSellingUserScoresOfFullConstructorUser_SellingUserScoresMatches()
-        {
-            Assert.That(userFullConstructor.SellingUserScores, Is.EqualTo(userScoresFullConstructor));
-        }
-
-        [Test]
         public void UserCreationDateGet_GetCreationDateOfFullConstructorUser_CreationDateMatches()
         {
             Assert.That(userFullConstructor.CreationDate, Is.EqualTo(creationDateFullConstructor));
@@ -231,24 +221,10 @@ namespace Tests.Model
         }
 
         [Test]
-        public void AddNewUserScore_AddUserScoreToFullConstructorUser_UserScoreAdded()
-        {
-            userFullConstructor.AddNewUserScore(scoreToAddAndRemove);
-            Assert.That(userFullConstructor.SellingUserScores[0], Is.EqualTo(scoreToAddAndRemove));
-        }
-
-        [Test]
         public void UserSetNumberOfSales_SetNumberOfSalesOfFullConstructorUser_NumberOfSalesUpdates()
         {
             userFullConstructor.NumberOfSales = 1;
             Assert.That(userFullConstructor.NumberOfSales, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void RemoveUserScore_RemoveUserScoreFromFullConstructorUser_ScoreRemoved()
-        {
-            userFullConstructor.RemoveUserScore(scoreToAddAndRemove);
-            Assert.That(userFullConstructor.SellingUserScores.Count, Is.EqualTo(0));
         }
 
         [Test]
