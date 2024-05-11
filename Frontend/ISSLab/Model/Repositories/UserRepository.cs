@@ -67,11 +67,6 @@ namespace ISSLab.Model.Repositories
             }
         }
 
-        public void AddReview(Review review)
-        {
-            allUsers.Find(user => user.Id == review.SellerId).AddReview(review);
-        }
-
         public void UpdateUserProfilePicture(Guid userId, string newProfilePicture)
         {
             for (int i = 0; i < allUsers.Count; i++)

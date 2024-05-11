@@ -30,7 +30,7 @@ namespace Tests.Services
         {
             Guid userId = Guid.NewGuid();
             User addedUser = new User(userId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
 
             userService.AddUser(addedUser);
 
@@ -78,14 +78,6 @@ namespace Tests.Services
             userService.UpdateUserUsername(Guid.NewGuid(), "user");
 
             mockedUserRepository.Verify(repository => repository.UpdateUserUsername(It.IsAny<Guid>(), It.IsAny<string>()), Times.Once);
-        }
-
-        [Test]
-        public void AddReview_Any_UserRepositoryAddReviewIsCalled()
-        {
-            userService.AddReview(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "content", DateTime.Now, 3);
-
-            mockedUserRepository.Verify(repository => repository.AddReview(It.IsAny<Review>()), Times.Once);
         }
 
         [Test]

@@ -6,7 +6,6 @@ namespace ISSLab.Services
     {
         void AddPostToCart(Guid groupId, Guid postId, Guid userId);
         void AddPostToFavorites(Guid groupId, Guid postId, Guid userId);
-        void AddReview(Guid reviewerId, Guid sellerId, Guid groupId, string content, DateTime date, int rating);
         void AddUser(User user);
         List<Post> GetFavoritePosts(Guid groupId, Guid userId);
         User GetUserById(Guid id);

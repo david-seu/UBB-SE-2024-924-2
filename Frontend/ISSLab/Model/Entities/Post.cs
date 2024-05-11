@@ -18,7 +18,6 @@ namespace ISSLab.Model.Entities
         private Guid groupId;
         private bool promoted;
         private List<Guid> usersThatFavorited;
-        private List<Report> reports;
         private string itemLocation;
         private bool confirmed;
         private string description;
@@ -45,11 +44,10 @@ namespace ISSLab.Model.Entities
             views = 0;
             interestStatuses = new List<InterestStatus>();
             this.contacts = contacts;
-            reports = new List<Report>();
             this.type = type;
         }
 
-        public Post(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string contacts, List<Report> reports, string type, bool confirmed, int views)
+        public Post(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string contacts, string type, bool confirmed, int views)
         {
             this.id = id;
             this.usersThatShared = usersThatShared;
@@ -65,7 +63,6 @@ namespace ISSLab.Model.Entities
             this.title = title;
             this.interestStatuses = interestStatuses;
             this.contacts = contacts;
-            this.reports = reports;
             this.type = type;
             this.views = views;
             this.confirmed = confirmed;
@@ -76,7 +73,6 @@ namespace ISSLab.Model.Entities
             id = Guid.NewGuid();
             usersThatShared = new List<Guid>();
             usersThatLiked = new List<Guid>();
-            reports = new List<Report>();
             mediaContent = Constants.EMPTY_STRING;
             creationDate = DateTime.Now;
             authorId = Guid.NewGuid();
@@ -104,7 +100,6 @@ namespace ISSLab.Model.Entities
         public Guid GroupId { get => groupId; }
         public bool Promoted { get => promoted; set => promoted = value; }
         public List<Guid> UsersThatFavorited { get => usersThatFavorited; }
-        public List<Report> Reports { get => reports; }
         public string ItemLocation { get => itemLocation; set => itemLocation = value; }
         public string Description { get => description; set => description = value; }
         public string Title { get => title; set => title = value; }
@@ -112,15 +107,6 @@ namespace ISSLab.Model.Entities
         public string Contacts { get => contacts; set => contacts = value; }
 
         public bool Confirmed { get => confirmed; set => confirmed = value; }
-
-        public void AddReport(Report report)
-        {
-            reports.Add(report);
-        }
-        public void RemoveReport(Guid userId)
-        {
-            reports.RemoveAll(userOnTrial => userOnTrial.UserId == userId);
-        }
 
         public void ToggleFavorite(Guid userId)
         {

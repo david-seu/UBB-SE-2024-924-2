@@ -27,8 +27,8 @@ namespace Tests.Model
             onGoing = true;
 
             postEmpty = new AuctionPost();
-            postWithId = new AuctionPost(Guid.NewGuid(), new List<Guid>(), new List<Guid>(), string.Empty, DateTime.Now, Guid.NewGuid(), Guid.NewGuid(), true, new List<Guid>(), string.Empty, string.Empty, string.Empty, new List<InterestStatus>(), string.Empty, new List<Report>(), 0, DateTime.Now, string.Empty, new List<Review>(), 0, Guid.NewGuid(), currentPriceLeader, currentBidPrice, minimumBidPrice, false, 100, onGoing);
-            postWithoutId = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, 100, DateTime.Now, string.Empty, new List<Review>(), 0, Guid.NewGuid(), currentPriceLeader, currentBidPrice, minimumBidPrice, true);
+            postWithId = new AuctionPost(Guid.NewGuid(), new List<Guid>(), new List<Guid>(), string.Empty, DateTime.Now, Guid.NewGuid(), Guid.NewGuid(), true, new List<Guid>(), string.Empty, string.Empty, string.Empty, new List<InterestStatus>(), string.Empty, 0, DateTime.Now, string.Empty, Guid.NewGuid(), currentPriceLeader, currentBidPrice, minimumBidPrice, false, 100, onGoing);
+            postWithoutId = new AuctionPost(string.Empty, Guid.NewGuid(), Guid.NewGuid(), string.Empty, string.Empty, string.Empty, string.Empty, 100, DateTime.Now, string.Empty, Guid.NewGuid(), currentPriceLeader, currentBidPrice, minimumBidPrice, true);
         }
 
         [Test]

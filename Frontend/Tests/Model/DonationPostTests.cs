@@ -27,8 +27,6 @@ namespace Tests.Model
         private string title;
         private List<InterestStatus> interestStatuses;
         private string contacts;
-        private List<Report> reports;
-        private float reviewScore;
         private double currentDonationAmount;
         private string donationPageLink;
         private string type;
@@ -39,7 +37,7 @@ namespace Tests.Model
         public void SetUp()
         {
             donationPost = new DonationPost();
-            donationPostSimpleConstructor = new DonationPost(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, reports, reviewScore, currentDonationAmount, donationPageLink, type, confirmed, views);
+            donationPostSimpleConstructor = new DonationPost(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, currentDonationAmount, donationPageLink, type, confirmed, views);
             id = Guid.NewGuid();
             usersThatShared = new List<Guid>();
             usersThatLiked = new List<Guid>();
@@ -54,21 +52,11 @@ namespace Tests.Model
             title = " ";
             interestStatuses = new List<InterestStatus>();
             contacts = " ";
-            reports = new List<Report>();
-            reviewScore = 0f;
             currentDonationAmount = 0f;
             donationPageLink = " ";
             type = " ";
             confirmed = true;
             views = 0;
-        }
-
-        [Test]
-        public void ReviewScore_AnyDonationPost_ReturnsReviewScore()
-        {
-            donationPost.ReviewScore = 1.0f;
-
-            Assert.That(donationPost.ReviewScore, Is.EqualTo(1.0f));
         }
 
         [Test]
@@ -85,22 +73,6 @@ namespace Tests.Model
             donationPost.DonationPageLink = "/1";
 
             Assert.That(donationPost.DonationPageLink, Is.EqualTo("/1"));
-        }
-
-        [Test]
-        public void AddReview_AnyPostOrReview_DoesNotCrash()
-        {
-            donationPost.AddReview(new Review());
-
-            Assert.Pass();
-        }
-
-        [Test]
-        public void RemoveReview_AnyPostOrReview_DoesNotCrash()
-        {
-            donationPost.RemoveReview(new Review());
-
-            Assert.Pass();
         }
     }
 }

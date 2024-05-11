@@ -41,7 +41,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
             Assert.That(userRepository.GetById(addedUserId), Is.EqualTo(addedUser));
@@ -52,7 +52,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
             var exceptionMessage = Assert.Throws<Exception>(() => { userRepository.GetById(Guid.NewGuid()); });
@@ -64,7 +64,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
 
             userRepository.AddUser(addedUser);
 
@@ -76,7 +76,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newUsername = "newName";
             userRepository.AddUser(addedUser);
 
@@ -91,7 +91,7 @@ namespace Tests.Model.Repositories
             Guid addedUserId = Guid.NewGuid();
             string usernameWhichShouldRemain = "shouldremain";
             User addedUser = new User(addedUserId, usernameWhichShouldRemain, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newUsername = "newName";
             userRepository.AddUser(addedUser);
 
@@ -105,7 +105,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             DateOnly newDateOfBirth = DateOnly.FromDateTime(DateTime.Now);
             userRepository.AddUser(addedUser);
 
@@ -120,7 +120,7 @@ namespace Tests.Model.Repositories
             Guid addedUserId = Guid.NewGuid();
             DateOnly dateOfBirthWhichShouldRemain = DateOnly.Parse("10.10.2020");
             User addedUser = new User(addedUserId, string.Empty, string.Empty, dateOfBirthWhichShouldRemain, string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             DateOnly newDateOfBirth = DateOnly.FromDateTime(DateTime.Now);
             userRepository.AddUser(addedUser);
 
@@ -130,34 +130,11 @@ namespace Tests.Model.Repositories
         }
 
         [Test]
-        public void AddReview_ExistingUser_ReviewAppearsInUsersReviews()
-        {
-            Guid addedUserId = Guid.NewGuid();
-            User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
-            Review addedReview = new Review();
-            addedReview.SellerId = addedUserId;
-            userRepository.AddUser(addedUser);
-
-            userRepository.AddReview(addedReview);
-
-            Assert.That(addedUser.Reviews, Does.Contain(addedReview));
-        }
-
-        [Test]
-        public void AddReview_NonexistingUser_ExceptionThrown()
-        {
-            Review addedReview = new Review();
-
-            var exceptionMessage = Assert.Throws<NullReferenceException>(() => { userRepository.AddReview(addedReview); });
-        }
-
-        [Test]
         public void UpdateUserProfilePicture_ExistingUser_UsersProfilePictureIsUpdated()
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newProfilePicture = "pic";
             userRepository.AddUser(addedUser);
 
@@ -173,7 +150,7 @@ namespace Tests.Model.Repositories
             string profilePictureWhichShouldRemain = "profilepic";
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), profilePictureWhichShouldRemain, string.Empty,
                 DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newProfilePicture = "pic";
             userRepository.AddUser(addedUser);
 
@@ -187,7 +164,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newPassword = "pass";
             userRepository.AddUser(addedUser);
 
@@ -202,7 +179,7 @@ namespace Tests.Model.Repositories
             Guid addedUserId = Guid.NewGuid();
             string passwordWhichShouldRemain = "originalpass";
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, passwordWhichShouldRemain, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             string newPassword = "pass";
             userRepository.AddUser(addedUser);
 
@@ -216,7 +193,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             int newNumberOfSells = 123;
             userRepository.AddUser(addedUser);
 
@@ -232,7 +209,7 @@ namespace Tests.Model.Repositories
             int numberOfSellsWhichShouldRemain = 99;
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
                 new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(),
-                new List<Review>(), numberOfSellsWhichShouldRemain);
+                numberOfSellsWhichShouldRemain);
             int newNumberOfSells = 123;
             userRepository.AddUser(addedUser);
 
@@ -246,7 +223,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedThenRemovedUserId = Guid.NewGuid();
             User addedThenRemovedUser = new User(addedThenRemovedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedThenRemovedUser);
 
             userRepository.DeleteUser(addedThenRemovedUserId);
@@ -259,7 +236,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
             userRepository.DeleteUser(Guid.NewGuid());
@@ -281,7 +258,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
             userRepository.AddPostToCart(Guid.NewGuid(), addedUserId, Guid.NewGuid());
@@ -294,7 +271,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid postId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
             userRepository.AddUser(addedUser);
@@ -310,7 +287,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid postId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
             userRepository.AddUser(addedUser);
@@ -325,7 +302,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid groupId = Guid.NewGuid();
             addedUser.AddGroup(groupId);
             Cart cart = new Cart(groupId, addedUserId);
@@ -362,7 +339,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             userRepository.AddUser(addedUser);
 
             userRepository.AddToFavorites(Guid.NewGuid(), addedUserId, Guid.NewGuid());
@@ -375,7 +352,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid postId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
             userRepository.AddUser(addedUser);
@@ -391,7 +368,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid postId = Guid.NewGuid();
             Guid groupId = Guid.NewGuid();
             userRepository.AddUser(addedUser);
@@ -406,7 +383,7 @@ namespace Tests.Model.Repositories
         {
             Guid addedUserId = Guid.NewGuid();
             User addedUser = new User(addedUserId, string.Empty, string.Empty, DateOnly.Parse("10.10.2020"), string.Empty, string.Empty, DateTime.Now, new List<Guid>(),
-                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), new List<Review>(), 0);
+                new List<Guid>(), new List<SellingUserScore>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             Guid groupId = Guid.NewGuid();
             addedUser.AddGroup(groupId);
             UsersFavoritePosts favorites = new UsersFavoritePosts(groupId, addedUserId);

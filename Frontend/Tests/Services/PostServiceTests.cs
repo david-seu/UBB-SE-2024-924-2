@@ -93,13 +93,6 @@ namespace Tests.Services
         }
 
         [Test]
-        public void AddReport_AnyReport_ExceptionThrown()
-        {
-            var exceptionMessage = Assert.Throws<Exception>(() => { postService.AddReport(Guid.NewGuid(), Guid.NewGuid(), string.Empty); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
-        }
-
-        [Test]
         public void RemoveConfirmation_PostDoesNotExist_ExceptionThrown()
         {
             var exceptionMessage = Assert.Throws<Exception>(() => { postService.RemoveConfirmation(Guid.NewGuid()); });
@@ -135,51 +128,6 @@ namespace Tests.Services
             postService.ConfirmPost(theOnlyPost.Id);
 
             Assert.That(theOnlyPost.Confirmed, Is.True);
-        }
-
-        [Test]
-        public void AddReport_PostDoesNotExist_ExceptionThrown()
-        {
-            var exceptionMessage = Assert.Throws<Exception>(() => { postService.AddReport(Guid.NewGuid(), Guid.NewGuid(), "reason"); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
-        }
-
-        [Test]
-        public void AddReport_PostDoesExist_ReportIsAdded()
-        {
-            Post theOnlyPost = new Post();
-            Guid idOfTheOnlyPost = theOnlyPost.Id;
-            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyPost);
-            Guid userId = Guid.NewGuid();
-            string reason = "reason";
-
-            postService.AddReport(idOfTheOnlyPost, userId, reason);
-
-            Assert.That(theOnlyPost.Reports.Count, Is.EqualTo(1));
-            Assert.That(theOnlyPost.Reports[0].PostId, Is.EqualTo(idOfTheOnlyPost));
-            Assert.That(theOnlyPost.Reports[0].UserId, Is.EqualTo(userId));
-            Assert.That(theOnlyPost.Reports[0].ReasonForReporting, Is.EqualTo(reason));
-        }
-
-        [Test]
-        public void RemoveReport_PostDoesNotExist_ExceptionThrown()
-        {
-            var exceptionMessage = Assert.Throws<Exception>(() => { postService.RemoveReport(Guid.NewGuid(), Guid.NewGuid()); });
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Post not found"));
-        }
-
-        [Test]
-        public void RemoveReport_PostDoesExist_ReportIsRemoved()
-        {
-            Post theOnlyPost = new Post();
-            Guid idOfTheOnlyPost = theOnlyPost.Id;
-            postRepositoryMock.Setup(repository => repository.GetPostById(It.IsAny<Guid>())).Returns(theOnlyPost);
-            Guid userId = Guid.NewGuid();
-            theOnlyPost.AddReport(new Report(userId, idOfTheOnlyPost, "reason"));
-
-            postService.RemoveReport(idOfTheOnlyPost, userId);
-
-            Assert.That(theOnlyPost.Reports, Is.Empty);
         }
 
         [Test]

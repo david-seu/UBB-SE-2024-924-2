@@ -11,7 +11,6 @@ namespace ISSLab.Model.Entities
 {
     public class DonationPost : Post
     {
-        private float reviewScore;
         private double currentDonationAmount;
         private string donationPageLink;
 
@@ -19,35 +18,20 @@ namespace ISSLab.Model.Entities
         {
             currentDonationAmount = 0;
             this.donationPageLink = donationPageLink;
-            reviewScore = 0;
         }
 
         public DonationPost() : base()
         {
             currentDonationAmount = 0;
             donationPageLink = Constants.EMPTY_STRING;
-            reviewScore = 0;
         }
 
-        public DonationPost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string media, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string location, string description, string title, List<InterestStatus> interestStatuses, string contacts, List<Report> reports, float reviewScore, double currentDonationAmount, string donationPageLink, string type, bool confirmed, int views) : base(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, reports, type, confirmed, views)
+        public DonationPost(Guid id, List<Guid> usersThatShared, List<Guid> usersThatLiked, string media, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string location, string description, string title, List<InterestStatus> interestStatuses, string contacts, double currentDonationAmount, string donationPageLink, string type, bool confirmed, int views) : base(id, usersThatShared, usersThatLiked, media, creationDate, authorId, groupId, promoted, usersThatFavorited, location, description, title, interestStatuses, contacts, type, confirmed, views)
         {
-            this.reviewScore = reviewScore;
             this.currentDonationAmount = currentDonationAmount;
             this.donationPageLink = donationPageLink;
         }
 
-        public void AddReview(Review review)
-        {
-        }
-        public void RemoveReview(Review review)
-        {
-        }
-
-        public float ReviewScore
-        {
-            get { return reviewScore; }
-            set { reviewScore = value; }
-        }
         public double DonationAmount
         {
             get { return currentDonationAmount; }

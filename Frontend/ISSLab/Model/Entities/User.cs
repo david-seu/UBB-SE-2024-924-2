@@ -25,7 +25,6 @@ namespace ISSLab.Model.Entities
         private List<Cart> carts;
         private List<UsersFavoritePosts> favorites;
         private List<Guid> groups;
-        private List<Review> receivedReviews;
 
         public User(string username, string realName, DateOnly dateOfBirth, string profilePicture, string password)
         {
@@ -42,10 +41,9 @@ namespace ISSLab.Model.Entities
             carts = new List<Cart>();
             favorites = new List<UsersFavoritePosts>();
             groups = new List<Guid>();
-            receivedReviews = new List<Review>();
             numberOfSales = 0;
         }
-        public User(Guid id, string username, string realName, DateOnly dateOfBirth, string profilePicture, string password, DateTime creationDate, List<Guid> groupsWithSellingPrivelage, List<Guid> groupsWithActiveRequestToSell, List<SellingUserScore> userScores, List<Cart> carts, List<UsersFavoritePosts> favorites, List<Guid> groups, List<Review> receivedReviews, int nrOfSells)
+        public User(Guid id, string username, string realName, DateOnly dateOfBirth, string profilePicture, string password, DateTime creationDate, List<Guid> groupsWithSellingPrivelage, List<Guid> groupsWithActiveRequestToSell, List<SellingUserScore> userScores, List<Cart> carts, List<UsersFavoritePosts> favorites, List<Guid> groups, int nrOfSells)
         {
             this.id = id;
             this.username = username;
@@ -57,7 +55,6 @@ namespace ISSLab.Model.Entities
             groupsWithSellingPrivilege = groupsWithSellingPrivelage;
             this.groupsWithActiveRequestToSell = groupsWithActiveRequestToSell;
             this.userScores = userScores;
-            this.receivedReviews = receivedReviews;
             this.carts = carts;
             this.favorites = favorites;
             this.groups = groups;
@@ -65,7 +62,6 @@ namespace ISSLab.Model.Entities
             this.carts = carts;
             this.favorites = favorites;
             this.groups = groups;
-            this.receivedReviews = receivedReviews;
         }
 
         public User()
@@ -84,7 +80,6 @@ namespace ISSLab.Model.Entities
             carts = new List<Cart>();
             favorites = new List<UsersFavoritePosts>();
             groups = new List<Guid>();
-            receivedReviews = new List<Review>();
         }
 
         public List<SellingUserScore> SellingUserScores { get => userScores; set => userScores = value; }
@@ -101,8 +96,6 @@ namespace ISSLab.Model.Entities
         public List<UsersFavoritePosts> Favorites { get => favorites; }
 
         public List<Guid> Groups { get => groups; }
-
-        public List<Review> Reviews { get => receivedReviews; }
 
         public List<Guid> GroupsWithSellingPrivilege { get => groupsWithSellingPrivilege; }
         public List<Guid> GroupsWithActiveRequestToSell { get => groupsWithActiveRequestToSell; }
@@ -134,11 +127,6 @@ namespace ISSLab.Model.Entities
         public void AddGroup(Guid newGroup)
         {
             groups.Add(newGroup);
-        }
-
-        public void AddReview(Review newReview)
-        {
-            receivedReviews.Add(newReview);
         }
         public void AddNewUserScore(SellingUserScore userScore)
         {

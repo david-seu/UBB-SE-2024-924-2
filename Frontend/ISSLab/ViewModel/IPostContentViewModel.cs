@@ -19,7 +19,6 @@ namespace ISSLab.ViewModel
         string Price { get; }
         string ProfilePicture { get; }
         Post Post { get; set; }
-        float Rating { get; }
         string TimePosted { get; }
         string Uninterests { get; }
         string Username { get; }

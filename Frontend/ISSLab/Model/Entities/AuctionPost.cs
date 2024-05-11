@@ -13,7 +13,7 @@ namespace ISSLab.Model.Entities
         private double minimumBidPrice;
         private bool onGoing;
 
-        public AuctionPost(string mediaContent, Guid authorId, Guid groupId, string itemLocation, string description, string title, string phoneNumber, double price, DateTime expirationDate, string deliveryType, List<Review> reviews, float reviewScore, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed) : base(mediaContent, authorId, groupId, itemLocation, description, title, phoneNumber, price, expirationDate, deliveryType, reviews, reviewScore, buyerId, Constants.AUCTION_POST_TYPE, confirmed)
+        public AuctionPost(string mediaContent, Guid authorId, Guid groupId, string itemLocation, string description, string title, string phoneNumber, double price, DateTime expirationDate, string deliveryType, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed) : base(mediaContent, authorId, groupId, itemLocation, description, title, phoneNumber, price, expirationDate, deliveryType, buyerId, Constants.AUCTION_POST_TYPE, confirmed)
         {
             this.currentPriceLeader = Guid.Empty;
             this.currentBidPrice = currentBidPrice;
@@ -29,7 +29,7 @@ namespace ISSLab.Model.Entities
             minimumBidPrice = 0;
         }
 
-        public AuctionPost(Guid postId, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string phoneNumber, List<Report> reports, double price, DateTime expirationDate, string deliveryType, List<Review> reviews, float reviewScore, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed, int viewCount, bool onGoing) : base(postId, usersThatShared, usersThatLiked, mediaContent, creationDate, authorId, groupId, promoted, usersThatFavorited, itemLocation, description, title, interestStatuses, phoneNumber, reports, price, expirationDate, deliveryType, reviews, reviewScore, buyerId, Constants.AUCTION_POST_TYPE, confirmed, viewCount)
+        public AuctionPost(Guid postId, List<Guid> usersThatShared, List<Guid> usersThatLiked, string mediaContent, DateTime creationDate, Guid authorId, Guid groupId, bool promoted, List<Guid> usersThatFavorited, string itemLocation, string description, string title, List<InterestStatus> interestStatuses, string phoneNumber, double price, DateTime expirationDate, string deliveryType, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice, bool confirmed, int viewCount, bool onGoing) : base(postId, usersThatShared, usersThatLiked, mediaContent, creationDate, authorId, groupId, promoted, usersThatFavorited, itemLocation, description, title, interestStatuses, phoneNumber, price, expirationDate, deliveryType, buyerId, Constants.AUCTION_POST_TYPE, confirmed, viewCount)
         {
             this.currentPriceLeader = currentPriceLeader;
             this.currentBidPrice = currentBidPrice;

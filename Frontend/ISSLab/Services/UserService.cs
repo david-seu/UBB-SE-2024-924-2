@@ -55,12 +55,6 @@ namespace ISSLab.Services
             userRepository.UpdateUserUsername(user, username);
         }
 
-        public void AddReview(Guid reviewerId, Guid sellerId, Guid groupId, string content, DateTime date, int rating)
-        {
-            Review review = new Review(reviewerId, sellerId, groupId, content, date, rating);
-            userRepository.AddReview(review);
-        }
-
         public void AddPostToCart(Guid groupId, Guid postId, Guid userId)
         {
             userRepository.AddPostToCart(groupId, userId, postId);

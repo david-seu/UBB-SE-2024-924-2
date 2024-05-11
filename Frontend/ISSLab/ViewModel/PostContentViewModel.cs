@@ -72,14 +72,6 @@ namespace ISSLab.ViewModel
             set { OurPost = value; }
         }
 
-        public float Rating
-        {
-            get
-            {
-                return ((FixedPricePost)OurPost).ReviewScore;
-            }
-        }
-
         public string Visible
         {
             get

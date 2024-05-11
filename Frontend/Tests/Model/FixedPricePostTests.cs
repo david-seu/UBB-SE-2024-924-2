@@ -34,79 +34,11 @@ namespace Tests.Model
         }
 
         [Test]
-        public void ReviewScore_Any_UpdatesReviewScore()
-        {
-            fixedPricePost.ReviewScore = 53.9f;
-
-            Assert.That(fixedPricePost.ReviewScore, Is.EqualTo(53.9f));
-        }
-
-        [Test]
         public void Delivery_Any_UpdatesDelivery()
         {
             fixedPricePost.Delivery = "A";
 
             Assert.That(fixedPricePost.Delivery, Is.EqualTo("A"));
-        }
-
-        [Test]
-        public void AddReview_NotAlreadyExistentReview_ReviewIsAdded()
-        {
-            Review firstReview = new Review();
-            Review secondReview = new Review();
-            fixedPricePost.AddReview(firstReview);
-            fixedPricePost.AddReview(secondReview);
-
-            List<Review> expectedReviews = new List<Review>()
-            {
-                firstReview,
-                secondReview,
-            };
-            List<Review> actualReviews = fixedPricePost.Reviews;
-
-            Assert.That(actualReviews, Is.EqualTo(expectedReviews));
-        }
-
-        [Test]
-        public void AddReview_AlreadyExistentReview_ExceptionThrown()
-        {
-            Review reviewToAdd = new Review();
-            fixedPricePost.AddReview(reviewToAdd);
-
-            var exceptionMessage = Assert.Throws<Exception>(() => { fixedPricePost.AddReview(reviewToAdd); });
-
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Review already exists. Edit the existing one if you want"));
-        }
-
-        [Test]
-        public void RemoveReview_ExistingReview_ReviewRemoved()
-        {
-            Review firstReview = new Review();
-            Review secondReview = new Review();
-            fixedPricePost.AddReview(firstReview);
-            fixedPricePost.AddReview(secondReview);
-
-            List<Review> listOfReviewsToVerifyRemoval = new List<Review>()
-            {
-                secondReview,
-            };
-
-            fixedPricePost.RemoveReview(firstReview);
-            List<Review> actualReviews = fixedPricePost.Reviews;
-
-            Assert.That(actualReviews, Is.EqualTo(listOfReviewsToVerifyRemoval));
-        }
-
-        [Test]
-        public void RemoveReview_NotAlreadyExistingReview_ExceptionThrown()
-        {
-            Review reviewNeverAdded = new Review();
-            Review reviewAdded = new Review();
-            fixedPricePost.AddReview(reviewAdded);
-
-            var exceptionMessage = Assert.Throws<Exception>(() => { fixedPricePost.RemoveReview(reviewNeverAdded); });
-
-            Assert.That(exceptionMessage.Message, Is.EqualTo("Review does not exist"));
         }
 
         [Test]

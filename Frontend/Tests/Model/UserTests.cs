@@ -34,7 +34,6 @@ namespace Tests.Model
         private List<Cart> cartsFullConstructor;
         private List<UsersFavoritePosts> favoritesFullConstructor;
         private List<Guid> groupsFullConstructor;
-        private List<Review> receivedReviewsFullConstructor;
         private int numberOfSalesFullConstructor;
 
         private SellingUserScore scoreToAddAndRemove;
@@ -66,10 +65,9 @@ namespace Tests.Model
             cartsFullConstructor = new List<Cart>();
             favoritesFullConstructor = new List<UsersFavoritePosts>();
             groupsFullConstructor = new List<Guid>();
-            receivedReviewsFullConstructor = new List<Review>();
             numberOfSalesFullConstructor = 0;
 
-            userFullConstructor = new User(idFullConstructor, usernameFullConstructor, realNameFullConstructor, dateOfBirthFullConstructor, profilePictureFullConstructor, passwordFullConstructor, creationDateFullConstructor, groupsWithSellingPrivilegeFullConstructor, groupsWithActiveRequestToSellFullConstructor, userScoresFullConstructor, cartsFullConstructor, favoritesFullConstructor, groupsFullConstructor, receivedReviewsFullConstructor, numberOfSalesFullConstructor);
+            userFullConstructor = new User(idFullConstructor, usernameFullConstructor, realNameFullConstructor, dateOfBirthFullConstructor, profilePictureFullConstructor, passwordFullConstructor, creationDateFullConstructor, groupsWithSellingPrivilegeFullConstructor, groupsWithActiveRequestToSellFullConstructor, userScoresFullConstructor, cartsFullConstructor, favoritesFullConstructor, groupsFullConstructor, numberOfSalesFullConstructor);
 
             scoreToAddAndRemove = new SellingUserScore();
             groupToUseForAccessTests = new Guid();
@@ -183,12 +181,6 @@ namespace Tests.Model
         }
 
         [Test]
-        public void UserReviewsGet_GetReviewsOfFullConstructorUser_ReviewsMatch()
-        {
-            Assert.That(userFullConstructor.Reviews, Is.EqualTo(receivedReviewsFullConstructor));
-        }
-
-        [Test]
         public void UserGroupsWithSellingPrivilege_GetGroupsWithSellingPrivilegeOfFullConstructorUser_GroupsMatch()
         {
             Assert.That(userFullConstructor.GroupsWithSellingPrivilege, Is.EqualTo(groupsWithSellingPrivilegeFullConstructor));
@@ -236,14 +228,6 @@ namespace Tests.Model
             Guid group = new Guid();
             userFullConstructor.AddGroup(group);
             Assert.That(userFullConstructor.Groups[0], Is.EqualTo(group));
-        }
-
-        [Test]
-        public void AddReview_AddReviewToFullConstructorUser_ReviewAdded()
-        {
-            Review review = new Review();
-            userFullConstructor.AddReview(review);
-            Assert.That(userFullConstructor.Reviews[0], Is.EqualTo(review));
         }
 
         [Test]

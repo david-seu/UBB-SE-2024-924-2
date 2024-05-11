@@ -13,7 +13,6 @@ namespace Tests.Model
         private Post firstConstructorPost;
         private Post secondConstructorPost;
         private Post thirdConstructorPost;
-        private Report reportToAdd;
         private Guid idUserToLike;
         private Guid idUserToFavorite;
         private Guid idUserToShare;
@@ -27,7 +26,6 @@ namespace Tests.Model
         [SetUp]
         public void SetUp()
         {
-            reportToAdd = new Report();
             idUserToLike = Guid.NewGuid();
             idUserToFavorite = Guid.NewGuid();
             idUserInterested1 = Guid.NewGuid();
@@ -36,7 +34,7 @@ namespace Tests.Model
             firstConstructorPost = new Post("./cat.jpg", Guid.NewGuid(), Guid.NewGuid(), "Cluj", "description1", "title1", "contacts1", string.Empty, true);
             secondConstructorPost = new Post(Guid.NewGuid(), new List<Guid>(), new List<Guid>(),
                 "./cat.jpg", DateTime.Parse("Jan 1, 2024"), Guid.NewGuid(), Guid.NewGuid(), false, new List<Guid>(), "Cluj", "description2", "title2",
-                new List<InterestStatus>(), "0744444444", new List<Report>(), "type2", false, 100);
+                new List<InterestStatus>(), "0744444444", "type2", false, 100);
             thirdConstructorPost = new Post();
             interestStatusToAdd1 = new InterestStatus(idUserInterested1, firstConstructorPost.Id, true);
             interestStatusToAdd2 = new InterestStatus(idUserInterested1, secondConstructorPost.Id, true);
@@ -129,25 +127,6 @@ namespace Tests.Model
         {
             Assert.IsInstanceOf<List<Guid>>(thirdConstructorPost.UsersThatFavorited);
         }
-
-        [Test]
-        public void ReportsGet_getReportsOfPostFirstConstructor_ShouldBeListReport()
-        {
-            Assert.IsInstanceOf<List<Report>>(firstConstructorPost.Reports);
-        }
-
-        [Test]
-        public void ReportsGet_getReportsOfPostSecondConstructor_ShouldBeListReport()
-        {
-            Assert.IsInstanceOf<List<Report>>(secondConstructorPost.Reports);
-        }
-
-        [Test]
-        public void ReportsGet_getReportsOfPostThirdConstructor_ShouldBeListReports()
-        {
-            Assert.IsInstanceOf<List<Report>>(thirdConstructorPost.Reports);
-        }
-
         [Test]
         public void MediaContentGet_getMediaContentOfPostFirstConstructor_ShouldBeString()
         {
@@ -233,49 +212,6 @@ namespace Tests.Model
             Assert.True(firstConstructorPost.ItemLocation == "Cluj");
             firstConstructorPost.ItemLocation = "Bucuresti";
             Assert.True(firstConstructorPost.ItemLocation == "Bucuresti");
-        }
-
-        [Test]
-        public void AddReport_AddReportToPostFirstConstructor_PostFirstConstructorShouldHaveOneReport()
-        {
-            firstConstructorPost.AddReport(reportToAdd);
-            Assert.That(firstConstructorPost.Reports, Has.Count.EqualTo(1));
-        }
-        [Test]
-        public void AddReport_AddReportToPostSecondConstructor_PostSecondConstructorShouldHaveOneReport()
-        {
-            secondConstructorPost.AddReport(reportToAdd);
-            Assert.That(secondConstructorPost.Reports, Has.Count.EqualTo(1));
-        }
-        [Test]
-        public void AddReport_AddReportToPostThirdConstructor_PostThirdConstructorShouldHaveOneReport()
-        {
-            thirdConstructorPost.AddReport(reportToAdd);
-            Assert.That(thirdConstructorPost.Reports, Has.Count.EqualTo(1));
-        }
-        [Test]
-        public void RemoveReport_RemoveSingularReportFromPostFirstConstructor_PostFirstConstructorShouldHaveNoReports()
-        {
-            firstConstructorPost.AddReport(reportToAdd);
-            Guid userId = reportToAdd.UserId;
-            firstConstructorPost.RemoveReport(userId);
-            Assert.That(firstConstructorPost.Reports, Has.Count.EqualTo(0));
-        }
-        [Test]
-        public void RemoveReport_RemoveSingularReportFromPostSecondConstructor_PostSecondConstructorShouldHaveNoReports()
-        {
-            secondConstructorPost.AddReport(reportToAdd);
-            Guid userId = reportToAdd.UserId;
-            secondConstructorPost.RemoveReport(userId);
-            Assert.That(secondConstructorPost.Reports, Has.Count.EqualTo(0));
-        }
-        [Test]
-        public void RemoveReport_RemoveSingularReportFromPostThirdConstructor_PostThirdConstructorShouldHaveNoReports()
-        {
-            thirdConstructorPost.AddReport(reportToAdd);
-            Guid userId = reportToAdd.UserId;
-            thirdConstructorPost.RemoveReport(userId);
-            Assert.That(thirdConstructorPost.Reports, Has.Count.EqualTo(0));
         }
 
         [Test]

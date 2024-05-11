@@ -40,7 +40,7 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public Post CreateAuctionPost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, List<Review> reviews, float reviewScore, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice)
+        public Post CreateAuctionPost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId, Guid currentPriceLeader, double currentBidPrice, double minimumBidPrice)
         {
             throw new NotImplementedException();
         }
@@ -50,7 +50,7 @@ namespace ISSLab.Services
             throw new NotImplementedException();
         }
 
-        public Post CreateFixedPricePost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, List<Review> reviews, float reviewScore, Guid buyerId)
+        public Post CreateFixedPricePost(string media, Guid authorId, Guid groupId, string location, string description, string title, string contacts, double price, DateTime expirationDate, string delivery, Guid buyerId)
         {
             throw new NotImplementedException();
         }

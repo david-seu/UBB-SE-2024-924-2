@@ -62,26 +62,6 @@ namespace ISSLab.Services
             post.Confirmed = true;
         }
 
-        public void AddReport(Guid postId, Guid userId, string reason)
-        {
-            Post? post = postRepository.GetPostById(postId);
-            if (post == null)
-            {
-                throw new Exception("Post not found");
-            }
-            post.Reports.Add(new Report(userId, postId, reason));
-        }
-
-        public void RemoveReport(Guid postID, Guid userId)
-        {
-            Post? post = postRepository.GetPostById(postID);
-            if (post == null)
-            {
-                throw new Exception("Post not found");
-            }
-            post.Reports.RemoveAll(report => report.UserId == userId);
-        }
-
         public void FavoritePost(Guid postId, Guid userId)
         {
             Post? post = postRepository.GetPostById(postId);

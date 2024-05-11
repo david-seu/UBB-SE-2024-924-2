@@ -4,7 +4,6 @@ namespace ISSLab.Model.Repositories
 {
     public interface IUserRepository
     {
-        void AddReview(Review reviewToBeAdded);
         void AddPostToCart(Guid groupId, Guid userId, Guid postId);
         void AddToFavorites(Guid groupId, Guid userId, Guid postId);
         void AddUser(User newUser);

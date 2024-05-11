@@ -282,7 +282,7 @@ namespace ISSLab.ViewModel
         public void CreateFixedPricePost()
         {
             FixedPricePost fixedPrice = new FixedPricePost(Constants.EMPTY_STRING, accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING,
-                PhoneNumber, float.Parse(Price), DateTime.Now.AddMonths(3), Delivery, new List<Review>(), 0, Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, false);
+                PhoneNumber, float.Parse(Price), DateTime.Now.AddMonths(3), Delivery, Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, false);
             postService.AddPost(fixedPrice);
 
             ResetFields();
