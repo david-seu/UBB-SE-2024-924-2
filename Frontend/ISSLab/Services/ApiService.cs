@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ISSLab.Model.Entities;
 using ISSLab.Services;
@@ -68,6 +69,46 @@ namespace ISSLab.Services
             {
                 Console.WriteLine($"Json error: {exception.Message}");
                 return new List<MarketplacePost> { };
+            }
+        }
+
+        public async Task<Uri> AddPostToCart(Guid groupId, Guid postId, Guid userId)
+        {
+            try
+            {
+                var data = new
+                {
+                    groupId,
+                    postId,
+                    userId
+                };
+
+                var json = JsonSerializer.Serialize(data);
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await httpClient.PostAsync("api/addPostToCart", content);
+                response.EnsureSuccessStatusCode();
+
+                Uri uri = response.Headers.Location;
+
+                Console.WriteLine($"Post added to cart successfully. URI: {uri}");
+
+                return uri;
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart.");
+
+                return null;
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart due to JSON parsing error.");
+
+                return null;
             }
         }
 
