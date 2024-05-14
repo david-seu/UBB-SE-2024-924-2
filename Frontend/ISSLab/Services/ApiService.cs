@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ISSLab.Model.Entities;
 using ISSLab.Services;
@@ -45,6 +48,27 @@ namespace ISSLab.Services
             response.EnsureSuccessStatusCode();
 
             return response.Headers.Location;
+        }
+
+        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
+                return new List<MarketplacePost> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<MarketplacePost> { };
+            }
         }
 
         public void Dispose()
