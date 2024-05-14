@@ -5,7 +5,7 @@ namespace ISSLab.ViewModel
 {
     public class CreatePostViewModel : ViewModelBase, ICreatePostViewModel
     {
-        private IPostService postService;
+        private IPostService postService; // TODO: REMOVE
         private Guid groupId;
         private Guid accountId;
 
@@ -270,21 +270,51 @@ namespace ISSLab.ViewModel
             }
         }
 
-        public void CreateDonationPost()
+        public async void CreateDonationPost()
         {
-            DonationMarketplacePost donationMarketplacePost = new DonationMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, Constants.EMPTY_STRING,
+            // for some reason, MarketplacePost is NOT of type Post
+            MarketplacePost donationMarketplacePost = new DonationMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, Constants.EMPTY_STRING,
                 Description, Constants.EMPTY_STRING, phoneNumber, donationLink, Constants.DONATION_POST_TYPE, true);
-            postService.AddPost(donationMarketplacePost);
+            // postService.AddPost(donationMarketplacePost);
+            // Getting the ApiService instance
+            ApiService apiService = ApiService.Instance;
+            try
+            {
+                // Calling the AddPostAsync method
+                Uri location = await apiService.AddPostAsync(donationMarketplacePost);
+                Console.WriteLine($"Post added successfully at {location}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
 
+            // Dispose of ApiService when done
+            apiService.Dispose();
             ResetFields();
         }
 
-        public void CreateFixedPricePost()
+        public async void CreateFixedPricePost()
         {
-            FixedPriceMarketplacePost fixedPriceMarketplace = new FixedPriceMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING,
+            MarketplacePost fixedPriceMarketplace = new FixedPriceMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING,
                 PhoneNumber, float.Parse(Price), DateTime.Now.AddMonths(3), Delivery, Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, false);
-            postService.AddPost(fixedPriceMarketplace);
+            // postService.AddPost(fixedPriceMarketplace);
+            // Getting the ApiService instance
+            ApiService apiService = ApiService.Instance;
 
+            try
+            {
+                // Calling the AddPostAsync method
+                Uri location = await apiService.AddPostAsync(fixedPriceMarketplace);
+                Console.WriteLine($"Post added successfully at {location}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            // Dispose of ApiService when done
+            apiService.Dispose();
             ResetFields();
         }
 
