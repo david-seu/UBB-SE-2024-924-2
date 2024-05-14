@@ -2,3 +2,4 @@
 BulldozerServer/.vs
 BulldozerServer/obj
 BulldozerServer/bin
+*.vsidx
