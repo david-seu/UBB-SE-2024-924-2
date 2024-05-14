@@ -8,17 +8,24 @@ namespace BulldozerServer.Controllers
     [Route("api/[controller]")]
     public class PostService : Controller
     {
-        private readonly IPostRepository postRepository;
+        private readonly IPostRepository _postRepository;
 
         public PostService(IPostRepository postRepository)
         {
-            this.postRepository = postRepository;
+            this._postRepository = postRepository;
         }
 
         [HttpGet("GetPosts")]
-        public IEnumerable<MarketplacePost> GetPosts()
+        public IActionResult GetPosts()
         {
-            return postRepository.GetAllPosts();
+            var allPosts = _postRepository.GetAllPosts();
+
+            if (allPosts == null || allPosts.Count == 0)
+            {
+                return NotFound("No posts found."); 
+            }
+
+            return Ok(allPosts); 
         }
     }
 
