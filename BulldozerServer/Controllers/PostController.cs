@@ -34,18 +34,6 @@ namespace BulldozerServer.Controllers
             return Ok();
         }
 
-        [HttpGet("{userId}/cart")]
-        public IActionResult GetPostsFromCart(Guid userId)
-        {
-            var postsInCart = userRepository.GetPostsFromCart(userId);
-            if (postsInCart == null || postsInCart.Count == 0)
-            {
-                return NotFound("No posts found in the cart.");
-            }
-
-            return Ok(postsInCart);
-        }
-
 
     }
 }
