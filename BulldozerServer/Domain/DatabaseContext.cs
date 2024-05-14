@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace BulldozerServer.Domain
 {
-    public class DatabaseContext : DbContext    
+    public class DatabaseContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+            : base(options)
         {
         }
 
+        public DbSet<User> User { get; set; }
     }
 }
