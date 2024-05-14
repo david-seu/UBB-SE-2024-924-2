@@ -18,7 +18,7 @@ namespace BulldozerServer.Controllers
         [HttpPost("AddPostToCart")]
         public IActionResult AddPostToCart(Guid groupId, Guid postId, Guid userId)
         {
-            userRepository.RemoveFromCart(groupId, userId, postId);
+            userRepository.AddPostToCart(groupId, userId, postId);
             return Ok();
         }
     }
