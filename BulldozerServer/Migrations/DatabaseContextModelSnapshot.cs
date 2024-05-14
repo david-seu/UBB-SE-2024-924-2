@@ -59,6 +59,16 @@ namespace BulldozerServer.Migrations
                     b.ToTable("User");
                 });
 #pragma warning restore 612, 618
+
+            modelBuilder.Entity<User>()
+                .HasMany(property => property.PostsInCart)
+                .WithMany()
+                .UsingEntity(relation => relation.ToTable("Cart"));
+
+            modelBuilder.Entity<User>()
+                .HasMany(property => property.FavoritePosts)
+                .WithMany()
+                .UsingEntity(relation => relation.ToTable("UserFavorsPost"));
         }
     }
 }
