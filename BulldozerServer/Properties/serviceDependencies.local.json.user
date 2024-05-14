@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "secrets.user": {
+      "restored": true,
+      "restoreTime": "2024-05-14T11:43:00.7887375Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2024-05-14T11:47:01.9314471Z"
+    }
+  },
+  "parameters": {
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "a799dbeb-bfd0-488c-a12d-5eb497b02202"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "UBB-SE-2024-924-2"
+    }
+  }
+}

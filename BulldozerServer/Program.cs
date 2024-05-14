@@ -42,7 +42,7 @@ namespace BulldozerServer
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+                
 
             app.MapControllers();
 
