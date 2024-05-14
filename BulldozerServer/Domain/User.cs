@@ -20,5 +20,6 @@
         public DateOnly BirthDay { get => birthDay; set => birthDay = value; }
         public DateTime CreatedDate { get => createdDate; set => createdDate = value; }
 
+        public ICollection<Group> Groups { get; } = new List<Group>(); 
     }
 }

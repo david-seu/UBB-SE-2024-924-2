@@ -5,6 +5,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ActiveDebugProfile>Container (Dockerfile)</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>C:\Users\seu21\Documente\GitHub\UBB-SE-2024-924-2\BulldozerServer\Properties\PublishProfiles\BulldozerServer - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>BulldozerServer - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

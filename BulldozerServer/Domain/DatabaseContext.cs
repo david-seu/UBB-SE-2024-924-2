@@ -11,5 +11,7 @@ namespace BulldozerServer.Domain
         }
 
         public DbSet<User> User { get; set; }
+
+        public DbSet<Group> Group { get; set; }
     }
 }
