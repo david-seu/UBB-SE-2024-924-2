@@ -33,5 +33,19 @@ namespace BulldozerServer.Controllers
             //return CreatedAtAction(nameof(AddPost), new { id = post.Id }, post);  Location header that contains the URI of the newly created post
             return Ok();
         }
+
+        [HttpGet("{userId}/cart")]
+        public IActionResult GetPostsFromCart(Guid userId)
+        {
+            var postsInCart = userRepository.GetPostsFromCart(userId);
+            if (postsInCart == null || postsInCart.Count == 0)
+            {
+                return NotFound("No posts found in the cart.");
+            }
+
+            return Ok(postsInCart);
+        }
+
+
     }
 }
