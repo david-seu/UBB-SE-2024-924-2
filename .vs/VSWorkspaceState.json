@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Frontend",
-    "\\Frontend\\ISSLab"
+    "\\Frontend\\ISSLab",
+    "\\Frontend\\ISSLab\\Services",
+    "\\Frontend\\ISSLab\\View",
+    "\\Frontend\\ISSLab\\ViewModel"
   ],
-  "SelectedNode": "\\Frontend\\Frontend.sln",
+  "SelectedNode": "\\Frontend\\ISSLab\\App.xaml.cs",
   "PreviewInSolutionExplorer": false
 }

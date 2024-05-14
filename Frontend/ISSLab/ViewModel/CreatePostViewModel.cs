@@ -276,16 +276,45 @@ namespace ISSLab.ViewModel
             MarketplacePost donationMarketplacePost = new DonationMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, Constants.EMPTY_STRING,
                 Description, Constants.EMPTY_STRING, phoneNumber, donationLink, Constants.DONATION_POST_TYPE, true);
             // postService.AddPost(donationMarketplacePost);
-            await ApiService.AddPostAsync(donationMarketplacePost);
+            // Getting the ApiService instance
+            ApiService apiService = ApiService.Instance;
+            try
+            {
+                // Calling the AddPostAsync method
+                Uri location = await apiService.AddPostAsync(donationMarketplacePost);
+                Console.WriteLine($"Post added successfully at {location}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            // Dispose of ApiService when done
+            apiService.Dispose();
             ResetFields();
         }
 
         public async void CreateFixedPricePost()
         {
-            FixedPriceMarketplacePost fixedPriceMarketplace = new FixedPriceMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING,
+            MarketplacePost fixedPriceMarketplace = new FixedPriceMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING,
                 PhoneNumber, float.Parse(Price), DateTime.Now.AddMonths(3), Delivery, Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, false);
             // postService.AddPost(fixedPriceMarketplace);
-            await ApiService.AddPostAsync(fixedPriceMarketplace);
+            // Getting the ApiService instance
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                // Calling the AddPostAsync method
+                Uri location = await apiService.AddPostAsync(fixedPriceMarketplace);
+                Console.WriteLine($"Post added successfully at {location}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            // Dispose of ApiService when done
+            apiService.Dispose();
             ResetFields();
         }
 
