@@ -21,5 +21,12 @@ namespace BulldozerServer.Controllers
             userRepository.RemoveFromCart(groupId, userId, postId);
             return Ok();
         }
+
+        [HttpPost("AddPostToFavorite")]
+        public IActionResult AddPostToFavorite(Guid groupId, Guid postId, Guid userId)
+        {
+            userRepository.AddToFavorite(groupId, userId, postId);
+            return Ok();
+        }
     }
 }
