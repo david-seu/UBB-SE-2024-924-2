@@ -86,6 +86,8 @@ namespace ISSLab.ViewModel
                 Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
             }
 
+
+            // nu il folositi ca strica tot (Bianca asa o zis)
             apiService.Dispose();
         }
 
@@ -96,7 +98,7 @@ namespace ISSLab.ViewModel
             try
             {
                 List<Poll> groupPolls = await apiService.GetGroupPolls(GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Id);
-                Console.WriteLine($"Successfully fetched the group posts");
+                Console.WriteLine($"Successfully fetched the group polls");
 
                 foreach (Poll poll in groupPolls)
                 {
