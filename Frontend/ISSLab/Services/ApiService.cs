@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ISSLab.Model.Entities;
 using ISSLab.Services;
@@ -48,6 +49,13 @@ namespace ISSLab.Services
             response.EnsureSuccessStatusCode();
 
             return response.Headers.Location;
+        }
+        public async Task<IEnumerable<Group>> GetGroupsAsync()
+        {
+            HttpResponseMessage response = await httpClient.GetAsync("api/groups");
+            response.EnsureSuccessStatusCode();
+            IEnumerable<Group> groups = await response.Content.ReadAsAsync<IEnumerable<Group>>();
+            return groups;
         }
 
         public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
