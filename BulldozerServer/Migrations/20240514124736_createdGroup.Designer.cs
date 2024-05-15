@@ -13,7 +13,7 @@ namespace BulldozerServer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20240514124736_createdGroup")]
-    partial class createdGroup
+    partial class CreatedGroup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
