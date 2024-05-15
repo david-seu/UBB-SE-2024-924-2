@@ -9,8 +9,8 @@ namespace BulldozerServer.Domain.MarketplacePosts
         private Guid groupId;
         private string title;
         private string description;
-        private string mediaContent;
-        private string location;
+        private string? mediaContent;
+        private string? location;
         private DateTime creationDate;
         private DateTime? endDate;
         private bool isPromoted;
@@ -23,12 +23,20 @@ namespace BulldozerServer.Domain.MarketplacePosts
         public Guid GroupId { get => groupId; set => groupId = value; }
         public string Title { get => title; set => title = value; }
         public string Description { get => description; set => description = value; }
-        public string MediaContent { get => mediaContent; set => mediaContent = value; }
-        public string Location { get => location; set => location = value; }
+        public string? MediaContent { get => mediaContent; set => mediaContent = value; }
+        public string? Location { get => location; set => location = value; }
         public DateTime CreationDate { get => creationDate; set => creationDate = value; }
         public DateTime? EndDate { get => endDate; set => endDate = value; }
         public bool IsPromoted { get => isPromoted; set => isPromoted = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
+
+        public User Author { get; set; }
+
+        public Group Group { get; set; }
+
+        public ICollection<User> PeopleThatFavored { get; } = new List<User>();
+
+        public ICollection<User> PeopleThatPlacedInCart { get; } = new List<User>();
 
         public MarketplacePost(Guid marketplacePostId, Guid authorId, Guid groupId, string title, string description, string mediaContent,
             string location, DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive)
@@ -46,7 +54,8 @@ namespace BulldozerServer.Domain.MarketplacePosts
             this.isActive = isActive;
         }
 
-        public MarketplacePost() {
+        public MarketplacePost()
+        {
             this.marketplacePostId = Guid.NewGuid();
             this.authorId = Guid.NewGuid();
             this.groupId = Guid.NewGuid();

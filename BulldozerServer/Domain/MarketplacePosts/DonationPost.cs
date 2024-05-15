@@ -1,6 +1,6 @@
 ﻿namespace BulldozerServer.Domain.MarketplacePosts
 {
-    public class DonationPost: MarketplacePost
+    public class DonationPost : MarketplacePost
     {
         private string donationLink;
         private double currentDonationAmount;

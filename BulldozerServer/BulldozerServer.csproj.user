@@ -4,7 +4,10 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>Container (Dockerfile)</ActiveDebugProfile>
+    <ActiveDebugProfile>https</ActiveDebugProfile>
     <NameOfLastUsedPublishProfile>BulldozerServer - Web Deploy</NameOfLastUsedPublishProfile>
+    <_SelectedScaffolderID>ApiControllerWithContextScaffolder</_SelectedScaffolderID>
+    <_SelectedScaffolderCategoryPath>root/Common</_SelectedScaffolderCategoryPath>
+    <WebStackScaffolding_ControllerDialogWidth>650</WebStackScaffolding_ControllerDialogWidth>
   </PropertyGroup>
 </Project>

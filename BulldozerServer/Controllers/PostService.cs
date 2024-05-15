@@ -8,18 +8,18 @@ namespace BulldozerServer.Controllers
     [Route("api/[controller]")]
     public class PostService : Controller
     {
-        private readonly IPostRepository postRepository;
+        // private readonly IPostRepository postRepository;
 
-        public PostService(IPostRepository postRepository)
-        {
-            this.postRepository = postRepository;
-        }
+        // public PostService(IPostRepository postRepository)
+        // {
+        //    this.postRepository = postRepository;
+        // }
 
-        [HttpDelete("{id}")]
-        public IActionResult RemovePost(Post post)
-        {
-            postRepository.RemovePost(post.Id);
-            return Ok();
-        }
+        // [HttpDelete("{id}")]
+        // public IActionResult RemovePost(Post post)
+        // {
+        //    postRepository.RemovePost(post.Id);
+        //    return Ok();
+        // }
     }
 }
