@@ -4,6 +4,7 @@ using BulldozerServer.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulldozerServer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240514124736_createdGroup")]
+    partial class createdGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,16 +106,6 @@ namespace BulldozerServer.Migrations
                     b.Navigation("User");
                 });
 #pragma warning restore 612, 618
-
-            modelBuilder.Entity<User>()
-                .HasMany(property => property.PostsInCart)
-                .WithMany()
-                .UsingEntity(relation => relation.ToTable("Cart"));
-
-            modelBuilder.Entity<User>()
-                .HasMany(property => property.FavoritePosts)
-                .WithMany()
-                .UsingEntity(relation => relation.ToTable("UserFavorsPost"));
         }
     }
 }
