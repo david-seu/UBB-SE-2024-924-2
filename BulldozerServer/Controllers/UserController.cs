@@ -1,31 +1,32 @@
 ﻿using BulldozerServer.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
+using ISSLab.Services;
 
 namespace BulldozerServer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserService : Controller
+    public class UserController : ControllerBase
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserService userService;
 
-        public UserService(IUserRepository userRepository)
+        public UserController(IUserService userService)
         {
-            this.userRepository = userRepository;
+            this.userService = userService;
         }
 
         [HttpPost("AddPostToCart")]
         public IActionResult AddPostToCart(Guid groupId, Guid postId, Guid userId)
         {
-            userRepository.RemoveFromCart(groupId, userId, postId);
+            userService.AddPostToCart(groupId, postId, userId);
             return Ok();
         }
 
         [HttpPost("AddPostToFavorite")]
         public IActionResult AddPostToFavorite(Guid groupId, Guid postId, Guid userId)
         {
-            userRepository.AddToFavorite(groupId, userId, postId);
+            userService.AddPostToFavorites(groupId, postId, userId);
             return Ok();
         }
     }

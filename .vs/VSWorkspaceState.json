@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\BulldozerServer",
+    "\\Frontend",
+    "\\Frontend\\ISSLab",
+    "\\Frontend\\ISSLab\\Model",
+    "\\Frontend\\ISSLab\\Model\\Repositories",
+    "\\Frontend\\ISSLab\\ViewModel"
+  ],
+  "SelectedNode": "\\Frontend\\ISSLab\\Model\\Repositories\\UserRepository.cs",
+  "PreviewInSolutionExplorer": false
+}
