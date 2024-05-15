@@ -6,11 +6,11 @@ namespace BulldozerServer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PostService : Controller
+    public class PostController : Controller
     {
         private readonly IPostRepository postRepository;
 
-        public PostService(IPostRepository postRepository)
+        public PostController(IPostRepository postRepository)
         {
             this.postRepository = postRepository;
         }
