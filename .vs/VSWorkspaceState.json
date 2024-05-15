@@ -1,11 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\BulldozerServer",
+    "\\BulldozerServer\\Controllers",
     "\\Frontend",
     "\\Frontend\\ISSLab",
-    "\\Frontend\\ISSLab\\Services",
-    "\\Frontend\\ISSLab\\View",
-    "\\Frontend\\ISSLab\\ViewModel"
+    "\\Frontend\\ISSLab\\Model",
+    "\\Frontend\\ISSLab\\Model\\Entities",
+    "\\Frontend\\ISSLab\\Services"
   ],
   "SelectedNode": "\\Frontend\\ISSLab\\Services\\ApiService.cs",
   "PreviewInSolutionExplorer": false

@@ -71,6 +71,26 @@ namespace ISSLab.Services
             }
         }
 
+        public async Task<List<Post>> GetPosts()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync("$api/getPosts");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                // handle this, need a logger instance for this class maybe?
+                return new List<Post> { };
+            }
+            catch (JsonException exception) {
+                // call logger here, when there is an instance
+                return new List<Post> { };
+            }
+        }
+
         public void Dispose()
         {
             httpClient.Dispose();
