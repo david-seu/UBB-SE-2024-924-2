@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using ISSLab.Model.Entities;
 using ISSLab.ViewModel;
+using ISSLab.Services;
 
 namespace ISSLab.ViewModel
 {
@@ -34,9 +35,12 @@ namespace ISSLab.ViewModel
             get; set;
         }
 
-        public GroupViewModel(GroupNonMarketplace selectedGroupMarketplace)
+        public GroupViewModel(GroupNonMarketplace selectedGroup)
         {
-            GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel = selectedGroupMarketplace;
+            GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel = selectedGroup;
+
+            FetchPosts();
+            FetchPolls();
 
             // TODO: Fetch posts and members from the repository
             GroupMembers = new ObservableCollection<GroupMember>
@@ -57,43 +61,58 @@ namespace ISSLab.ViewModel
                 new Request(Guid.NewGuid(), Guid.NewGuid(), "Gabriel", Guid.NewGuid())
             };
 
-            PostsMadeInTheGroupChat = new ObservableCollection<GroupPost>
-            {
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid())
-            };
-
-            List<Poll> polls = new List<Poll>
-            {
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "Mergeti la Untold?", Guid.NewGuid()),
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "Il votati pe Boc?", Guid.NewGuid()),
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "V-ati facut la ISS?", Guid.NewGuid()),
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "Ati semnat pentru Sosoaca?", Guid.NewGuid()),
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "Iti place Aqua Carpatica?", Guid.NewGuid()),
-            };
-            foreach (Poll poll in polls)
-            {
-                poll.AddOption("Da");
-                poll.AddOption("Nu");
-                poll.AddOption("Poate");
-                poll.AddOption("Nu vreau sa raspund");
-            }
-            CollectionOfPolls = new ObservableCollection<Poll>(polls);
-
             List<PollViewModel> pollViewModels = new List<PollViewModel>();
             foreach (Poll poll in CollectionOfPolls)
             {
                 pollViewModels.Add(new PollViewModel(poll));
             }
             CollectionOfViewModelsForEachIndividualPoll = new ObservableCollection<PollViewModel>(pollViewModels);
+        }
+
+        public async void FetchPosts()
+        {
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                List<GroupPost> groupPosts = await apiService.GetGroupPosts(GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                Console.WriteLine($"Successfully fetched the group posts");
+
+                PostsMadeInTheGroupChat = new ObservableCollection<GroupPost>(
+                groupPosts.Select(post => new GroupPost(post.Id, post.OwnerId, post.Description, post.Image, post.GroupId)));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
+            }
+
+            apiService.Dispose();
+        }
+
+        public async void FetchPolls()
+        {
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                List<Poll> groupPolls = await apiService.GetGroupPolls(GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                Console.WriteLine($"Successfully fetched the group posts");
+
+                foreach (Poll poll in groupPolls)
+                {
+                    poll.AddOption("Yes");
+                    poll.AddOption("No");
+                    poll.AddOption("Maybe");
+                    poll.AddOption("I don't want to answer");
+                }
+                CollectionOfPolls = new ObservableCollection<Poll>(groupPolls);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the group POLLS: {ex.Message}");
+            }
+
+            apiService.Dispose();
         }
 
         private Poll currentlySelectedPoll;

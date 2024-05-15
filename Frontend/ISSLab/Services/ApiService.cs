@@ -112,6 +112,47 @@ namespace ISSLab.Services
             }
         }
 
+        public async Task<List<GroupPost>> GetGroupPosts(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPosts?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<GroupPost>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<GroupPost> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<GroupPost> { };
+            }
+        }
+        public async Task<List<Poll>> GetGroupPolls(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPolls?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Poll>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<Poll> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Poll> { };
+            }
+        }
+
         public void Dispose()
         {
             httpClient.Dispose();
