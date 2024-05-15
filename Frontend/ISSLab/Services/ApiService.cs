@@ -71,6 +71,27 @@ namespace ISSLab.Services
             }
         }
 
+        public async Task<List<MarketplacePost>> GetMarketplacePosts()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync("api/getMarketplacePosts");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                // call logger
+                return new List<MarketplacePost> { };
+            }
+            catch (JsonException exception)
+            {
+                // call logger
+                return new List<MarketplacePost> { };
+            }
+        }
+
         public void Dispose()
         {
             httpClient.Dispose();
