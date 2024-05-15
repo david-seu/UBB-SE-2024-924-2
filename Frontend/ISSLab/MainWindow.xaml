@@ -8,6 +8,9 @@
         xmlns:viewModels="clr-namespace:ISSLab.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="950" MinHeight="450" MinWidth="950">
+    <StackPanel>
+        <Frame x:Name="MainFrame" Content="Frame" HorizontalAlignment="Center" VerticalAlignment="Top" NavigationUIVisibility="Hidden"/>
+
     <!--<Window.DataContext>
         <viewModels:MainWindowViewModel/>
     </Window.DataContext>-->
@@ -119,4 +122,5 @@
             </ScrollViewer>
         </Grid>
     </Grid>
+    </StackPanel>
 </Window>
