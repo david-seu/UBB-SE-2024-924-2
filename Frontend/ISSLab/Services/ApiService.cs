@@ -58,6 +58,14 @@ namespace ISSLab.Services
             return groups;
         }
 
+        public async Task<IEnumerable<GroupMember>> GetGroupMembers(Guid groupId)
+        {
+            HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
+            response.EnsureSuccessStatusCode();
+            IEnumerable<GroupMember> groupMembers = await response.Content.ReadAsAsync<IEnumerable<GroupMember>>();
+            return groupMembers;
+        }
+
         public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
         {
             try
