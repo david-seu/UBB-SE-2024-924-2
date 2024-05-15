@@ -130,7 +130,7 @@
                 Margin="1"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                FontSize="10">
+                FontSize="10" Click="MarketplaceButton_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10" />
