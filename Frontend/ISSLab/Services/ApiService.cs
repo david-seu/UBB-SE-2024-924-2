@@ -75,7 +75,7 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync("$api/getPosts");
+                HttpResponseMessage response = await httpClient.GetAsync("api/getPosts");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<Post>>();
