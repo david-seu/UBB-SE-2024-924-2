@@ -5,29 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
 using BulldozerServer.Controllers;
+using BulldozerServer.Domain;
 using ISSLab.Model.Entities;
 using ISSLab.Model.Repositories;
+using Microsoft.EntityFrameworkCore;
 namespace ISSLab.Services
 {
     public class UserService : IUserService
     {
-        private IUserRepository userRepository;
-        private IPostRepository postRepository;
+        
+        private DatabaseContext _context;
 
-        public UserService(IUserRepository users, IPostRepository posts)
+        public UserService(DatabaseContext context)
         {
-            this.userRepository = users;
-            this.postRepository = posts;
+            _context = context;
         }
 
-        public void AddUser(UserMarketplace user)
+        public async void AddUser(UserMarketplace user)
         {
-            userRepository.AddUser(user);
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
         }
 
-        public void RemoveUser(UserMarketplace user)
+        public async Task<int> RemoveUser(Guid id)
         {
-            userRepository.DeleteUser(user.Id);
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return -1;
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return 0;
         }
 
         public UserMarketplace GetUserById(Guid id)
@@ -42,7 +53,7 @@ namespace ISSLab.Services
 
         public List<UserMarketplace> GetUsers()
         {
-            return userRepository.GetAll();
+            return await _context.Users.ToListAsync();
         }
 
         public bool IsUserInGroup(Guid userId, Guid groupId)
