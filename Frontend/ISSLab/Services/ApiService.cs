@@ -71,6 +71,28 @@ namespace ISSLab.Services
             }
         }
 
+        public async Task<List<Post>> GetFavouritePosts(Guid userId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getFavouritePosts?userId={userId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                // logger call here
+                return new List<Post> { };
+            }
+            catch (JsonException exception)
+            {
+                // logger call here
+                return new List<Post> { };
+            }
+
+        }
+
         public void Dispose()
         {
             httpClient.Dispose();
