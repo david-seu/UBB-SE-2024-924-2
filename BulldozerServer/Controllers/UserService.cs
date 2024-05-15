@@ -1,6 +1,6 @@
-﻿using BulldozerServer.Domain;
+﻿using System.Text.RegularExpressions;
+using BulldozerServer.Domain;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
 
 namespace BulldozerServer.Controllers
 {
