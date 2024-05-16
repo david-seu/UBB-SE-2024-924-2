@@ -46,11 +46,31 @@ namespace ISSLab.Services
 
         public async Task<Uri> AddPostAsync(MarketplacePost post)
         {
-            // might need to use this in the hardcoded posts functions as well
-            HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPost", post);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPost", post);
+                response.EnsureSuccessStatusCode();
 
-            return response.Headers.Location;
+                Uri uri = response.Headers.Location;
+
+                Console.WriteLine($"Post added successfully. URI: {uri}");
+
+                return uri;
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                Console.WriteLine("Failed to add post.");
+
+                return null;
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart due to JSON parsing error.");
+
+                return null;
+            }
         }
 
         public async Task<List<Group>> GetGroupsAsync()
