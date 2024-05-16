@@ -141,29 +141,28 @@ namespace BulldozerServer.Services
 
         public void RemoveUser(Guid userId)
         {
-            Console.WriteLine("Removing user");
             var userToRemove = context.Users.Find(userId);
             if (userToRemove == null)
             {
                 throw new Exception("User not found");
             }
-            Console.WriteLine("Removing user 2");
             context.Users.Remove(userToRemove);
-            Console.WriteLine("Removing user 3");
             context.SaveChanges();
-            Console.WriteLine("Removing user 4");
         }
 
-        public async Task<User> UpdateUserUsername(Guid userId, string username)
+        public async Task<User> UpdateUserUsername(UserDto userDto)
         {
-            var foundUser = await context.Users.FindAsync(userId);
+            var foundUser = await context.Users.FindAsync(userDto.UserId);
             if (foundUser == null)
             {
                 throw new Exception("User not found");
             }
-            foundUser.Username = username;
-            context.Users.Update(foundUser);
-            context.SaveChangesAsync();
+            userDto.PostsInCart = foundUser.PostsInCart;
+            userDto.FavoritePosts = foundUser.FavoritePosts;
+            userDto.Groups = foundUser.Groups;
+            userDto.MarketplacePost = foundUser.MarketplacePosts;
+            context.Users.Update(UserMapper.MapUserDtoToUser(userDto));
+            context.SaveChanges();
             return foundUser;
         }
 

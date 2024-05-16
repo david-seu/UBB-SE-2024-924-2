@@ -17,7 +17,7 @@ namespace BulldozerServer.Services
         void RemovePostFromCart(Guid groupId, Guid postId, Guid userId);
         void RemovePostFromFavorites(Guid groupId, Guid postId, Guid userId);
         void RemoveUser(Guid userId);
-        Task<User> UpdateUserUsername(Guid user, string username);
+        Task<User> UpdateUserUsername(UserDto userDto);
         Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId);
     }
 }

@@ -55,26 +55,26 @@ namespace BulldozerServer.Controllers
         [HttpDelete]
         public async Task<ActionResult<User>> DeleteUser(Guid userId)
         {
-           //Guid userId = Guid.Parse(Request.Query["id"]);
+           // Guid userId = Guid.Parse(Request.Query["id"]);
            userService.RemoveUser(userId);
            return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(Guid id, User user)
+        public async Task<IActionResult> UpdateUser(UserDto userDto)
         {
-            if (id != user.UserId)
+            Guid userId = Guid.Parse(Request.Query["id"]);
+            if (userId != userDto.UserId)
             {
                 return BadRequest();
             }
-
             try
             {
-                await userService.UpdateUserUsername(id, user.Username);
+                await userService.UpdateUserUsername(userDto);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!UserExists(userId))
                 {
                     return NotFound();
                 }
