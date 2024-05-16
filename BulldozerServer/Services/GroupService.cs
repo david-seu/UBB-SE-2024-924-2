@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulldozerServer.Domain;
+using BulldozerServer.Mapper;
+using BulldozerServer.Payload.DTO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace UBB_SE_2024_Popsicles.Services
 {
@@ -17,50 +20,44 @@ namespace UBB_SE_2024_Popsicles.Services
             this.context = context;
         }
 
-        private static string defaultGroupName = "New Group";
+        /*private static string defaultGroupName = "New Group";
         private static string defaultGroupDescription = "This is a new group";
         private static string defaultGroupIcon = "default";
         private static string defaultGroupBanner = "default";
         private static int defaultMaximumNumberOfPostsPerHourPerUser = 5;
         private static bool defaultIsGroupPublic = false;
         private static bool defaultAllowanceOfPostage = false;
-        private static string defaultGroupRole = "user";
+        private static string defaultGroupRole = "user";*/
 
-        // private static bool defaultPostIsPinned = false;
-        // private static string defaultPostDescription = "This is a new post";
-        // Add the three repos: GroupRepository, GroupMemberRepository, and GroupMembershipRepository
-        public void CreateGroup(Guid groupOwnerId)
+        public async EntityEntry<Group> CreateGroup(GroupDTO groupDTO)
         {
-            Guid groupId = Guid.NewGuid();
-            // Generate a random group code by slicing a random GUID into a 6-character string
-            // This results in a 1 in 2^36 chance of a collision (it should be fine)
-            string uniqueGroupCode = Guid.NewGuid().ToString().Substring(0, 6);
-            Group newGroup = new Group(groupId, groupOwnerId, defaultGroupName, defaultGroupDescription, DateTime.Now, true, defaultAllowanceOfPostage);
-            // Add the new group to the GroupRepository
-            context.Groups.Add(newGroup);
-            AddMemberToGroup(groupOwnerId, groupId, "admin");
-            context.SaveChangesAsync();
+            if (context.Groups.Find(groupDTO.GroupId) != null)
+            {
+                throw new Exception("Group with this id already exists");
+            }
+            Group group = GroupMapper.GroupDTOToGroup(groupDTO);
+            var addResult = context.Groups.Add(group);
+            AddMemberToGroup(group.UserId, group.GroupId, "admin");
+
+            await context.SaveChangesAsync();
+            return addResult;
         }
 
-        public void UpdateGroup(Guid groupId, string newGroupName, string newGroupDescription, string newGroupIcon, string newGroupBanner,
-            int maximumNumberOfPostsPerHourPerUser, bool isGroupPublic, bool allowanceOfPostageByDefault)
+        public async void UpdateGroup(GroupDTO groupDTO)
         {
-            // Get the Group from the GroupRepository
-            if (context.Groups.Find(groupId) == null)
+            if (context.Groups.Find(groupDTO.GroupId) == null)
             {
                 throw new Exception("Group not found");
             }
-            Group group = context.Groups.Find(groupId);
+            Group group = GroupMapper.GroupDTOToGroup(groupDTO);
+            var updateResult = context.Groups.Update(group);
 
-            Group newGroup = new Group(groupId, group.GroupOwnerId, newGroupName, newGroupDescription, newGroupIcon, newGroupBanner, maximumNumberOfPostsPerHourPerUser, isGroupPublic, allowanceOfPostageByDefault, group.GroupCode);
-
-            // Update the group in the GroupRepository
-            context.Groups.Update(newGroup);
+            await context.SaveChangesAsync();
+            return updateResult;
         }
 
         public async void DeleteGroup(Guid groupId)
         {
-            // Delete the group from the GroupRepository
             Group group = context.Groups.Find(groupId);
             if (group == null)
             {
@@ -71,166 +68,72 @@ namespace UBB_SE_2024_Popsicles.Services
             await context.SaveChangesAsync();
         }
 
-        public async void AddMemberToGroup(Guid groupMemberId, Guid groupId, string userRole = "user")
+        public async void AddMemberToGroup(MembershipDTO membershipDTO)
         {
-            Guid groupMembershipId = Guid.NewGuid();
-            DateOnly joinDate = DateOnly.FromDateTime(DateTime.Now);
-            bool isBannedFromGroup = false;
-            bool isTimedOutFromGroup = false;
-            bool bypassPostageRestrictionPostSettings = true;
-            if (userRole == "user")
+            Guid userId = membershipDTO.UserId;
+            Guid groupId = membershipDTO.GroupId;
+
+            if (context.Memberships.Find(groupId, userId) != null)
             {
-                bypassPostageRestrictionPostSettings = false;
+                throw new Exception("User is already in group");
             }
-            Membership newMembership = new Membership(groupId, groupMemberId, joinDate, isBannedFromGroup, isTimedOutFromGroup, bypassPostageRestrictionPostSettings);
-            context.Memberships.Add(newMembership);
+
+            Membership membership = MembershipMapper.MembershipDTOToMembership(membershipDTO);
+            var addResult = context.Memberships.Add(membership);
+            await context.SaveChangesAsync();
+            return addResult;
+        }
+
+        public async void RemoveMemberFromGroup(Guid groupId, Guid userId)
+        {
+            var membership = context.Memberships.Find(groupId, userId);
+            if (membership == null)
+            {
+                throw new Exception("User doesn't belong to this group");
+            }
+            context.Memberships.Remove(membership);
             await context.SaveChangesAsync();
         }
 
-        public async void RemoveMemberFromGroup(Guid groupMemberId, Guid groupId)
+        public async  UpdateMembership(MembershipDTO membershipDTO)
         {
-            // Get the GroupMember from the GroupMemberRepository
-            Membership foundMembership = context.Memberships.Find(groupId, groupMemberId);
-            if (foundMembership == null)
+            Guid userId = membershipDTO.UserId;
+            Guid groupId = membershipDTO.GroupId;
+
+            if (context.Memberships.Find(groupId, userId) == null)
             {
                 throw new Exception("User doesn't belong to this group");
             }
 
-            context.Memberships.Remove(foundMembership);
+            Membership membership = MembershipMapper.MembershipDTOToMembership(membershipDTO);
+            var updateResult = context.Memberships.Update(membership);
             await context.SaveChangesAsync();
+            return updateResult;
         }
 
-        public async void BanMemberFromGroup(Guid bannedGroupMemberId, Guid groupId)
+        public async void AddNewRequestToJoinGroup(JoinRequestDTO joinRequestDTO)
         {
-            // Get the Group from the GroupRepository
-            Membership updateMembership = context.Memberships.Find(groupId, bannedGroupMemberId);
-            if (updateMembership == null)
-            {
-                throw new Exception("User doesn't belong to this group");
-            }
-            updateMembership.IsBanned = true;
-            context.Memberships.Update(updateMembership);
+            JoinRequest joinRequest = JoinRequestMapper.JoinRequestDTOToJoinRequest(joinRequestDTO);
+            var addResult = context.JoinRequests.Add(joinRequest);
             await context.SaveChangesAsync();
+            return addResult;
         }
 
-        public async void UnbanMemberFromGroup(Guid unbannedGroupMemberId, Guid groupId)
+        public async void AcceptRequestToJoinGroup(JoinRequestDTO joinRequestDTO)
         {
-            // Get the Group from the GroupRepository
-            Membership updateMembership = context.Memberships.Find(groupId, unbannedGroupMemberId);
-            if (updateMembership == null)
-            {
-                throw new Exception("User doesn't belong to this group");
-            }
-            updateMembership.IsBanned = false;
-            context.Memberships.Update(updateMembership);
-            await context.SaveChangesAsync();
-        }
-
-        public async void TimeoutMemberFromGroup(Guid groupMemberId, Guid groupId)
-        {
-            // Get the Group from the GroupRepository
-            Membership updateMembership = context.Memberships.Find(groupId, groupMemberId);
-            if (updateMembership == null)
-            {
-                throw new Exception("User doesn't belong to this group");
-            }
-            updateMembership.IsTO = true;
-            context.Memberships.Update(updateMembership);
-            await context.SaveChangesAsync();
-        }
-
-        public async void EndTimeoutOfMemberFromGroup(Guid groupMemberId, Guid groupId)
-        {
-            // Get the Group from the GroupRepository
-            Membership updateMembership = context.Memberships.Find(groupId, groupMemberId);
-            if (updateMembership == null)
-            {
-                throw new Exception("User doesn't belong to this group");
-            }
-            updateMembership.IsTO = false;
-            context.Memberships.Update(updateMembership);
-            await context.SaveChangesAsync();
-        }
-
-        public async void ChangeMemberRoleInTheGroup(Guid groupMemberId, Guid groupId, string newGroupRole)
-        {
-            // Get the Group from the GroupRepository
-            var group = await context.Groups.FindAsync(groupId);
-            if (group == null)
-            {
-                throw new Exception("Group not found");
-            }
-
-            //GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
-            GroupMembership groupMembership = context.
-            groupMembership.GroupMemberRole = newGroupRole;
-
-            // Update the GroupMembership in the GroupMembershipRepository
-            context.Groups.Update(groupMembership);
-            await context.SaveChangesAsync();
-        }
-
-        public void AllowMemberToBypassPostageRestriction(Guid groupMemberId, Guid groupId)
-        {
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
-
-            groupMembership.BypassPostageRestriction = true;
-
-            // Update the GroupMembership in the GroupMembershipRepository
-            groupMembershipRepository.UpdateGroupMembership(groupMembership);
-        }
-
-        public void DisallowMemberToBypassPostageRestriction(Guid groupMemberId, Guid groupId)
-        {
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
-
-            groupMembership.BypassPostageRestriction = false;
-
-            // Update the GroupMembership in the GroupMembershipRepository
-            groupMembershipRepository.UpdateGroupMembership(groupMembership);
-        }
-
-        public async void AddNewRequestToJoinGroup(Guid groupMemberId, Guid groupId)
-        {
-            Guid joinRequestId = Guid.NewGuid();
-            var result = context.JoinRequests.Add(new JoinRequest(joinRequestId,groupMemberId, groupId));
-            await context.SaveChangesAsync();
-        }
-
-        public void AcceptRequestToJoinGroup(Guid joinRequestId)
-        {
-            var request = context.JoinRequests.Find(joinRequestId);
-            if (request == null)
+            if (context.JoinRequests.Find(joinRequestDTO.JoinRequestId) == null)
             {
                 throw new Exception("User didnt request to join this group");
             }
-            Guid groupId = request.GroupId;
-            Guid userId = request.UserId;
+            JoinRequest joinRequest = 
             context.Memberships.Add(new Membership(groupId, userId));
-            context.JoinRequests.ExecuteDelete()
+            context.JoinRequests.Remove(request);
+            await context.SaveChangesAsync();
         }
 
         public void RejectRequestToJoinGroup(Guid joinRequestId)
         {
-            // Get the JoinRequest from the RequestRepository
-            JoinRequest joinRequest = joinRequestsRepository.GetJoinRequestById(joinRequestId);
-
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(joinRequest.GroupId);
-            // Get the GroupMember from the GroupMemberRepository
-            GroupMember groupMember = groupMemberRepository.GetGroupMemberById(joinRequest.GroupMemberId);
-
-            group.RemoveJoinRequest(joinRequest.JoinRequestId);
-            groupMember.RemoveActiveJoinRequest(joinRequest.JoinRequestId);
-
-            // Delete the JoinRequest from the RequestRepository
-            joinRequestsRepository.RemoveJoinRequestById(joinRequest.JoinRequestId);
+            
         }
 
         public void CreateNewPostOnGroupChat(Guid groupId, Guid groupMemberId, string postContent, string postImage)
