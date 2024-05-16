@@ -1,10 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Frontend",
-    "\\Frontend\\ISSLab",
-    "\\Frontend\\ISSLab\\ViewModel"
+    ""
   ],
-  "SelectedNode": "\\Frontend\\ISSLab\\ViewModel\\GroupViewModel.cs",
+  "SelectedNode": "\\BulldozerServer.sln",
   "PreviewInSolutionExplorer": false
 }

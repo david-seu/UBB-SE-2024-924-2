@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using BulldozerServer.Domain;
 
-namespace BulldozerServer.Domain.MarketplacePosts
+namespace BulldozerServer.Payloads.DTO
 {
-    public class MarketplacePost
+    public class MarketplacePostDTO
     {
         private Guid marketplacePostId;
         private Guid? authorId;
@@ -42,36 +43,5 @@ namespace BulldozerServer.Domain.MarketplacePosts
         public ICollection<User> PeopleThatFavored { get; } = new List<User>();
 
         public ICollection<User> PeopleThatPlacedInCart { get; } = new List<User>();
-
-        public MarketplacePost(Guid marketplacePostId, Guid authorId, Guid groupId, string title, string description, string mediaContent,
-            string location, DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive)
-        {
-            this.marketplacePostId = marketplacePostId;
-            this.authorId = authorId;
-            this.groupId = groupId;
-            this.title = title;
-            this.description = description;
-            this.mediaContent = mediaContent;
-            this.location = location;
-            this.creationDate = creationDate;
-            this.endDate = endDate;
-            this.isPromoted = isPromoted;
-            this.isActive = isActive;
-        }
-
-        public MarketplacePost()
-        {
-            this.marketplacePostId = Guid.NewGuid();
-            this.authorId = Guid.NewGuid();
-            this.groupId = Guid.NewGuid();
-            this.title = Constants.EMPTY_STRING;
-            this.description = Constants.EMPTY_STRING;
-            this.mediaContent = Constants.EMPTY_STRING;
-            this.location = Constants.EMPTY_STRING;
-            this.creationDate = DateTime.Now;
-            this.endDate = null;
-            this.isPromoted = false;
-            this.isActive = true;
-        }
     }
 }

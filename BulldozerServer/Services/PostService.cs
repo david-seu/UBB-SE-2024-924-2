@@ -5,79 +5,57 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using BulldozerServer.Domain;
+using BulldozerServer.Domain.MarketplacePosts;
+using BulldozerServer.Mapper;
+using BulldozerServer.Payloads.DTO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BulldozerServer.Services
 {
     public class PostService : IPostService
     {
-        private IPostRepository postRepository;
+        private DatabaseContext databaseContext;
 
-        public PostService(IPostRepository posts)
+        public PostService(DatabaseContext posts)
         {
-            this.postRepository = posts;
-        }
-
-        public List<MarketplacePost> GetPosts()
-        {
-            return postRepository.GetAllPosts();
+            this.databaseContext = posts;
         }
 
-        public void AddPost(MarketplacePost marketplacePost)
+        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetMarketplacePosts()
         {
-            postRepository.AddPost(marketplacePost);
+            return await databaseContext.MarketplacePost.ToListAsync();
         }
-        public void RemovePost(MarketplacePost marketplacePost)
+
+        public async Task<EntityEntry<MarketplacePost>> AddMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
-            postRepository.RemovePost(marketplacePost.Id);
+            var marketplacePost = MarketplacePostMapper.MapMarketplacePostDTOToMarketplacePost(marketplacePostDTO);
+            var context = databaseContext.MarketplacePost.Add(marketplacePost);
+            await databaseContext.SaveChangesAsync();
+            return context;
         }
-        public MarketplacePost GetPostById(Guid id)
+        public async Task<EntityEntry> RemoveMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
-            MarketplacePost? postWithThatId = postRepository.GetPostById(id);
-            if (postWithThatId == null)
+            var marketplacePost = MarketplacePostMapper.MapMarketplacePostDTOToMarketplacePost(marketplacePostDTO);
+            var postToDelete = await databaseContext.MarketplacePost.FindAsync(marketplacePost.MarketplacePostId);
+            if (postToDelete == null)
             {
-                throw new Exception("MarketplacePost not found");
+                throw new Exception("Post doesn't exist!");
             }
-            return postWithThatId;
+            var context = databaseContext.Remove(marketplacePost.MarketplacePostId);
+            await databaseContext.SaveChangesAsync();
+            return context;
         }
-
-        public void RemoveConfirmation(Guid postID)
+        public async Task<MarketplacePost> GetMarketplacePostById(Guid id)
         {
-            MarketplacePost? post = postRepository.GetPostById(postID);
-            if (post == null)
+            var postToDelete = await databaseContext.MarketplacePost.FindAsync(id);
+            if (postToDelete == null)
             {
-                throw new Exception("MarketplacePost not found");
+                throw new Exception("Post doesn't exist!");
             }
-            post.Confirmed = false;
-        }
-
-        public void ConfirmPost(Guid postID)
-        {
-            MarketplacePost? post = postRepository.GetPostById(postID);
-            if (post == null)
-            {
-                throw new Exception("MarketplacePost not found");
-            }
-            post.Confirmed = true;
-        }
-
-        public void FavoritePost(Guid postId, Guid userId)
-        {
-            MarketplacePost? post = postRepository.GetPostById(postId);
-            if (post == null)
-            {
-                throw new Exception("MarketplacePost not found");
-            }
-            post.UsersThatFavorited.Add(userId);
-        }
-
-        public void UnfavoritePost(Guid postId, Guid userId)
-        {
-            MarketplacePost? post = postRepository.GetPostById(postId);
-            if (post == null)
-            {
-                throw new Exception("MarketplacePost not found");
-            }
-            post.UsersThatFavorited.Remove(userId);
+            return postToDelete;
         }
     }
 }
