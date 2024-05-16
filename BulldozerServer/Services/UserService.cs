@@ -60,7 +60,7 @@ namespace BulldozerServer.Services
             return addedUser;
         }
 
-        public async Task<List<MarketplacePost>> GetFavoritePosts(Guid groupId, Guid userId)
+        public async Task<List<MarketplacePost>> GetFavoritePosts(Guid userId)
         {
             var foundUser = await context.Users.FindAsync(userId);
             if (foundUser == null)

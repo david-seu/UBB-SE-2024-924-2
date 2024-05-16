@@ -9,7 +9,7 @@ namespace BulldozerServer.Services
         void AddPostToCart(Guid groupId, Guid postId, Guid userId);
         void AddPostToFavorites(Guid groupId, Guid postId, Guid userId);
         Task<EntityEntry<User>> AddUser(User user);
-        Task<List<MarketplacePost>> GetFavoritePosts(Guid groupId, Guid userId);
+        Task<List<MarketplacePost>> GetFavoritePosts(Guid userId);
         Task<User> GetUserById(Guid id);
         Task<List<User>> GetUsers();
         Task<bool> IsUserInGroup(Guid userId, Guid groupId);
