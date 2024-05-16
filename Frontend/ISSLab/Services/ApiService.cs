@@ -57,7 +57,7 @@ namespace ISSLab.Services
         {
             HttpResponseMessage response = await httpClient.GetAsync("api/groups");
             response.EnsureSuccessStatusCode();
-            IEnumerable<Group> groups = await response.Content.ReadAsAsync<IEnumerable<Group>>();
+            IEnumerable<Group> groups = await response.Content.ReadFromJsonAsync<IEnumerable<Group>>();
             return groups;
         }
 
@@ -65,7 +65,7 @@ namespace ISSLab.Services
         {
             HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
             response.EnsureSuccessStatusCode();
-            IEnumerable<GroupMember> groupMembers = await response.Content.ReadAsAsync<IEnumerable<GroupMember>>();
+            IEnumerable<GroupMember> groupMembers = await response.Content.ReadFromJsonAsync<IEnumerable<GroupMember>>();
             return groupMembers;
         }
 
@@ -189,6 +189,27 @@ namespace ISSLab.Services
                 return new List<Post> { };
             }
         }
+        public async Task<List<MarketplacePost>> GetMarketplacePosts()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync("api/getMarketplacePosts");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                // call logger
+                return new List<MarketplacePost> { };
+            }
+            catch (JsonException exception)
+            {
+                // call logger
+                return new List<MarketplacePost> { };
+            }
+        }
+
         public void Dispose()
         {
                 httpClient.Dispose();
