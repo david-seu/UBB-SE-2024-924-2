@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using BulldozerServer.Domain.MarketplacePosts;
+using ISSLab.Domain.MarketplacePosts;
 
-namespace BulldozerServer.Domain
+namespace ISSLab.Domain
 {
     public class User
     {

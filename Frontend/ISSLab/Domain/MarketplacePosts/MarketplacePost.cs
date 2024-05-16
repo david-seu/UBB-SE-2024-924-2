@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BulldozerServer.Domain.MarketplacePosts
+namespace ISSLab.Domain.MarketplacePosts
 {
     public class MarketplacePost
     {

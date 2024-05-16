@@ -1,4 +1,4 @@
-﻿namespace BulldozerServer.Domain
+﻿namespace ISSLab.Domain
 {
     public class Group
     {
