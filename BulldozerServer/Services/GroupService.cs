@@ -230,5 +230,10 @@ namespace UBB_SE_2024_Popsicles.Services
             }
             return group;
         }
+
+        public async Task<List<Group>> GetGroups()
+        {
+            return await context.Groups.ToListAsync();
+        }
     }
 }
