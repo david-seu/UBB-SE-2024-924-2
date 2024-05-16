@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using ISSLab.ViewModel;
-using ISSLab.Domain;
+using ISSLab.Domain
 using ISSLab.Services;
 
 namespace ISSLab.ViewModel
@@ -75,7 +75,7 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<Post> groupPosts = await apiService.GetGroupPosts(GroupThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                List<Post> groupPosts = await apiService.GetGroupPosts(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group posts");
 
                 PostsMadeInTheGroupChat = new ObservableCollection<Post>(
@@ -85,11 +85,6 @@ namespace ISSLab.ViewModel
             {
                 Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
             }
-
-            // nu il folositi ca strica tot (Bianca asa o zis)
-            // Updated upstream
-            apiService.Dispose();
-            // apiService.Dispose();
         }
 
         public async void FetchRequestsToJoinGroup()
@@ -99,8 +94,7 @@ namespace ISSLab.ViewModel
             try
             {
                 List<Request> requestsToJoinGroup =
-                    await apiService.GetRequestsToJoinGroup(GroupThatIsEncapsulatedByThisInstanceOnViewModel
-                        .Id);
+                    await apiService.GetRequestsToJoinGroup(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group posts");
 
                 RequestsToJoinTheGroup = new ObservableCollection<Request>(
@@ -111,9 +105,6 @@ namespace ISSLab.ViewModel
             {
                 Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
             }
-
-            // nu il folositi ca strica tot (Bianca asa o zis)
-            // apiService.Dispose();
         }
 
         public async void FetchGroupMembers()
@@ -122,24 +113,16 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<User> groupMembers = await apiService.GetGroupMembers(GroupThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                List<User> groupMembers = await apiService.GetGroupMembers(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group members");
 
                 GroupMembers = new ObservableCollection<User>(
-                    groupMembers.Select(member => new User(member.UserId, member.Username, member.Username
-                    
-                    
-                    
-                    
-                    ,member.Password, member.Email, member.PhoneNumber, member.)));
+                    groupMembers.Select(member => new User(member.UserId, member.Username, member.FullName, member.Password, member.Email, member.PhoneNumber)));
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error while fetching the group MEMBERS: {ex.Message}");
             }
-
-            // nu il folositi ca strica tot (Bianca asa o zis)
-            // apiService.Dispose();
         }
 
         public async void FetchPolls()
@@ -148,7 +131,7 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<Poll> groupPolls = await apiService.GetGroupPolls(GroupThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                List<Poll> groupPolls = await apiService.GetGroupPolls(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group polls");
 
                 foreach (Poll poll in groupPolls)
@@ -196,7 +179,6 @@ namespace ISSLab.ViewModel
             }
         }
 
-        // ???
         private Group groupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel;
         public Group GroupThatIsEncapsulatedByThisInstanceOnViewModel
         {
@@ -215,34 +197,25 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Name;
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupName;
             }
             set
             {
-                GroupThatIsEncapsulatedByThisInstanceOnViewModel.Name = value;
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupName = value;
                 // TODO: notify somehow the main window view model that Name has changed
                 OnPropertyChanged(nameof(GroupName));
             }
         }
 
-        // public string DirectoryPathToTheGroupsBannerImageFile
-        // {
-        //    get
-        //    {
-        //        return GroupThatIsEncapsulatedByThisInstanceOnViewModel.;
-        //    }
-        // }
-        // Group Settings Tab
         public string NameOfTheGroupsOwner
         {
             // TODO: Fetch owner name from the repository
             get
             {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.OwnerId.ToString();
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.UserId.ToString();
             }
         }
 
-        // nush redenumi asta
         public string UniqueGroupCode
         {
             get
@@ -255,7 +228,7 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.CreatedAt.ToString();
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.CreatedDate.ToString();
             }
         }
 
