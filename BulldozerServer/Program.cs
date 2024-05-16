@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using BulldozerServer.Domain;
+using BulldozerServer.Services;
 
 namespace BulldozerServer
 {
@@ -28,6 +29,7 @@ namespace BulldozerServer
 
             builder.Services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(connection));
+            builder.Services.AddScoped<IPostService, PostService>();
 
             var app = builder.Build();
 
