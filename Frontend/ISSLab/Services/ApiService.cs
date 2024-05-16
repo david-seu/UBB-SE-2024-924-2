@@ -87,6 +87,87 @@ namespace ISSLab.Services
             }
         }
 
+        public async Task<Uri> AddPostToCart(Guid groupId, Guid postId, Guid userId)
+        {
+            try
+            {
+                var data = new
+                {
+                    groupId,
+                    postId,
+                    userId
+                };
+
+                var json = JsonSerializer.Serialize(data);
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await httpClient.PostAsync("api/addPostToCart", content);
+                response.EnsureSuccessStatusCode();
+
+                Uri uri = response.Headers.Location;
+
+                Console.WriteLine($"Post added to cart successfully. URI: {uri}");
+
+                return uri;
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart.");
+
+                return null;
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart due to JSON parsing error.");
+
+                return null;
+            }
+        }
+
+        public async Task<List<GroupPost>> GetGroupPosts(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPosts?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<GroupPost>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<GroupPost> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<GroupPost> { };
+            }
+        }
+        public async Task<List<Poll>> GetGroupPolls(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPolls?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Poll>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<Poll> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Poll> { };
+            }
+        }
+
         public void Dispose()
         {
             httpClient.Dispose();
