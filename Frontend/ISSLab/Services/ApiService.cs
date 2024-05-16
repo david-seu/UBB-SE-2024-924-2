@@ -102,11 +102,7 @@ namespace ISSLab.Services
                     userId
                 };
 
-                var json = JsonSerializer.Serialize(data);
-
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await httpClient.PostAsync("api/addPostToCart", content);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPostToCart", data);
                 response.EnsureSuccessStatusCode();
 
                 Uri uri = response.Headers.Location;
