@@ -13,7 +13,6 @@
         public Guid GroupId { get => groupId; set => groupId = value; }
         public Guid UserId { get => userId; set => userId = value; }
 
-        public User User { get; set; } = null!;
         public string GroupName { get => groupName; set => groupName = value; }
         public string Description { get => description; set => description = value; }
         public DateTime CreatedDate { get => createdDate; set => createdDate = value; }
@@ -26,5 +25,14 @@
         public ICollection<Request> JoinRequests { get; } = new List<Request>();
 
         public ICollection<Poll> GroupPolls { get; } = new List<Poll>();
+        public Group(Guid groupId, Guid userId, string groupName, string groupDescription, bool isPublic, bool allowanceOfPostage)
+        {
+            GroupId = groupId;
+            UserId = userId;
+            GroupName = groupName;
+            Description = groupDescription;
+            IsPublic = isPublic;
+            AllowanceOfPostage = allowanceOfPostage;
+        }
     }
 }
