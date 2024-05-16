@@ -1,6 +1,4 @@
-﻿using ISSLab.Model.Entities;
-
-namespace ISSLab.Services
+﻿namespace BulldozerServer.Services
 {
     public interface IUserService
     {

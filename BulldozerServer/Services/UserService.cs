@@ -4,41 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
-using BulldozerServer.Controllers;
-using BulldozerServer.Domain;
-using ISSLab.Model.Entities;
-using ISSLab.Model.Repositories;
-using Microsoft.EntityFrameworkCore;
-namespace ISSLab.Services
+
+namespace BulldozerServer.Services
 {
     public class UserService : IUserService
     {
-        
-        private DatabaseContext _context;
+        private IUserRepository userRepository;
+        private IPostRepository postRepository;
 
-        public UserService(DatabaseContext context)
+        public UserService(IUserRepository users, IPostRepository posts)
         {
-            _context = context;
+            this.userRepository = users;
+            this.postRepository = posts;
         }
 
-        public async void AddUser(UserMarketplace user)
+        public void AddUser(UserMarketplace user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            userRepository.AddUser(user);
         }
 
-        public async Task<int> RemoveUser(Guid id)
+        public void RemoveUser(UserMarketplace user)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return -1;
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return 0;
+            userRepository.DeleteUser(user.Id);
         }
 
         public UserMarketplace GetUserById(Guid id)
@@ -53,7 +40,7 @@ namespace ISSLab.Services
 
         public List<UserMarketplace> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return userRepository.GetAll();
         }
 
         public bool IsUserInGroup(Guid userId, Guid groupId)
