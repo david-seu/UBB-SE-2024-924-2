@@ -20,11 +20,11 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddMarketplacePost(MarketplacePost post)
+        public IActionResult AddMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
             try
             {
-                MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                //MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
                 var context = this.postService.AddMarketplacePost(marketplacePostDTO);
                 return Ok(context);
             }
@@ -35,11 +35,11 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpDelete]
-        public IActionResult RemoveMarketplacePost(MarketplacePost post)
+        public IActionResult RemoveMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
             try
             {
-                MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                //MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
                 var context = this.postService.RemoveMarketplacePost(marketplacePostDTO);
                 return Ok(context);
             }
