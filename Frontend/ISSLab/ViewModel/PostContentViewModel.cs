@@ -239,15 +239,13 @@ namespace ISSLab.ViewModel
 
             try
             {
-                await apiService.AddPostToCart(this.GroupId, this.MarketplacePost.MarketplacePostId, this.AccountId);
+                await apiService.AddPostToCart(this.MarketplacePost.MarketplacePostId, this.AccountId);
                 Console.WriteLine($"Successfully added the post to the cart");
             }
             catch (Exception exception)
             {
                 Console.WriteLine($"Error while adding the post to the cart: {exception.Message}");
             }
-
-            apiService.Dispose();
         }
 
         public string AvailableFor
@@ -257,13 +255,13 @@ namespace ISSLab.ViewModel
                 if (OurMarketplacePost.Description == Constants.FIXED_PRICE_POST_TYPE)
                 {
                     FixedPricePost fixedPriceMarketplacePost = (FixedPricePost)OurMarketplacePost;
-                    TimeSpan timeLeft = fixedPriceMarketplacePost.EndDate - DateTime.Now;
+                    TimeSpan timeLeft = fixedPriceMarketplacePost.EndDate.Value - DateTime.Now;
                     return DisplayRemainingTime(timeLeft);
                 }
                 else if (OurMarketplacePost.Description == Constants.AUCTION_POST_TYPE)
                 {
                     AuctionPost fixedPriceMarketplacePost = (AuctionPost)OurMarketplacePost;
-                    TimeSpan timeLeft = fixedPriceMarketplacePost.EndDate - DateTime.Now;
+                    TimeSpan timeLeft = fixedPriceMarketplacePost.EndDate.Value - DateTime.Now;
                     return DisplayRemainingTime(timeLeft);
                 }
                 else
@@ -314,11 +312,11 @@ namespace ISSLab.ViewModel
             if (OurMarketplacePost.GetType() == typeof(AuctionPost))
             {
                 AuctionPost auctionMarketplacePost = (AuctionPost)OurMarketplacePost;
-                TimeSpan timeLeft = auctionMarketplacePost.EndDate - DateTime.Now;
+                TimeSpan timeLeft = auctionMarketplacePost.EndDate.Value - DateTime.Now;
                 TimeSpan timeSpan = TimeSpan.FromSeconds(Constants.EXPIRATION_DATE_SLIGHT_PROLONGMENT_THRESHOLD_IN_SECONDS);
                 if (timeLeft.TotalSeconds < Constants.EXPIRATION_DATE_SLIGHT_PROLONGMENT_THRESHOLD_IN_SECONDS)
                 {
-                    auctionMarketplacePost.SlightlyPostponeExpirationDate();
+                    auctionMarketplacePost.EndDate.Value.AddMinutes(5);
                     OnPropertyChanged(nameof(AvailableFor));
                 }
             ((AuctionPost)(OurMarketplacePost)).CurrentBidPrice += 5;
@@ -337,7 +335,7 @@ namespace ISSLab.ViewModel
             {
                 if (OurMarketplacePost.Type == Constants.AUCTION_POST_TYPE)
                 {
-                    return Constants.DOLLAR_SIGN + ((AuctionMarketplacePost)(OurMarketplacePost)).CurrentBidPrice;
+                    return Constants.DOLLAR_SIGN + ((AuctionPost)OurMarketplacePost).CurrentBidPrice;
                 }
                 else
                 {
@@ -357,7 +355,7 @@ namespace ISSLab.ViewModel
 
         public void AddInterests()
         {
-            var existingInterest = OurMarketplacePost.InterestStatuses.FirstOrDefault(interest => interest.InterestedUserId == OurUser.Id && interest.PostId == OurMarketplacePost.Id);
+            var existingInterest = OurMarketplacePost.InterestStatuses.FirstOrDefault(interest => interest.InterestedUserId == OurUser.UserId && interest.PostId == OurMarketplacePost.MarketplacePostId);
 
             if (existingInterest != null)
             {
@@ -365,7 +363,7 @@ namespace ISSLab.ViewModel
             }
             else
             {
-                OurMarketplacePost.InterestStatuses.Add(new InterestStatus(OurUser.Id, OurMarketplacePost.Id, true));
+                OurMarketplacePost.InterestStatuses.Add(new InterestStatus(OurUser.UserId, OurMarketplacePost.MarketplacePostId, true));
             }
 
             OnPropertyChanged(nameof(Interests));
@@ -382,7 +380,7 @@ namespace ISSLab.ViewModel
 
         public void AddUninterests()
         {
-            var existingUninterest = OurMarketplacePost.InterestStatuses.FirstOrDefault(interest => interest.InterestedUserId == OurUser.Id && interest.PostId == OurMarketplacePost.Id && !interest.Interested);
+            var existingUninterest = OurMarketplacePost.InterestStatuses.FirstOrDefault(interest => interest.InterestedUserId == OurUser.UserId && interest.PostId == OurMarketplacePost.MarketplacePostId && !interest.Interested);
 
             if (existingUninterest != null)
             {
@@ -390,7 +388,7 @@ namespace ISSLab.ViewModel
             }
             else
             {
-                OurMarketplacePost.InterestStatuses.Add(new InterestStatus(OurUser.Id, OurMarketplacePost.Id, false));
+                OurMarketplacePost.InterestStatuses.Add(new InterestStatus(OurUser.UserId, OurMarketplacePost.MarketplacePostId, false));
             }
             OnPropertyChanged(nameof(Uninterests));
         }
@@ -407,7 +405,7 @@ namespace ISSLab.ViewModel
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
-                FileName = ((DonationMarketplacePost)OurMarketplacePost).DonationPageLink,
+                FileName = ((DonationPost)OurMarketplacePost).DonationLink,
                 UseShellExecute = true
             });
         }
