@@ -73,7 +73,28 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<GroupNonMarketplace>> GetGroupsAsync()
+        public async Task<List<Post>> GetPosts()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getPosts");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<Post> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Post> { };
+            }
+        }
+        
+      public async Task<List<GroupNonMarketplace>> GetGroupsAsync()
         {
             // TODO: Change to Domain entities
             try

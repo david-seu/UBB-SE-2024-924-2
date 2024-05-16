@@ -41,10 +41,26 @@ namespace ISSLab.ViewModel
 
             FetchPosts();
             FetchPolls();
-            FetchGroupMembers();
-            FetchRequestsToJoinGroup();
 
             // TODO: Fetch posts and members from the repository
+            GroupMembers = new ObservableCollection<GroupMember>
+            {
+                new GroupMember(Guid.NewGuid(), "Denis", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
+                new GroupMember(Guid.NewGuid(), "Andreea", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
+                new GroupMember(Guid.NewGuid(), "Dorian Pop", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
+                new GroupMember(Guid.NewGuid(), "Razvan", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
+                new GroupMember(Guid.NewGuid(), "Cristi", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
+                new GroupMember(Guid.NewGuid(), "Cristos", "admin", "denis@ubb.ro", "0749999345", "I am stupid.")
+            };
+
+            RequestsToJoinTheGroup = new ObservableCollection<Request>()
+            {
+                new Request(Guid.NewGuid(), Guid.NewGuid(), "Vasile", Guid.NewGuid()),
+                new Request(Guid.NewGuid(), Guid.NewGuid(), "Andrei", Guid.NewGuid()),
+                new Request(Guid.NewGuid(), Guid.NewGuid(), "Maria", Guid.NewGuid()),
+                new Request(Guid.NewGuid(), Guid.NewGuid(), "Gabriel", Guid.NewGuid())
+            };
+
             List<PollViewModel> pollViewModels = new List<PollViewModel>();
             foreach (Poll poll in CollectionOfPolls)
             {
@@ -71,52 +87,7 @@ namespace ISSLab.ViewModel
             }
 
             // nu il folositi ca strica tot (Bianca asa o zis)
-            // apiService.Dispose();
-        }
-
-        public async void FetchRequestsToJoinGroup()
-        {
-            ApiService apiService = ApiService.Instance;
-
-            try
-            {
-                List<Request> requestsToJoinGroup =
-                    await apiService.GetRequestsToJoinGroup(GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel
-                        .Id);
-                Console.WriteLine($"Successfully fetched the group posts");
-
-                RequestsToJoinTheGroup = new ObservableCollection<Request>(
-                    requestsToJoinGroup.Select(request =>
-                        new Request(request.Id, request.GroupMemberId, request.GroupMemberName, request.GroupId)));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
-            }
-
-            // nu il folositi ca strica tot (Bianca asa o zis)
-            // apiService.Dispose();
-        }
-
-        public async void FetchGroupMembers()
-        {
-            ApiService apiService = ApiService.Instance;
-
-            try
-            {
-                List<GroupMember> groupMembers = await apiService.GetGroupMembers(GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Id);
-                Console.WriteLine($"Successfully fetched the group members");
-
-                GroupMembers = new ObservableCollection<GroupMember>(
-                    groupMembers.Select(member => new GroupMember(member.Id, member.Username, member.Password, member.Email, member.Phone, member.Description)));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while fetching the group MEMBERS: {ex.Message}");
-            }
-
-            // nu il folositi ca strica tot (Bianca asa o zis)
-            // apiService.Dispose();
+            apiService.Dispose();
         }
 
         public async void FetchPolls()
@@ -142,7 +113,7 @@ namespace ISSLab.ViewModel
                 Console.WriteLine($"Error while fetching the group POLLS: {ex.Message}");
             }
 
-            // apiService.Dispose();
+            apiService.Dispose();
         }
 
         private Poll currentlySelectedPoll;
