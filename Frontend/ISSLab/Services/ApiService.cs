@@ -27,7 +27,8 @@ namespace ISSLab.Services
             httpClient.BaseAddress = new Uri("http://localhost:64195/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json")); // Setting this header tells the server to send data in JSON format
+                new MediaTypeWithQualityHeaderValue(
+                    "application/json")); // Setting this header tells the server to send data in JSON format
         }
 
         public static ApiService Instance
@@ -38,6 +39,7 @@ namespace ISSLab.Services
                 {
                     instance = new ApiService();
                 }
+
                 return instance;
             }
         }
@@ -50,11 +52,12 @@ namespace ISSLab.Services
 
             return response.Headers.Location;
         }
+
         public async Task<IEnumerable<Group>> GetGroupsAsync()
         {
             HttpResponseMessage response = await httpClient.GetAsync("api/groups");
             response.EnsureSuccessStatusCode();
-            IEnumerable<Group> groups = await response.Content.ReadAsAsync<IEnumerable<Group>>();
+            IEnumerable<Group> groups = await response.Content.ReadFromJsonAsync<IEnumerable<Group>>();
             return groups;
         }
 
@@ -62,7 +65,7 @@ namespace ISSLab.Services
         {
             HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
             response.EnsureSuccessStatusCode();
-            IEnumerable<GroupMember> groupMembers = await response.Content.ReadAsAsync<IEnumerable<GroupMember>>();
+            IEnumerable<GroupMember> groupMembers = await response.Content.ReadFromJsonAsync<IEnumerable<GroupMember>>();
             return groupMembers;
         }
 
@@ -70,7 +73,8 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
+                HttpResponseMessage response =
+                    await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
@@ -98,11 +102,7 @@ namespace ISSLab.Services
                     userId
                 };
 
-                var json = JsonSerializer.Serialize(data);
-
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await httpClient.PostAsync("api/addPostToCart", content);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPostToCart", data);
                 response.EnsureSuccessStatusCode();
 
                 Uri uri = response.Headers.Location;
@@ -147,6 +147,7 @@ namespace ISSLab.Services
                 return new List<GroupPost> { };
             }
         }
+
         public async Task<List<Poll>> GetGroupPolls(Guid groupId)
         {
             try
@@ -188,11 +189,11 @@ namespace ISSLab.Services
                 return new List<Post> { };
             }
         }
-
         public void Dispose()
         {
-            httpClient.Dispose();
+                httpClient.Dispose();
         }
     }
 }
+
 
