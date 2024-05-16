@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using ISSLab.Model.Entities;
+using ISSLab.Domain.MarketplacePosts;
 
 namespace ISSLab.ViewModel
 {
@@ -7,6 +7,8 @@ namespace ISSLab.ViewModel
     {
         ICreatePostViewModel PostCreationViewModel { get; set; }
         ObservableCollection<IPostContentViewModel> ShownPosts { get; set; }
+
+        Guid IdOfActiveUser { get; set; }
 
         void ChangeToCart();
         void ChangeToFavorites();
