@@ -12,10 +12,10 @@ namespace BulldozerServer.Domain
         private bool isPublic;
         private bool allowanceOfPostage;
 
-        public Group(Guid groupId, Guid userId, string groupName, string description, DateTime createdDate, bool isPublic, bool allowanceOfPostage)
+        public Group(Guid groupId, Guid ownerId, string groupName, string description, DateTime createdDate, bool isPublic, bool allowanceOfPostage)
         {
             this.groupId = groupId;
-            this.ownerId = userId;
+            this.ownerId = ownerId;
             this.groupName = groupName;
             this.description = description;
             this.createdDate = createdDate;

@@ -13,7 +13,7 @@ namespace BulldozerServer.Mapper
           membershipDTO.JoinDate = membership.JoinDate;
           membershipDTO.IsBanned = membership.IsBanned;
           membershipDTO.IsAdmin = membership.IsAdmin;
-          membershipDTO.IsTO = membership.IsTO;
+          membershipDTO.IsTO = membership.IsTimedOut;
           return membershipDTO;
         }
         public static Membership MembershipDTOToMembership(MembershipDTO membershipDTO)

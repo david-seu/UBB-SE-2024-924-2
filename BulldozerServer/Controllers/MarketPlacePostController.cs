@@ -10,11 +10,11 @@ namespace BulldozerServer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PostController : Controller
+    public class MarketPlacePostController : Controller
     {
         private IPostService postService;
 
-        public PostController(IPostService postService)
+        public MarketPlacePostController(IPostService postService)
         {
             this.postService = postService;
         }
