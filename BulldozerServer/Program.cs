@@ -30,6 +30,7 @@ namespace BulldozerServer
             builder.Services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(connection));
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IPostService, PostService>();
 
             var app = builder.Build();
 

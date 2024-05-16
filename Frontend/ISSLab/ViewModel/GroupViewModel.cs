@@ -2,9 +2,11 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using ISSLab.Domain;
 using ISSLab.Model.Entities;
 using ISSLab.ViewModel;
 using ISSLab.Services;
+using User = ISSLab.Domain.User;
 
 namespace ISSLab.ViewModel
 {
@@ -20,7 +22,7 @@ namespace ISSLab.ViewModel
             get; set;
         }
 
-        public ObservableCollection<GroupMember> GroupMembers
+        public ObservableCollection<User> GroupMembers
         {
             get; set;
         }
@@ -41,25 +43,10 @@ namespace ISSLab.ViewModel
 
             FetchPosts();
             FetchPolls();
+            FetchRequestsToJoinGroup();
+            FetchGroupMembers();
 
             // TODO: Fetch posts and members from the repository
-            GroupMembers = new ObservableCollection<GroupMember>
-            {
-                new GroupMember(Guid.NewGuid(), "Denis", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Andreea", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Dorian Pop", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Razvan", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Cristi", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Cristos", "admin", "denis@ubb.ro", "0749999345", "I am stupid.")
-            };
-
-            RequestsToJoinTheGroup = new ObservableCollection<Request>()
-            {
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Vasile", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Andrei", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Maria", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Gabriel", Guid.NewGuid())
-            };
 
             List<PollViewModel> pollViewModels = new List<PollViewModel>();
             foreach (Poll poll in CollectionOfPolls)
@@ -75,7 +62,7 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<Post> groupPosts = await apiService.GetGroupPosts(GroupThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                List<Post> groupPosts = await apiService.GetGroupPosts(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group posts");
 
                 PostsMadeInTheGroupChat = new ObservableCollection<Post>(
@@ -87,9 +74,6 @@ namespace ISSLab.ViewModel
             }
 
             // nu il folositi ca strica tot (Bianca asa o zis)
-<<<<<<< Updated upstream
-            apiService.Dispose();
-=======
             // apiService.Dispose();
         }
 
@@ -127,7 +111,7 @@ namespace ISSLab.ViewModel
                 Console.WriteLine($"Successfully fetched the group members");
 
                 GroupMembers = new ObservableCollection<User>(
-                    groupMembers.Select(member => new User(member.Id, member.Username, member.Password, member.Email, member.Phone, member.Description)));
+                    groupMembers.Select(member => new User(member.UserId, member.Username, member.Password, member.Email, member.PhoneNumber, member.FullName)));
             }
             catch (Exception ex)
             {
@@ -136,7 +120,6 @@ namespace ISSLab.ViewModel
 
             // nu il folositi ca strica tot (Bianca asa o zis)
             // apiService.Dispose();
->>>>>>> Stashed changes
         }
 
         public async void FetchPolls()
