@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BulldozerServer.Domain
@@ -35,8 +36,18 @@ namespace BulldozerServer.Domain
 
         public Review(Guid userId, Guid marketplacePostId)
         {
-
+            this.userId = userId;
+            this.marketplacePostId = marketplacePostId;
+            this.content = Constants.EMPTY_STRING;
+            this.rating = 0;
+            this.postTime = DateOnly.FromDateTime(DateTime.Now);
         }
 
+        public Guid ReviewId { get => reviewId; }
+        public Guid UserId { get => userId; }
+        public Guid MarketplacePostId { get => marketplacePostId; }
+        public string Content { get => content; set => content = value; }
+        public int Rating { get => rating; set => rating = value; }
+        public DateOnly PostTime { get => postTime; }
     }
 }
