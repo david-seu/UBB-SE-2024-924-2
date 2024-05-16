@@ -86,7 +86,6 @@ namespace ISSLab.ViewModel
                 Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
             }
 
-
             // nu il folositi ca strica tot (Bianca asa o zis)
             apiService.Dispose();
         }
