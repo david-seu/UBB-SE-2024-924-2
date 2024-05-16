@@ -7,7 +7,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using ISSLab.Model.Entities;
+using ISSLab.Domain;
+using ISSLab.Domain.MarketplacePosts;
 using ISSLab.Services;
 using ISSLab.View;
 
@@ -22,7 +23,7 @@ namespace ISSLab.ViewModel
         public Guid GroupId { get; set; }
         private MarketplacePost OurMarketplacePost { get; set; }
         public Guid AccountId { get; set; }
-        public UserMarketplace OurUser;
+        public User OurUser;
         private string visible;
         private string donationButtonVisible;
         private string buyButtonVisible;
@@ -30,7 +31,7 @@ namespace ISSLab.ViewModel
         private string bidPriceVisible;
         private DispatcherTimer timer;
         public IChatFactory OurChatFactory { get; }
-        public PostContentViewModel(MarketplacePost marketplacePost, UserMarketplace user, Guid accountId, Guid groupId, IUserService userService, IChatFactory chatFactory) : base()
+        public PostContentViewModel(MarketplacePost marketplacePost, User user, Guid accountId, Guid groupId, IUserService userService, IChatFactory chatFactory) : base()
         {
             this.userService = userService;
             this.GroupId = groupId;
@@ -42,7 +43,7 @@ namespace ISSLab.ViewModel
             this.buyButtonVisible = Constants.COLLAPSED_VISIBILITY;
             this.bidButtonVisible = Constants.COLLAPSED_VISIBILITY;
             this.bidPriceVisible = Constants.COLLAPSED_VISIBILITY;
-            if (this.OurMarketplacePost.Type == Constants.DONATION_POST_TYPE)
+            if (this.OurMarketplacePost.Description == Constants.DONATION_POST_TYPE)
             {
                 this.donationButtonVisible = Constants.VISIBLE_VISIBILITY;
             }

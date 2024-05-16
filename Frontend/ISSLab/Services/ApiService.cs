@@ -136,7 +136,7 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<Post>> GetPostsFromCart(Guid userId, Guid groupId)
+        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
         {
             try
             {
@@ -144,17 +144,38 @@ namespace ISSLab.Services
                     await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<Post>>();
+                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
             }
             catch (HttpRequestException exception)
             {
                 Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
-                return new List<Post> { };
+                return new List<MarketplacePost> { };
             }
             catch (JsonException exception)
             {
                 Console.WriteLine($"Json error: {exception.Message}");
-                return new List<Post> { };
+                return new List<MarketplacePost> { };
+            }
+        }
+        public async Task<User> GetUserById(Guid userId)
+        {
+            try
+            {
+                HttpResponseMessage response =
+                    await httpClient.GetAsync($"api/getUserById?userId={userId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<User>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
+                return new User { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new User { };
             }
         }
 
@@ -256,24 +277,24 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<Post>> GetFavouritePosts(Guid userId)
+        public async Task<List<MarketplacePost>> GetFavouritePosts(Guid userId)
         {
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync($"api/getFavouritePosts?userId={userId}");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<Post>>();
+                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
             }
             catch (HttpRequestException exception)
             {
                 // logger call here
-                return new List<Post> { };
+                return new List<MarketplacePost> { };
             }
             catch (JsonException exception)
             {
                 // logger call here
-                return new List<Post> { };
+                return new List<MarketplacePost> { };
             }
         }
         public async Task<List<MarketplacePost>> GetMarketplacePosts()

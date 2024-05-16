@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using ISSLab.Domain;
-using ISSLab.Model.Entities;
 using ISSLab.ViewModel;
 using ISSLab.Services;
 using User = ISSLab.Domain.User;
@@ -84,8 +83,7 @@ namespace ISSLab.ViewModel
             try
             {
                 List<Request> requestsToJoinGroup =
-                    await apiService.GetRequestsToJoinGroup(GroupThatIsEncapsulatedByThisInstanceOnViewModel
-                        .Id);
+                    await apiService.GetRequestsToJoinGroup(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group posts");
 
                 RequestsToJoinTheGroup = new ObservableCollection<Request>(
@@ -107,7 +105,7 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<User> groupMembers = await apiService.GetGroupMembers(GroupThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                List<User> groupMembers = await apiService.GetGroupMembers(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group members");
 
                 GroupMembers = new ObservableCollection<User>(
@@ -128,7 +126,7 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<Poll> groupPolls = await apiService.GetGroupPolls(GroupThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                List<Poll> groupPolls = await apiService.GetGroupPolls(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group polls");
 
                 foreach (Poll poll in groupPolls)
