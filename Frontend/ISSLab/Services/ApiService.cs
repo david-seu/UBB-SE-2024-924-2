@@ -7,9 +7,9 @@ using System.Net.Http.Json;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ISSLab.Model.Entities;
+using ISSLab.Domain;
+using ISSLab.Domain.MarketplacePosts;
 using ISSLab.Services;
 
 namespace ISSLab.Services
@@ -44,7 +44,7 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<Uri> AddPostAsync(MarketplacePost post)
+        public async Task<Uri> AddPostAsync(Post post)
         {
             try
             {
@@ -114,29 +114,29 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<GroupMember>> GetGroupMembers(Guid groupId)
+        public async Task<List<User>> GetGroupMembers(Guid groupId)
         {
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
                 response.EnsureSuccessStatusCode();
-                List<GroupMember> groupMembers =
-                    await response.Content.ReadFromJsonAsync<List<GroupMember>>();
+                List<User> groupMembers =
+                    await response.Content.ReadFromJsonAsync<List<User>>();
                 return groupMembers;
             }
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"Http error: {ex.Message}"); // should use the logger we implemented
-                return new List<GroupMember> { };
+                return new List<User> { };
             }
             catch (JsonException exception)
             {
                 Console.WriteLine($"Json error: {exception.Message}");
-                return new List<GroupMember> { };
+                return new List<User> { };
             }
         }
 
-        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
+        public async Task<List<Post>> GetPostsFromCart(Guid userId, Guid groupId)
         {
             try
             {
@@ -144,17 +144,17 @@ namespace ISSLab.Services
                     await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
             }
             catch (HttpRequestException exception)
             {
                 Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
-                return new List<MarketplacePost> { };
+                return new List<Post> { };
             }
             catch (JsonException exception)
             {
                 Console.WriteLine($"Json error: {exception.Message}");
-                return new List<MarketplacePost> { };
+                return new List<Post> { };
             }
         }
 
@@ -194,24 +194,24 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<GroupPost>> GetGroupPosts(Guid groupId)
+        public async Task<List<Post>> GetGroupPosts(Guid groupId)
         {
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPosts?groupId={groupId}");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<GroupPost>>();
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
             }
             catch (HttpRequestException exception)
             {
                 Console.WriteLine($"Http error: {exception.Message}");
-                return new List<GroupPost> { };
+                return new List<Post> { };
             }
             catch (JsonException exception)
             {
                 Console.WriteLine($"Json error: {exception.Message}");
-                return new List<GroupPost> { };
+                return new List<Post> { };
             }
         }
 
