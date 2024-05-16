@@ -28,6 +28,24 @@ namespace ISSLab.View
             InitializeComponent();
         }
 
+        public Guid GetUserId()
+        {
+            if (DataContext is MainWindowViewModel mainViewModel)
+            {
+                return mainViewModel.UserId;
+            }
+            return Guid.Empty;
+        }
+
+        public Guid GetGroupId()
+        {
+            if (DataContext is MainWindowViewModel mainViewModel)
+            {
+                return mainViewModel.GroupId;
+            }
+            return Guid.Empty;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             GroupListListBox.SelectedIndex = 0;
@@ -58,6 +76,11 @@ namespace ISSLab.View
         private void CreateGroupButton_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Implement CreateGroupButton_Click
+        }
+
+        private void GroupView_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
