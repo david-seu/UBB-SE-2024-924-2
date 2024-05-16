@@ -24,7 +24,7 @@ namespace ISSLab.Services
         {
             httpClient = new HttpClient();
             // TODO: Use actual server port number here
-            httpClient.BaseAddress = new Uri("http://localhost:64195/");
+            httpClient.BaseAddress = new Uri("https://localhost:32778/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue(
