@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ISSLab.Domain;
 
 namespace ISSLab.Model.Entities
 {
-        public class User
+    public class User
         {
             public Guid Id
             {

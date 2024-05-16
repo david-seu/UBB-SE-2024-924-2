@@ -1,4 +1,6 @@
-﻿namespace ISSLab.Model.Entities
+﻿using ISSLab.Domain;
+
+namespace ISSLab.Model.Entities
 {
     public class GroupNonMarketplace
     {

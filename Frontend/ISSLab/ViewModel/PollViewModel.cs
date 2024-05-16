@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
-using ISSLab.Model.Entities;
 using ISSLab.ViewModel;
+using ISSLab.Domain;
 
 namespace ISSLab.ViewModel
 {

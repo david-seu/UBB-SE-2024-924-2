@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using ISSLab.ViewModel;
-using ISSLab.Domain
+using ISSLab.Domain;
 using ISSLab.Services;
 
 namespace ISSLab.ViewModel
@@ -87,9 +87,8 @@ namespace ISSLab.ViewModel
             }
 
             // nu il folositi ca strica tot (Bianca asa o zis)
-<<<<<<< Updated upstream
+            // Updated upstream
             apiService.Dispose();
-=======
             // apiService.Dispose();
         }
 
@@ -127,7 +126,12 @@ namespace ISSLab.ViewModel
                 Console.WriteLine($"Successfully fetched the group members");
 
                 GroupMembers = new ObservableCollection<User>(
-                    groupMembers.Select(member => new User(member.Id, member.Username, member.Password, member.Email, member.Phone, member.Description)));
+                    groupMembers.Select(member => new User(member.UserId, member.Username, member.Username
+                    
+                    
+                    
+                    
+                    ,member.Password, member.Email, member.PhoneNumber, member.)));
             }
             catch (Exception ex)
             {
@@ -136,7 +140,6 @@ namespace ISSLab.ViewModel
 
             // nu il folositi ca strica tot (Bianca asa o zis)
             // apiService.Dispose();
->>>>>>> Stashed changes
         }
 
         public async void FetchPolls()
