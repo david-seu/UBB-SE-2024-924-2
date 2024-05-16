@@ -9,6 +9,7 @@ namespace BulldozerServer.Domain
     public class Poll
     {
         private Guid pollId;
+        private Guid groupId;
         private string description;
         private DateOnly creationDate;
         private DateOnly endDate;
@@ -57,6 +58,7 @@ namespace BulldozerServer.Domain
         }
 
         public Guid PollId { get => pollId; }
+        public Guid GroupId { get => groupId; }
         public string Description { get => description; set => description = value; }
         public DateOnly CreationDate { get => creationDate; }
         public DateOnly EndDate { get => endDate; set => endDate = value; }

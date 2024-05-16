@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulldozerServer.Domain;
+using BulldozerServer.Domain.MarketplacePosts;
 using BulldozerServer.Mapper;
 using BulldozerServer.Payload.DTO;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace UBB_SE_2024_Popsicles.Services
         private static bool defaultAllowanceOfPostage = false;
         private static string defaultGroupRole = "user";*/
 
-        public async EntityEntry<Group> CreateGroup(GroupDTO groupDTO)
+        public async Task<EntityEntry<Group>> CreateGroup(GroupDTO groupDTO)
         {
             if (context.Groups.Find(groupDTO.GroupId) != null)
             {
@@ -43,7 +44,7 @@ namespace UBB_SE_2024_Popsicles.Services
             return addResult;
         }
 
-        public async void UpdateGroup(GroupDTO groupDTO)
+        public async Task<EntityEntry<Group>> UpdateGroup(GroupDTO groupDTO)
         {
             if (context.Groups.Find(groupDTO.GroupId) == null)
             {
@@ -68,7 +69,7 @@ namespace UBB_SE_2024_Popsicles.Services
             await context.SaveChangesAsync();
         }
 
-        public async void AddMemberToGroup(MembershipDTO membershipDTO)
+        public async Task<EntityEntry<Membership>> AddMemberToGroup(MembershipDTO membershipDTO)
         {
             Guid userId = membershipDTO.UserId;
             Guid groupId = membershipDTO.GroupId;
@@ -95,7 +96,7 @@ namespace UBB_SE_2024_Popsicles.Services
             await context.SaveChangesAsync();
         }
 
-        public async  UpdateMembership(MembershipDTO membershipDTO)
+        public async Task<EntityEntry<Membership>> UpdateMembership(MembershipDTO membershipDTO)
         {
             Guid userId = membershipDTO.UserId;
             Guid groupId = membershipDTO.GroupId;
@@ -111,7 +112,7 @@ namespace UBB_SE_2024_Popsicles.Services
             return updateResult;
         }
 
-        public async void AddNewRequestToJoinGroup(JoinRequestDTO joinRequestDTO)
+        public async Task<EntityEntry<JoinRequest>> AddNewRequestToJoinGroup(JoinRequestDTO joinRequestDTO)
         {
             JoinRequest joinRequest = JoinRequestMapper.JoinRequestDTOToJoinRequest(joinRequestDTO);
             var addResult = context.JoinRequests.Add(joinRequest);
@@ -123,17 +124,23 @@ namespace UBB_SE_2024_Popsicles.Services
         {
             if (context.JoinRequests.Find(joinRequestDTO.JoinRequestId) == null)
             {
-                throw new Exception("User didnt request to join this group");
+                throw new Exception("User didn't request to join this group");
             }
-            JoinRequest joinRequest = 
-            context.Memberships.Add(new Membership(groupId, userId));
-            context.JoinRequests.Remove(request);
+            JoinRequest joinRequest = JoinRequestMapper.JoinRequestDTOToJoinRequest(joinRequestDTO);
+            context.Memberships.Add(new Membership(joinRequest.GroupId, joinRequest.UserId));
+            context.JoinRequests.Remove(joinRequest);
             await context.SaveChangesAsync();
         }
 
-        public void RejectRequestToJoinGroup(Guid joinRequestId)
+        public async void RejectRequestToJoinGroup(Guid joinRequestId)
         {
-            
+            var request = context.JoinRequests.Find(joinRequestId);
+            if (request == null)
+            {
+                throw new Exception("User didn't request to join this group");
+            }
+            context.JoinRequests.Remove(request);
+            await context.SaveChangesAsync();
         }
 
         public void CreateNewPostOnGroupChat(Guid groupId, Guid groupMemberId, string postContent, string postImage)
@@ -174,86 +181,75 @@ namespace UBB_SE_2024_Popsicles.Services
             }
         }
 
-        public List<GroupPost> GetGroupPosts(Guid groupId)
+        public ICollection<MarketplacePost> GetGroupPosts(Guid groupId)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            return group.ListOfGroupPosts;
+            Group group = context.Groups.Find(groupId);
+            return group.MarketplacePosts;
         }
 
-        public List<GroupMember> GetGroupMembers(Guid groupId)
+        public List<User> GetGroupMembers(Guid groupId)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
+            var members = context.Users.Join(
+             context.Memberships,
+             user => user.UserId,
+             membership => membership.UserId,
+             (user, membership) => new { User = user, Membership = membership })
+         .Where(joined => joined.Membership.GroupId == groupId)
+         .Select(joined => joined.User)
+         .ToList();
 
-            // Get the Members from the Group
-            List<GroupMember> listOfGroupMembers = new List<GroupMember>();
-            foreach (GroupMembership groupMembership in group.ListOfGroupMemberships)
+            return members;
+        }
+
+        public bool IsUserInGroup(Guid groupId, Guid groupMemberId)
+        {
+            var membership = context.Memberships.Find(groupId, groupMemberId);
+            if (membership == null)
             {
-                GroupMember groupMember = groupMemberRepository.GetGroupMemberById(groupMembership.GroupMemberId);
-                listOfGroupMembers.Add(groupMember);
+                return false;
             }
-
-            return listOfGroupMembers;
+            return true;
         }
 
-        public GroupMember GetMemberFromGroup(Guid groupId, Guid groupMemberId)
-        {
-            Group group = groupRepository.GetGroupById(groupId);
-            foreach (GroupMembership membership in group.ListOfGroupMemberships)
-            {
-                if (membership.GroupMemberId == groupMemberId)
-                {
-                    return groupMemberRepository.GetGroupMemberById(groupMemberId);
-                }
-            }
-            throw new Exception("Group member not found");
-        }
-
-        public List<JoinRequest> GetRequestsToJoin(Guid groupId)
+        public List<JoinRequest> GetRequestsToJoinFromGroup(Guid groupId)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            return group.ListOfJoinRequests;
+            var allRequestsFromGroup = context.JoinRequests.Where(request => request.GroupId == groupId).ToList();
+            return allRequestsFromGroup;
         }
 
-        public List<Group> GetAllGroups(Guid groupMemberId)
+        public List<Group> GetAllGroupsUserBelongsTo(Guid groupMemberId)
         {
             // Get the GroupMember from the GroupMemberRepository
-            GroupMember groupMember = groupMemberRepository.GetGroupMemberById(groupMemberId);
-
-            // Get the Groups from the GroupMember
-            List<Group> groups = new List<Group>();
-            foreach (GroupMembership membership in groupMember.GroupMemberships)
-            {
-                Group group = groupRepository.GetGroupById(membership.GroupId);
-                groups.Add(group);
-            }
+            var groups = context.Groups.Join(
+             context.Memberships,
+             group => group.GroupId,
+             membership => membership.GroupId,
+             (group, membership) => new { Group = group, Membership = membership })
+         .Where(joined => joined.Membership.UserId == groupMemberId)
+         .Select(joined => joined.Group)
+         .ToList();
 
             return groups;
         }
 
         public Group GetGroup(Guid groupId)
         {
-            return groupRepository.GetGroupById(groupId);
+            var group = context.Groups.Find(groupId);
+            if (group == null)
+            {
+                throw new Exception("Can't find group");
+            }
+            return group;
         }
-
-        public List<GroupPoll> GetGroupPolls(Guid groupId)
+        public List<Poll> GetGroupPolls(Guid groupId)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
+            var polls = context.Polls.Where(poll => poll.GroupId == groupId).ToList();
 
-            return group.ListOfGroupPolls;
-        }
-
-        public GroupPoll GetSpecificGroupPoll(Guid groupId, Guid pollId)
-        {
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            return group.GetGroupPoll(pollId);
+            return polls;
         }
 
         public void CreateNewPoll(Guid groupId, Guid groupMemberId, string pollDescription)

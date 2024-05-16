@@ -14,6 +14,7 @@ namespace BulldozerServer.Domain
 
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<JoinRequest> JoinRequests { get; set; }
+        public DbSet<Poll> Polls { get; set; }
         #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -29,9 +29,7 @@
         public string Description { get => description; set => description = value; }
         public DateTime CreatedDate { get => createdDate; set => createdDate = value; }
         public bool IsPublic { get => isPublic; set => isPublic = value; }
-
         public bool AllowanceOfPostage { get => allowanceOfPostage; set => allowanceOfPostage = value; }
-
         public ICollection<MarketplacePosts.MarketplacePost> MarketplacePosts { get; } = new List<MarketplacePosts.MarketplacePost>();
     }
 }
