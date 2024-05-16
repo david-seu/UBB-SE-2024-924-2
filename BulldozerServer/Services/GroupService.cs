@@ -40,6 +40,7 @@ namespace UBB_SE_2024_Popsicles.Services
             // Add the new group to the GroupRepository
             context.Groups.Add(newGroup);
             AddMemberToGroup(groupOwnerId, groupId, "admin");
+            context.SaveChangesAsync();
         }
 
         public void UpdateGroup(Guid groupId, string newGroupName, string newGroupDescription, string newGroupIcon, string newGroupBanner,
@@ -159,17 +160,25 @@ namespace UBB_SE_2024_Popsicles.Services
             groupMembershipRepository.UpdateGroupMembership(groupMembership);
         }
 
-        public void ChangeMemberRoleInTheGroup(Guid groupMemberId, Guid groupId, string newGroupRole)
+        /*
+         *  Unknown repo function UpdateGroupMembership
+         */
+        public async void ChangeMemberRoleInTheGroup(Guid groupMemberId, Guid groupId, string newGroupRole)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
+            var group = await context.Groups.FindAsync(groupId);
+            if (group == null)
+            {
+                throw new Exception("Group not found");
+            }
 
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
-
+            //GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
+            GroupMembership groupMembership = context.
             groupMembership.GroupMemberRole = newGroupRole;
 
             // Update the GroupMembership in the GroupMembershipRepository
-            groupMembershipRepository.UpdateGroupMembership(groupMembership);
+            context.Groups.Update(groupMembership);
+            await context.SaveChangesAsync();
         }
 
         public void AllowMemberToBypassPostageRestriction(Guid groupMemberId, Guid groupId)
