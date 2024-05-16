@@ -166,6 +166,8 @@ namespace ISSLab.Services
                 Console.WriteLine($"Json error: {exception.Message}");
                 return new List<Poll> { };
             }
+        }
+
         public async Task<List<Post>> GetFavouritePosts(Guid userId)
         {
             try
@@ -185,7 +187,6 @@ namespace ISSLab.Services
                 // logger call here
                 return new List<Post> { };
             }
-
         }
 
         public void Dispose()
