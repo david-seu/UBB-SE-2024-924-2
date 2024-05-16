@@ -31,5 +31,9 @@ namespace BulldozerServer.Domain
 
         public Guid PollOptionId { get => pollOptionId; }
         public Guid UserId { get => userId; }
+
+        public User UserThatAnswered { get; set; }
+
+        public PollOption PollOption { get; set; }
     }
 }

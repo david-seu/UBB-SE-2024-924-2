@@ -36,5 +36,10 @@ namespace BulldozerServer.Domain
         public Guid PollOptionId { get => pollOptionId; }
         public Guid PollId { get => pollId; }
         public string Option { get => option; set => option = value; }
+
+        public Poll Poll { get; set; }
+
+        public ICollection<User> UsersThatSelectedOption { get; } = new List<User>();
+        public ICollection<PollAnswer> PollAnswers { get; } = new List<PollAnswer>();
     }
 }

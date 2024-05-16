@@ -4,6 +4,7 @@ using BulldozerServer.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulldozerServer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240516171100_AddedPolls")]
+    partial class AddedPolls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,41 +211,6 @@ namespace BulldozerServer.Migrations
                     b.ToTable("Polls");
                 });
 
-            modelBuilder.Entity("BulldozerServer.Domain.PollAnswer", b =>
-                {
-                    b.Property<Guid>("PollOptionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PollOptionId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PollAnswers");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.PollOption", b =>
-                {
-                    b.Property<Guid>("PollOptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Option")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("PollId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PollOptionId");
-
-                    b.HasIndex("PollId");
-
-                    b.ToTable("PollOptions");
-                });
-
             modelBuilder.Entity("BulldozerServer.Domain.User", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -434,36 +402,6 @@ namespace BulldozerServer.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("BulldozerServer.Domain.PollAnswer", b =>
-                {
-                    b.HasOne("BulldozerServer.Domain.PollOption", "PollOption")
-                        .WithMany("PollAnswers")
-                        .HasForeignKey("PollOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BulldozerServer.Domain.User", "UserThatAnswered")
-                        .WithMany("PollAnswers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PollOption");
-
-                    b.Navigation("UserThatAnswered");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.PollOption", b =>
-                {
-                    b.HasOne("BulldozerServer.Domain.Poll", "Poll")
-                        .WithMany("PollOptions")
-                        .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Poll");
-                });
-
             modelBuilder.Entity("BulldozerServer.Domain.UsersFavoritePosts", b =>
                 {
                     b.HasOne("BulldozerServer.Domain.MarketplacePosts.MarketplacePost", null)
@@ -490,16 +428,6 @@ namespace BulldozerServer.Migrations
                     b.Navigation("Memberships");
                 });
 
-            modelBuilder.Entity("BulldozerServer.Domain.Poll", b =>
-                {
-                    b.Navigation("PollOptions");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.PollOption", b =>
-                {
-                    b.Navigation("PollAnswers");
-                });
-
             modelBuilder.Entity("BulldozerServer.Domain.User", b =>
                 {
                     b.Navigation("JoinRequests");
@@ -509,8 +437,6 @@ namespace BulldozerServer.Migrations
                     b.Navigation("Memberships");
 
                     b.Navigation("OwnedGroups");
-
-                    b.Navigation("PollAnswers");
                 });
 #pragma warning restore 612, 618
         }

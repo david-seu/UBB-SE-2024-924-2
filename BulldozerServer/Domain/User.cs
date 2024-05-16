@@ -34,5 +34,11 @@ namespace BulldozerServer.Domain
 
         public ICollection<Group> GroupsPartOf { get; } = new List<Group>();
         public ICollection<Membership> Memberships { get; } = new List<Membership>();
+
+        public ICollection<Group> GroupsTryingToJoin { get; } = new List<Group>();
+        public ICollection<JoinRequest> JoinRequests { get; } = new List<JoinRequest>();
+
+        public ICollection<PollOption> SelectedPollOptions { get; } = new List<PollOption>();
+        public ICollection<PollAnswer> PollAnswers { get; } = new List<PollAnswer>();
     }
 }

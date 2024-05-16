@@ -27,5 +27,9 @@ namespace BulldozerServer.Domain
 
         public ICollection<User> Users { get; } = new List<User>();
         public ICollection<Membership> Memberships { get; } = new List<Membership>();
+        public ICollection<User> UsersTryingToJoin { get; } = new List<User>();
+        public ICollection<JoinRequest> JoinRequests { get; } = new List<JoinRequest>();
+
+        public ICollection<Poll> GroupPolls { get; } = new List<Poll>();
     }
 }

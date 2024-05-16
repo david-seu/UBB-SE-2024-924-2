@@ -14,11 +14,16 @@ namespace BulldozerServer.Domain
         public DbSet<AuctionPost> AuctionPosts { get; set; }
         public DbSet<DonationPost> DonationPosts { get; set; }
 
-        // public DbSet<JoinRequest> JoinRequests { get; set; }
+        public DbSet<JoinRequest> JoinRequests { get; set; }
         public DbSet<Cart> Cart { get; set; }
 
         public DbSet<UsersFavoritePosts> UsersFavoritePosts { get; set; }
         public DbSet<Membership> Memberships { get; set; }
+
+        public DbSet<Poll> Polls { get; set; }
+        public DbSet<PollOption> PollOptions { get; set; }
+
+        public DbSet<PollAnswer> PollAnswers { get; set; }
         #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,7 +74,53 @@ namespace BulldozerServer.Domain
                 .WithMany(g => g.Users)
                 .UsingEntity<Membership>();
 
-            // modelBuilder.Entity<Membership>
+            modelBuilder.Entity<JoinRequest>().HasKey(jr => jr.JoinRequestId);
+
+            modelBuilder.Entity<JoinRequest>()
+                .HasOne(jr => jr.User)
+                .WithMany(u => u.JoinRequests)
+                .HasForeignKey(jr => jr.UserId);
+
+            modelBuilder.Entity<JoinRequest>()
+                .HasOne(jr => jr.Group)
+                .WithMany(g => g.JoinRequests)
+                .HasForeignKey(jr => jr.GroupId);
+
+            modelBuilder.Entity<Group>()
+                .HasMany(g => g.UsersTryingToJoin)
+                .WithMany(u => u.GroupsTryingToJoin)
+                .UsingEntity<JoinRequest>();
+
+            modelBuilder.Entity<Poll>().HasKey(p => p.PollId);
+
+            modelBuilder.Entity<Poll>()
+                .HasOne(p => p.Group)
+                .WithMany(g => g.GroupPolls)
+                .HasForeignKey(p => p.GroupId);
+
+            modelBuilder.Entity<PollOption>().HasKey(po => po.PollOptionId);
+
+            modelBuilder.Entity<PollOption>()
+                .HasOne(po => po.Poll)
+                .WithMany(p => p.PollOptions)
+                .HasForeignKey(po => po.PollId);
+
+            modelBuilder.Entity<PollAnswer>().HasKey(pa => new { pa.PollOptionId, pa.UserId });
+
+            modelBuilder.Entity<PollAnswer>()
+                .HasOne(pa => pa.PollOption)
+                .WithMany(po => po.PollAnswers)
+                .HasForeignKey(pa => pa.PollOptionId);
+
+            modelBuilder.Entity<PollAnswer>()
+                .HasOne(pa => pa.UserThatAnswered)
+                .WithMany(u => u.PollAnswers)
+                .HasForeignKey(pa => pa.UserId);
+
+            modelBuilder.Entity<PollOption>()
+                .HasMany(pa => pa.UsersThatSelectedOption)
+                .WithMany(u => u.SelectedPollOptions)
+                .UsingEntity<PollAnswer>();
         }
         #endregion
 
