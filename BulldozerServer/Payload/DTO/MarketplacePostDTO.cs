@@ -17,6 +17,7 @@ namespace BulldozerServer.Payloads.DTO
         private DateTime? endDate;
         private bool isPromoted;
         private bool isActive;
+        private string type;
 
         [Key]
         public Guid MarketplacePostId { get => marketplacePostId; set => marketplacePostId = value; }
@@ -36,12 +37,14 @@ namespace BulldozerServer.Payloads.DTO
         public bool IsPromoted { get => isPromoted; set => isPromoted = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
 
+        public string Type { get => type; set => type = value; }
+
         public User? Author { get; set; }
 
         public Group Group { get; set; }
 
-        public ICollection<User> PeopleThatFavored { get; } = new List<User>();
+        public ICollection<User> PeopleThatFavored { get; set; } = new List<User>();
 
-        public ICollection<User> PeopleThatPlacedInCart { get; } = new List<User>();
+        public ICollection<User> PeopleThatPlacedInCart { get; set; } = new List<User>();
     }
 }
