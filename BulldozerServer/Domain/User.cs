@@ -28,8 +28,8 @@ namespace BulldozerServer.Domain
         public ICollection<MarketplacePost> PostsInCart { get; set; }
 
         public ICollection<MarketplacePost> FavoritePosts { get; set; }
-        public ICollection<Group> Groups { get; }
+        public ICollection<Group> Groups { get; set; }
 
-        public ICollection<MarketplacePost> MarketplacePosts { get; } = new List<MarketplacePost>();
+        public ICollection<MarketplacePost> MarketplacePosts { get; set; } = new List<MarketplacePost>();
     }
 }

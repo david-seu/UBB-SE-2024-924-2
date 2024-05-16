@@ -23,11 +23,11 @@ namespace BulldozerServer.Payload.DTO
         public DateOnly BirthDay { get => birthDay; set => birthDay = value; }
         public DateTime CreatedDate { get => createdDate; set => createdDate = value; }
 
-        public ICollection<MarketplacePost> PostsInCart = new List<MarketplacePost>();
+        public ICollection<MarketplacePost> PostsInCart { get; set; } = new List<MarketplacePost>();
 
-        public ICollection<MarketplacePost> FavoritePosts = new List<MarketplacePost>();
-        public ICollection<Group> Groups = new List<Group>();
+        public ICollection<MarketplacePost> FavoritePosts { get; set; } = new List<MarketplacePost>();
+        public ICollection<Group> Groups { get; set; } = new List<Group>();
 
-        public ICollection<MarketplacePost> MarketplacePost = new List<MarketplacePost>();
+        public ICollection<MarketplacePost> MarketplacePost { get; set; } = new List<MarketplacePost>();
     }
 }
