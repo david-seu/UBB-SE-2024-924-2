@@ -195,6 +195,26 @@ namespace ISSLab.Services
                 return new List<Poll> { };
             }
         }
+        public async Task<List<Request>> GetRequestsToJoinGroup(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPolls?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Request>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<Request> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Request> { };
+            }
+        }
 
         public async Task<List<Post>> GetFavouritePosts(Guid userId)
         {
