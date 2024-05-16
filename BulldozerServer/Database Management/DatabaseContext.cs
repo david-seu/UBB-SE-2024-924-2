@@ -8,6 +8,9 @@ namespace BulldozerServer.Domain
         public DbSet<User> User { get; set; }
         public DbSet<Group> Group { get; set; }
         public DbSet<MarketplacePost> MarketplacePost { get; set; }
+        public DbSet<FixedPricePost> FixedPricePost { get; set; }
+        public DbSet<AuctionPost> AuctionPost { get; set; }
+        public DbSet<DonationPost> DonationPost { get; set; }
 
         #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,8 +32,7 @@ namespace BulldozerServer.Domain
             modelBuilder.Entity<MarketplacePost>()
                 .HasOne(mp => mp.Author)
                 .WithMany(u => u.MarketplacePosts)
-                .HasForeignKey(mp => mp.AuthorId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(mp => mp.AuthorId);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.PostsInCart)
