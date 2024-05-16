@@ -18,7 +18,7 @@ namespace BulldozerServer.Domain.MarketplacePosts
         private bool isActive;
 
         [Key]
-        public Guid MarketplacePostId { get => marketplacePostId; }
+        public Guid MarketplacePostId { get => marketplacePostId; set => marketplacePostId = value; }
 
         [AllowNull]
         public Guid? AuthorId { get => authorId; set => authorId = value; }

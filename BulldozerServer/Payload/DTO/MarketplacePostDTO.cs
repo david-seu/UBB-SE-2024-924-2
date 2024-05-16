@@ -1,6 +1,6 @@
-﻿using BulldozerServer.Domain;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using BulldozerServer.Domain;
 
 namespace BulldozerServer.Payloads.DTO
 {
@@ -19,7 +19,7 @@ namespace BulldozerServer.Payloads.DTO
         private bool isActive;
 
         [Key]
-        public Guid MarketplacePostId { get => marketplacePostId; }
+        public Guid MarketplacePostId { get => marketplacePostId; set => marketplacePostId = value; }
 
         [AllowNull]
         public Guid? AuthorId { get => authorId; set => authorId = value; }
