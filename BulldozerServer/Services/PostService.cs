@@ -51,8 +51,7 @@ namespace BulldozerServer.Services
             {
                 throw new Exception("Post doesn't exist!");
             }
-            var context = await databaseContext.MarketplacePost.FindAsync(id);
-            return context;
+            return postToDelete;
         }
     }
 }

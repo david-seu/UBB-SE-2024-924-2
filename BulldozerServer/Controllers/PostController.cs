@@ -45,10 +45,27 @@ namespace BulldozerServer.Controllers
             }
         }
 
-        [HttpGet{id}]
+        [HttpGet("{id}")]
         public IActionResult GetPostById(Guid id)
         {
-            try { }
+            try
+            {
+                var post = this.postService.GetPostById(id);
+                return Ok(post);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("{}")]
+        public IActionResult GetPosts()
+        {
+            try
+            {
+                v
+            }
         }
     }
 }
