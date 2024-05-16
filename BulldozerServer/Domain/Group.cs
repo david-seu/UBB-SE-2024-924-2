@@ -12,6 +12,17 @@ namespace BulldozerServer.Domain
         private bool isPublic;
         private bool allowanceOfPostage;
 
+        public Group(Guid groupId, Guid userId, string groupName, string description, DateTime createdDate, bool isPublic, bool allowanceOfPostage)
+        {
+            this.groupId = groupId;
+            this.userId = userId;
+            this.groupName = groupName;
+            this.description = description;
+            this.createdDate = createdDate;
+            this.isPublic = isPublic;
+            this.allowanceOfPostage = allowanceOfPostage;
+        }
+
         public Guid GroupId { get => groupId; set => groupId = value; }
         public Guid OwnerId { get => ownerId; set => ownerId = value; }
 
@@ -20,9 +31,7 @@ namespace BulldozerServer.Domain
         public string Description { get => description; set => description = value; }
         public DateTime CreatedDate { get => createdDate; set => createdDate = value; }
         public bool IsPublic { get => isPublic; set => isPublic = value; }
-
         public bool AllowanceOfPostage { get => allowanceOfPostage; set => allowanceOfPostage = value; }
-
         public ICollection<MarketplacePosts.MarketplacePost> MarketplacePosts { get; } = new List<MarketplacePosts.MarketplacePost>();
 
         public ICollection<User> Users { get; } = new List<User>();
