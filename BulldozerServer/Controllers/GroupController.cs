@@ -233,5 +233,11 @@ namespace BulldozerServer.Controllers
                 return NotFound(e.Message);
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Group>>> GetGroups()
+        {
+            return await groupService.GetGroups();
+        }
     }
 }
