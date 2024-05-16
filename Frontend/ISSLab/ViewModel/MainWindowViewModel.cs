@@ -155,7 +155,7 @@ namespace ISSLab.ViewModel
             // TODO: Replace this with a call to the repository
             CollectionOfActiveGroups = new ObservableCollection<Group>
             {
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
                  new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
                  new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
                  new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),

@@ -55,10 +55,12 @@ namespace ISSLab.ViewModel
 
             RequestsToJoinTheGroup = new ObservableCollection<Request>()
             {
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Vasile", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Andrei", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Maria", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Gabriel", Guid.NewGuid())
+                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
             };
 
             List<PollViewModel> pollViewModels = new List<PollViewModel>();
@@ -99,7 +101,7 @@ namespace ISSLab.ViewModel
 
                 RequestsToJoinTheGroup = new ObservableCollection<Request>(
                     requestsToJoinGroup.Select(request =>
-                        new Request(request.Id, request.GroupMemberId, request.GroupMemberName, request.GroupId)));
+                        new Request(request.JoinRequestId, request.UserId, request.GroupId)));
             }
             catch (Exception ex)
             {
@@ -147,7 +149,6 @@ namespace ISSLab.ViewModel
             {
                 Console.WriteLine($"Error while fetching the group POLLS: {ex.Message}");
             }
-
         }
 
         private Poll currentlySelectedPoll;
@@ -214,7 +215,6 @@ namespace ISSLab.ViewModel
                 return GroupThatIsEncapsulatedByThisInstanceOnViewModel.UserId.ToString();
             }
         }
-
 
         public string DateOfCreationInStringFormat
         {
