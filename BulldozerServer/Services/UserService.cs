@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Xml.Schema;
 using BulldozerServer.Domain;
 using BulldozerServer.Domain.MarketplacePosts;
+using BulldozerServer.Mapper;
+using BulldozerServer.Payload.DTO;
 using ISSLab.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -53,11 +55,11 @@ namespace BulldozerServer.Services
             context.SaveChangesAsync();
         }
 
-        public async Task<EntityEntry<User>> AddUser(User user)
+        public async Task<UserDto> AddUser(UserDto userDto)
         {
-            var addedUser = await context.Users.AddAsync(user);
+            var addedUser = await context.Users.AddAsync(UserMapper.MapUserDtoToUser(userDto));
             await context.SaveChangesAsync();
-            return addedUser;
+            return UserMapper.MapUserToUserDto(addedUser.Entity);
         }
 
         public async Task<List<MarketplacePost>> GetFavoritePosts(Guid userId)
@@ -83,11 +85,10 @@ namespace BulldozerServer.Services
         public Task<List<User>> GetUsers()
         {
             var users = context.Users.ToListAsync();
-            //if (users == null)
-            //{
+            // if (users == null)
+            // {
             //    throw new Exception("No users found");
-            //}
-
+            // }
             return users;
         }
 
@@ -138,15 +139,19 @@ namespace BulldozerServer.Services
             await context.SaveChangesAsync();
         }
 
-        public async void RemoveUser(User user)
+        public void RemoveUser(Guid userId)
         {
-            var userToRemove = await context.Users.FindAsync(user.UserId);
+            Console.WriteLine("Removing user");
+            var userToRemove = context.Users.Find(userId);
             if (userToRemove == null)
             {
                 throw new Exception("User not found");
             }
+            Console.WriteLine("Removing user 2");
             context.Users.Remove(userToRemove);
-            await context.SaveChangesAsync();
+            Console.WriteLine("Removing user 3");
+            context.SaveChanges();
+            Console.WriteLine("Removing user 4");
         }
 
         public async Task<User> UpdateUserUsername(Guid userId, string username)
