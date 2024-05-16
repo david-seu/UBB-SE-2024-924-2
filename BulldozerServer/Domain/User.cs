@@ -40,5 +40,6 @@ namespace BulldozerServer.Domain
 
         public ICollection<PollOption> SelectedPollOptions { get; } = new List<PollOption>();
         public ICollection<PollAnswer> PollAnswers { get; } = new List<PollAnswer>();
+        public ICollection<GroupPost> GroupPosts { get; } = new List<GroupPost>();
     }
 }

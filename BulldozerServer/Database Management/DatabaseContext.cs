@@ -24,6 +24,8 @@ namespace BulldozerServer.Domain
         public DbSet<PollOption> PollOptions { get; set; }
 
         public DbSet<PollAnswer> PollAnswers { get; set; }
+
+        public DbSet<GroupPost> GroupPosts { get; set; }
         #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -121,6 +123,19 @@ namespace BulldozerServer.Domain
                 .HasMany(pa => pa.UsersThatSelectedOption)
                 .WithMany(u => u.SelectedPollOptions)
                 .UsingEntity<PollAnswer>();
+
+            modelBuilder.Entity<GroupPost>()
+                .HasKey(gp => gp.GroupPostId);
+
+            modelBuilder.Entity<GroupPost>()
+                .HasOne(gp => gp.Group)
+                .WithMany(g => g.GroupPosts)
+                .HasForeignKey(gp => gp.GroupId);
+
+            modelBuilder.Entity<GroupPost>()
+                .HasOne(gp => gp.Author)
+                .WithMany(u => u.GroupPosts)
+                .HasForeignKey(gp => gp.AuthorId);
         }
         #endregion
 

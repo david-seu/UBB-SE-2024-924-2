@@ -31,5 +31,7 @@ namespace BulldozerServer.Domain
         public ICollection<JoinRequest> JoinRequests { get; } = new List<JoinRequest>();
 
         public ICollection<Poll> GroupPolls { get; } = new List<Poll>();
+
+        public ICollection<GroupPost> GroupPosts { get; } = new List<GroupPost>();
     }
 }
