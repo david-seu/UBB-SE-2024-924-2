@@ -26,20 +26,20 @@ namespace BulldozerServer.Services
 
         public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetMarketplacePosts()
         {
-            return await databaseContext.MarketplacePost.ToListAsync();
+            return await databaseContext.MarketplacePosts.ToListAsync();
         }
 
         public async Task<EntityEntry<MarketplacePost>> AddMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
             var marketplacePost = MarketplacePostMapper.MapMarketplacePostDTOToMarketplacePost(marketplacePostDTO);
-            var context = databaseContext.MarketplacePost.Add(marketplacePost);
+            var context = databaseContext.MarketplacePosts.Add(marketplacePost);
             await databaseContext.SaveChangesAsync();
             return context;
         }
         public async Task<EntityEntry> RemoveMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
             var marketplacePost = MarketplacePostMapper.MapMarketplacePostDTOToMarketplacePost(marketplacePostDTO);
-            var postToDelete = await databaseContext.MarketplacePost.FindAsync(marketplacePost.MarketplacePostId);
+            var postToDelete = await databaseContext.MarketplacePosts.FindAsync(marketplacePost.MarketplacePostId);
             if (postToDelete == null)
             {
                 throw new Exception("Post doesn't exist!");
@@ -50,7 +50,7 @@ namespace BulldozerServer.Services
         }
         public async Task<MarketplacePost> GetMarketplacePostById(Guid id)
         {
-            var postToDelete = await databaseContext.MarketplacePost.FindAsync(id);
+            var postToDelete = await databaseContext.MarketplacePosts.FindAsync(id);
             if (postToDelete == null)
             {
                 throw new Exception("Post doesn't exist!");

@@ -6,8 +6,8 @@ using BulldozerServer.Domain.MarketplacePosts;
 
 namespace BulldozerServer.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class GroupController : ControllerBase
     {
         private readonly IGroupService groupService;
@@ -36,7 +36,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                var updatedGroup = await groupService.
+                var updatedGroup = await groupService.UpdateGroup(groupDTO);
                 return Ok(updatedGroup.Entity);
             }
             catch (Exception e)
@@ -50,7 +50,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                await groupService.DeleteGroup(groupId);
+                groupService.DeleteGroup(groupId);
                 return NoContent();
             }
             catch (Exception e)
@@ -78,7 +78,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                await groupService.RemoveMemberFromGroup(groupId, userId);
+                groupService.RemoveMemberFromGroup(groupId, userId);
                 return NoContent();
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                await groupService.AcceptRequestToJoinGroup(joinRequestDTO);
+                groupService.AcceptRequestToJoinGroup(joinRequestDTO);
                 return NoContent();
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                await groupService.RejectRequestToJoinGroup(joinRequestId);
+                groupService.RejectRequestToJoinGroup(joinRequestId);
                 return NoContent();
             }
             catch (Exception e)
@@ -148,7 +148,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                groupService.CreateNewPostOnGroupChat(groupId, groupPostDTO.GroupMemberId, groupPostDTO.PostContent, groupPostDTO.PostImage);
+                groupService.CreateNewPostOnGroupChat(groupId, groupPostDTO.GroupPostId, groupPostDTO.PostContent, groupPostDTO.PostImage);
                 return NoContent();
             }
             catch (Exception e)
@@ -225,7 +225,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                var group = await groupService.GetGroup(groupId);
+                var group = groupService.GetGroup(groupId);
                 return Ok(group);
             }
             catch (Exception e)

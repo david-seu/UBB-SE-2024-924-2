@@ -25,21 +25,21 @@ namespace BulldozerServer.Domain
         public DateOnly BirthDay { get => birthDay; set => birthDay = value; }
         public DateTime CreatedDate { get => createdDate; set => createdDate = value; }
 
-        public ICollection<MarketplacePost> PostsInCart { get; } = new List<MarketplacePost>();
+        public ICollection<MarketplacePost> PostsInCart { get; set; } = new List<MarketplacePost>();
 
-        public ICollection<MarketplacePost> FavoritePosts { get; } = new List<MarketplacePost>();
-        public ICollection<Group> OwnedGroups { get; } = new List<Group>();
+        public ICollection<MarketplacePost> FavoritePosts { get; set; } = new List<MarketplacePost>();
+        public ICollection<Group> OwnedGroups { get; set; } = new List<Group>();
 
-        public ICollection<MarketplacePost> MarketplacePosts { get; } = new List<MarketplacePost>();
+        public ICollection<MarketplacePost> MarketplacePosts { get; set; } = new List<MarketplacePost>();
 
-        public ICollection<Group> GroupsPartOf { get; } = new List<Group>();
-        public ICollection<Membership> Memberships { get; } = new List<Membership>();
+        public ICollection<Group> GroupsPartOf { get; set; } = new List<Group>();
+        public ICollection<Membership> Memberships { get; set; } = new List<Membership>();
 
-        public ICollection<Group> GroupsTryingToJoin { get; } = new List<Group>();
-        public ICollection<JoinRequest> JoinRequests { get; } = new List<JoinRequest>();
+        public ICollection<Group> GroupsTryingToJoin { get; set; } = new List<Group>();
+        public ICollection<JoinRequest> JoinRequests { get; set; } = new List<JoinRequest>();
 
-        public ICollection<PollOption> SelectedPollOptions { get; } = new List<PollOption>();
-        public ICollection<PollAnswer> PollAnswers { get; } = new List<PollAnswer>();
-        public ICollection<GroupPost> GroupPosts { get; } = new List<GroupPost>();
+        public ICollection<PollOption> SelectedPollOptions { get; set; } = new List<PollOption>();
+        public ICollection<PollAnswer> PollAnswers { get; set; } = new List<PollAnswer>();
+        public ICollection<GroupPost> GroupPosts { get; set; } = new List<GroupPost>();
     }
 }

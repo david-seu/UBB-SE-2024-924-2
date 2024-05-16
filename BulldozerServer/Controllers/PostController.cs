@@ -24,7 +24,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                //MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                // MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
                 var context = this.postService.AddMarketplacePost(marketplacePostDTO);
                 return Ok(context);
             }
@@ -39,7 +39,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                //MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                // MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
                 var context = this.postService.RemoveMarketplacePost(marketplacePostDTO);
                 return Ok(context);
             }
