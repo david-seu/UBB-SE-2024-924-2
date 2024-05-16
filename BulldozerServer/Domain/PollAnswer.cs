@@ -29,5 +29,7 @@ namespace BulldozerServer.Domain
             this.userId = userId;
         }
 
+        public Guid PollAnswerId { get => pollAnswerId; }
+        public Guid UserId { get => userId; }
     }
 }
