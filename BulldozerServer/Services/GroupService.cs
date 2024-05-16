@@ -1,15 +1,17 @@
-﻿using System;
+﻿using BulldozerServer.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UBB_SE_2024_Popsicles.Models;
-using UBB_SE_2024_Popsicles.Repositories;
+
 
 namespace UBB_SE_2024_Popsicles.Services
 {
     internal class GroupService : IGroupService
     {
+        private DatabaseContext context;
         private static string defaultGroupName = "New Group";
         private static string defaultGroupDescription = "This is a new group";
         private static string defaultGroupIcon = "default";
@@ -22,17 +24,10 @@ namespace UBB_SE_2024_Popsicles.Services
         // private static bool defaultPostIsPinned = false;
         // private static string defaultPostDescription = "This is a new post";
         // Add the three repos: GroupRepository, GroupMemberRepository, and GroupMembershipRepository
-        private IGroupRepository groupRepository;
-        private IGroupMemberRepository groupMemberRepository;
-        private IGroupMembershipRepository groupMembershipRepository;
-        private IJoinRequestRepository joinRequestsRepository;
 
-        internal GroupService(IGroupRepository groupRepository, IGroupMemberRepository groupMemberRepository, IGroupMembershipRepository groupMembershipRepository, IJoinRequestRepository joinRequestsRepository)
+        public GroupService(DatabaseContext context)
         {
-            this.groupRepository = groupRepository;
-            this.groupMemberRepository = groupMemberRepository;
-            this.groupMembershipRepository = groupMembershipRepository;
-            this.joinRequestsRepository = joinRequestsRepository;
+            this.context = context;
         }
 
         public void CreateGroup(Guid groupOwnerId)
