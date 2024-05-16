@@ -73,24 +73,25 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<Group>> GetGroupsAsync()
+        public async Task<List<GroupNonMarketplace>> GetGroupsAsync()
         {
+            // TODO: Change to Domain entities
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync("api/groups");
                 response.EnsureSuccessStatusCode();
-                List<Group> groups = await response.Content.ReadFromJsonAsync<List<Group>>();
+                List<GroupNonMarketplace> groups = await response.Content.ReadFromJsonAsync<List<GroupNonMarketplace>>();
                 return groups;
             }
             catch (HttpRequestException exception)
             {
                 Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
-                return new List<Group> { };
+                return new List<GroupNonMarketplace> { };
             }
             catch (JsonException exception)
             {
                 Console.WriteLine($"Json error: {exception.Message}");
-                return new List<Group> { };
+                return new List<GroupNonMarketplace> { };
             }
         }
 

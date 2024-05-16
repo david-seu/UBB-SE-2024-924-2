@@ -122,23 +122,32 @@ namespace ISSLab.ViewModel
             GroupMember mockGroupMember = new GroupMember(idOfCurrentMockUser, "Dorian", "admin", "dorian@ubb.ro", "0725702312", "No paper, no pencil but I am still drawing attention.");
             CurrentActiveUser = mockGroupMember;
 
-            // TODO: Replace this with a call to the repository
-            CollectionOfActiveGroups = new ObservableCollection<GroupNonMarketplace>
-            {
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 5", "Description 5", "robotics-GroupNonMarketplace", "woman", 50, true, true, "5481f5"),
-                // groups created with the Renewals GroupMarketplace entity
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-            };
-
+            FetchGroups();
+            // CollectionOfActiveGroups = new ObservableCollection<GroupNonMarketplace>
+            // {
+            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
+            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
+            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
+            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),
+            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 5", "Description 5", "robotics-GroupNonMarketplace", "woman", 50, true, true, "5481f5"),
+            // };
             CurrentlySelectedGroupMarketplace = CollectionOfActiveGroups[0];
+        }
+        public async void FetchGroups()
+        {
+            ApiService apiService = ApiService.Instance;
+            try
+            {
+                List<GroupNonMarketplace> groups = await apiService.GetGroupsAsync();
+                Console.WriteLine($"Successfully fetched the groups");
+                CollectionOfActiveGroups = new ObservableCollection<GroupNonMarketplace>(
+                groups.Select(group => new GroupNonMarketplace(group.Id, group.OwnerId, group.Name, group.Description,
+                group.Icon, group.Banner, group.MaxPostsPerHourPerUser, group.IsPublic, group.CanMakePostsByDefault, group.GroupCode)));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching groups: {ex.Message}");
+            }
         }
 
         private GroupMember currentActiveUser;
