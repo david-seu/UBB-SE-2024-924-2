@@ -14,8 +14,6 @@ namespace BulldozerServer.Domain
         private DateOnly birthDay;
         private DateTime createdDate;
 
-        // create public properties for each field
-        [Key]
         public Guid UserId { get => userId; set => userId = value; }
         public string Username { get => username; set => username = value; }
         public string FullName { get => fullName; set => fullName = value; }

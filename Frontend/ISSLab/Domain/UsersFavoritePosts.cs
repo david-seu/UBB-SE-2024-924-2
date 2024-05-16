@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ISSLab.Model.Entities
+namespace ISSLab.Domain
 {
     public class UsersFavoritePosts
     {
