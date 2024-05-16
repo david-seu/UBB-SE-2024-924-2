@@ -18,7 +18,7 @@ namespace BulldozerServer.Mapper
             userDto.CreatedDate = user.CreatedDate;
             userDto.PostsInCart = user.PostsInCart;
             userDto.FavoritePosts = user.FavoritePosts;
-            userDto.Groups = user.Groups;
+            userDto.Groups = user.GroupsPartOf;
             userDto.MarketplacePost = user.MarketplacePosts;
             return userDto;
         }
@@ -36,7 +36,7 @@ namespace BulldozerServer.Mapper
             user.CreatedDate = userDto.CreatedDate;
             user.PostsInCart = userDto.PostsInCart;
             user.FavoritePosts = userDto.FavoritePosts;
-            user.Groups = userDto.Groups;
+            user.GroupsPartOf = userDto.Groups;
             user.MarketplacePosts = userDto.MarketplacePost;
             return user;
         }
