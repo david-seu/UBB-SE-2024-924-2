@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using ISSLab.Model.Entities;
 using ISSLab.ViewModel;
+using ISSLab.Domain
 using ISSLab.Services;
 
 namespace ISSLab.ViewModel
@@ -20,7 +20,7 @@ namespace ISSLab.ViewModel
             get; set;
         }
 
-        public ObservableCollection<GroupMember> GroupMembers
+        public ObservableCollection<User> GroupMembers
         {
             get; set;
         }
@@ -43,14 +43,14 @@ namespace ISSLab.ViewModel
             FetchPolls();
 
             // TODO: Fetch posts and members from the repository
-            GroupMembers = new ObservableCollection<GroupMember>
+            GroupMembers = new ObservableCollection<User>
             {
-                new GroupMember(Guid.NewGuid(), "Denis", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Andreea", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Dorian Pop", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Razvan", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Cristi", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Cristos", "admin", "denis@ubb.ro", "0749999345", "I am stupid.")
+                new User(Guid.NewGuid(), "Denis", "Denis Popescu", "admin", "denis@ubb.ro", "0749999345"),
+                new User(Guid.NewGuid(), "Andreea", "Andreea Popescu", "admin", "denis@ubb.ro", "0749999345"),
+                new User(Guid.NewGuid(), "Dorian Pop", "Dorian Pop Popescu", "admin", "denis@ubb.ro", "0749999345"),
+                new User(Guid.NewGuid(), "Razvan", "Razvan Popescu", "admin", "denis@ubb.ro", "0749999345"),
+                new User(Guid.NewGuid(), "Cristi", "Cristi Popescu", "admin", "denis@ubb.ro", "0749999345"),
+                new User(Guid.NewGuid(), "Cristos", "Cristos Popescu", "admin", "denis@ubb.ro", "0749999345")
             };
 
             RequestsToJoinTheGroup = new ObservableCollection<Request>()

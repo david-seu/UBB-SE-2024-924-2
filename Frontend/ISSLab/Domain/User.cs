@@ -5,6 +5,7 @@ namespace ISSLab.Domain
 {
     public class User
     {
+        // GroupMember had description, User does not
         private Guid userId;
         private string username;
         private string fullName;
@@ -14,6 +15,30 @@ namespace ISSLab.Domain
         private DateOnly birthDay;
         private DateTime createdDate;
 
+        public User(Guid userId, string username, string fullName, string password, string email, string phoneNumber, DateOnly birthDay, DateTime createdDate, ICollection<MarketplacePost> postsInCart, ICollection<MarketplacePost> favoritePosts, ICollection<Group> groups, ICollection<MarketplacePost> marketplacePosts)
+        {
+            UserId = userId;
+            Username = username;
+            FullName = fullName;
+            Password = password;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            BirthDay = birthDay;
+            CreatedDate = createdDate;
+            PostsInCart = postsInCart;
+            FavoritePosts = favoritePosts;
+            Groups = groups;
+            MarketplacePosts = marketplacePosts;
+        }
+        public User(Guid userId, string username, string fullName, string password, string email, string phoneNumber)
+        {
+            UserId = userId;
+            Username = username;
+            FullName = fullName;
+            Password = password;
+            Email = email;
+            PhoneNumber = phoneNumber;
+        }
         public Guid UserId { get => userId; set => userId = value; }
         public string Username { get => username; set => username = value; }
         public string FullName { get => fullName; set => fullName = value; }
@@ -29,5 +54,7 @@ namespace ISSLab.Domain
         public ICollection<Group> Groups { get; }
 
         public ICollection<MarketplacePost> MarketplacePosts { get; } = new List<MarketplacePost>();
+
+        
     }
 }
