@@ -57,6 +57,7 @@ namespace BulldozerServer.Services
 
         public async Task<UserDto> AddUser(UserDto userDto)
         {
+            // comments
             var addedUser = await context.Users.AddAsync(UserMapper.MapUserDtoToUser(userDto));
             await context.SaveChangesAsync();
             return UserMapper.MapUserToUserDto(addedUser.Entity);
