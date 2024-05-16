@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace UBB_SE_2024_Popsicles.Services
 {
-    internal class GroupService : IGroupService
+    public class GroupService : IGroupService
     {
         private DatabaseContext context;
 
