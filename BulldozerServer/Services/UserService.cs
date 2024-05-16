@@ -83,10 +83,11 @@ namespace BulldozerServer.Services
         public Task<List<User>> GetUsers()
         {
             var users = context.Users.ToListAsync();
-            if (users == null)
-            {
-                throw new Exception("No users found");
-            }
+            //if (users == null)
+            //{
+            //    throw new Exception("No users found");
+            //}
+
             return users;
         }
 

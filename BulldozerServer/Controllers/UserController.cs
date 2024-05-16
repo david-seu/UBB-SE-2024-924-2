@@ -20,7 +20,15 @@ namespace BulldozerServer.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await userService.GetUsers();
+            return Ok(await userService.GetUsers());
+            //try
+            //{
+                
+            //}
+            //catch (Exception e)
+            //{
+            //    return NotFound(e);
+            //}
         }
 
         [HttpGet("{id}")]
