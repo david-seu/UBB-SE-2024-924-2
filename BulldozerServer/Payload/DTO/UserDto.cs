@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BulldozerServer.Domain.MarketplacePosts;
-
-namespace BulldozerServer.Domain
+﻿using BulldozerServer.Domain.MarketplacePosts;
+using BulldozerServer.Domain;
+namespace BulldozerServer.Payload.DTO
 {
-    public class User
+    public class UserDto
     {
         private Guid userId;
         private string username;
@@ -13,9 +12,7 @@ namespace BulldozerServer.Domain
         private string phoneNumber;
         private DateOnly birthDay;
         private DateTime createdDate;
-
         // create public properties for each field
-        [Key]
         public Guid UserId { get => userId; set => userId = value; }
         public string Username { get => username; set => username = value; }
         public string FullName { get => fullName; set => fullName = value; }

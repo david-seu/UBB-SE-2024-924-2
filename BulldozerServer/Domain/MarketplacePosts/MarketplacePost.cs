@@ -16,6 +16,7 @@ namespace BulldozerServer.Domain.MarketplacePosts
         private DateTime? endDate;
         private bool isPromoted;
         private bool isActive;
+        private string type;
 
         [Key]
         public Guid MarketplacePostId { get => marketplacePostId; set => marketplacePostId = value; }
@@ -34,6 +35,8 @@ namespace BulldozerServer.Domain.MarketplacePosts
         public DateTime? EndDate { get => endDate; set => endDate = value; }
         public bool IsPromoted { get => isPromoted; set => isPromoted = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
+
+        public string Type { get => type; set => type = value; }
 
         public User? Author { get; set; }
 

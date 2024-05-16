@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulldozerServer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240515194752_CreatePostsTable")]
-    partial class CreatePostsTable
+    [Migration("20240516170513_AddedJoinRequists")]
+    partial class AddedJoinRequists
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace BulldozerServer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("BulldozerServer.Domain.Cart", b =>
+                {
+                    b.Property<Guid>("MarketplacePostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("MarketplacePostId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Cart");
+                });
 
             modelBuilder.Entity("BulldozerServer.Domain.Group", b =>
                 {
@@ -48,14 +63,35 @@ namespace BulldozerServer.Migrations
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("GroupId");
 
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("BulldozerServer.Domain.JoinRequest", b =>
+                {
+                    b.Property<Guid>("JoinRequestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("JoinRequestId");
+
+                    b.HasIndex("GroupId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Group");
+                    b.ToTable("JoinRequests");
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.MarketplacePost", b =>
@@ -96,13 +132,48 @@ namespace BulldozerServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.HasKey("MarketplacePostId");
 
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("MarketplacePost");
+                    b.ToTable("MarketplacePosts");
+
+                    b.HasDiscriminator<string>("Type").HasValue("NormalPost");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("BulldozerServer.Domain.Membership", b =>
+                {
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsBanned")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTimedOut")
+                        .HasColumnType("bit");
+
+                    b.HasKey("GroupId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Memberships");
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.User", b =>
@@ -139,46 +210,112 @@ namespace BulldozerServer.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Cart", b =>
+            modelBuilder.Entity("BulldozerServer.Domain.UsersFavoritePosts", b =>
                 {
-                    b.Property<Guid>("PeopleThatPlacedInCartUserId")
+                    b.Property<Guid>("MarketplacePostId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PostsInCartMarketplacePostId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("PeopleThatPlacedInCartUserId", "PostsInCartMarketplacePostId");
+                    b.HasKey("MarketplacePostId", "UserId");
 
-                    b.HasIndex("PostsInCartMarketplacePostId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Cart");
+                    b.ToTable("UsersFavoritePosts");
                 });
 
-            modelBuilder.Entity("PostFavors", b =>
+            modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.DonationPost", b =>
                 {
-                    b.Property<Guid>("FavoritePostsMarketplacePostId")
+                    b.HasBaseType("BulldozerServer.Domain.MarketplacePosts.MarketplacePost");
+
+                    b.Property<double>("CurrentDonationAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("DonationLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Donation");
+                });
+
+            modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.FixedPricePost", b =>
+                {
+                    b.HasBaseType("BulldozerServer.Domain.MarketplacePosts.MarketplacePost");
+
+                    b.Property<string>("DeliveryType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsNegotiable")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasDiscriminator().HasValue("FixedPrice");
+                });
+
+            modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.AuctionPost", b =>
+                {
+                    b.HasBaseType("BulldozerServer.Domain.MarketplacePosts.FixedPricePost");
+
+                    b.Property<double>("CurrentBidPrice")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("CurrentPriceLeader")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PeopleThatFavoredUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<double>("MinimumBidPrice")
+                        .HasColumnType("float");
 
-                    b.HasKey("FavoritePostsMarketplacePostId", "PeopleThatFavoredUserId");
+                    b.HasDiscriminator().HasValue("Auction");
+                });
 
-                    b.HasIndex("PeopleThatFavoredUserId");
+            modelBuilder.Entity("BulldozerServer.Domain.Cart", b =>
+                {
+                    b.HasOne("BulldozerServer.Domain.MarketplacePosts.MarketplacePost", null)
+                        .WithMany()
+                        .HasForeignKey("MarketplacePostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.ToTable("PostFavors");
+                    b.HasOne("BulldozerServer.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.Group", b =>
                 {
+                    b.HasOne("BulldozerServer.Domain.User", "Owner")
+                        .WithMany("OwnedGroups")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("BulldozerServer.Domain.JoinRequest", b =>
+                {
+                    b.HasOne("BulldozerServer.Domain.Group", "Group")
+                        .WithMany("JoinRequests")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BulldozerServer.Domain.User", "User")
-                        .WithMany("Groups")
+                        .WithMany("JoinRequests")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });
@@ -200,46 +337,58 @@ namespace BulldozerServer.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("Cart", b =>
+            modelBuilder.Entity("BulldozerServer.Domain.Membership", b =>
                 {
-                    b.HasOne("BulldozerServer.Domain.User", null)
-                        .WithMany()
-                        .HasForeignKey("PeopleThatPlacedInCartUserId")
+                    b.HasOne("BulldozerServer.Domain.Group", "Group")
+                        .WithMany("Memberships")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BulldozerServer.Domain.MarketplacePosts.MarketplacePost", null)
-                        .WithMany()
-                        .HasForeignKey("PostsInCartMarketplacePostId")
+                    b.HasOne("BulldozerServer.Domain.User", "User")
+                        .WithMany("Memberships")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PostFavors", b =>
+            modelBuilder.Entity("BulldozerServer.Domain.UsersFavoritePosts", b =>
                 {
                     b.HasOne("BulldozerServer.Domain.MarketplacePosts.MarketplacePost", null)
                         .WithMany()
-                        .HasForeignKey("FavoritePostsMarketplacePostId")
+                        .HasForeignKey("MarketplacePostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BulldozerServer.Domain.User", null)
                         .WithMany()
-                        .HasForeignKey("PeopleThatFavoredUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.Group", b =>
                 {
+                    b.Navigation("JoinRequests");
+
                     b.Navigation("MarketplacePosts");
+
+                    b.Navigation("Memberships");
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.User", b =>
                 {
-                    b.Navigation("Groups");
+                    b.Navigation("JoinRequests");
 
                     b.Navigation("MarketplacePosts");
+
+                    b.Navigation("Memberships");
+
+                    b.Navigation("OwnedGroups");
                 });
 #pragma warning restore 612, 618
         }

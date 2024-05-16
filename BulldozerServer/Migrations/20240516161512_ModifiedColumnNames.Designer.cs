@@ -4,6 +4,7 @@ using BulldozerServer.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulldozerServer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240516161512_ModifiedColumnNames")]
+    partial class ModifiedColumnNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,61 +73,6 @@ namespace BulldozerServer.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("BulldozerServer.Domain.GroupPost", b =>
-                {
-                    b.Property<Guid>("GroupPostId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("AdminOnly")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsPinned")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MediaContent")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("GroupPostId");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("GroupPosts");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.JoinRequest", b =>
-                {
-                    b.Property<Guid>("JoinRequestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("JoinRequestId");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("JoinRequests");
-                });
-
             modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.MarketplacePost", b =>
                 {
                     b.Property<Guid>("MarketplacePostId")
@@ -179,102 +127,6 @@ namespace BulldozerServer.Migrations
                     b.HasDiscriminator<string>("Type").HasValue("NormalPost");
 
                     b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.Membership", b =>
-                {
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(0);
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(1);
-
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsBanned")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsTimedOut")
-                        .HasColumnType("bit");
-
-                    b.HasKey("GroupId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Memberships");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.Poll", b =>
-                {
-                    b.Property<Guid>("PollId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("EndDate")
-                        .HasColumnType("date");
-
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsAnonymous")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMultipleChoice")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPinned")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsVisible")
-                        .HasColumnType("bit");
-
-                    b.HasKey("PollId");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("Polls");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.PollAnswer", b =>
-                {
-                    b.Property<Guid>("PollOptionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PollOptionId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PollAnswers");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.PollOption", b =>
-                {
-                    b.Property<Guid>("PollOptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Option")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("PollId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PollOptionId");
-
-                    b.HasIndex("PollId");
-
-                    b.ToTable("PollOptions");
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.User", b =>
@@ -402,42 +254,6 @@ namespace BulldozerServer.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("BulldozerServer.Domain.GroupPost", b =>
-                {
-                    b.HasOne("BulldozerServer.Domain.User", "Author")
-                        .WithMany("GroupPosts")
-                        .HasForeignKey("AuthorId");
-
-                    b.HasOne("BulldozerServer.Domain.Group", "Group")
-                        .WithMany("GroupPosts")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.JoinRequest", b =>
-                {
-                    b.HasOne("BulldozerServer.Domain.Group", "Group")
-                        .WithMany("JoinRequests")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BulldozerServer.Domain.User", "User")
-                        .WithMany("JoinRequests")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.MarketplacePost", b =>
                 {
                     b.HasOne("BulldozerServer.Domain.User", "Author")
@@ -453,66 +269,6 @@ namespace BulldozerServer.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.Membership", b =>
-                {
-                    b.HasOne("BulldozerServer.Domain.Group", "Group")
-                        .WithMany("Memberships")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BulldozerServer.Domain.User", "User")
-                        .WithMany("Memberships")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.Poll", b =>
-                {
-                    b.HasOne("BulldozerServer.Domain.Group", "Group")
-                        .WithMany("GroupPolls")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.PollAnswer", b =>
-                {
-                    b.HasOne("BulldozerServer.Domain.PollOption", "PollOption")
-                        .WithMany("PollAnswers")
-                        .HasForeignKey("PollOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BulldozerServer.Domain.User", "UserThatAnswered")
-                        .WithMany("PollAnswers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PollOption");
-
-                    b.Navigation("UserThatAnswered");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.PollOption", b =>
-                {
-                    b.HasOne("BulldozerServer.Domain.Poll", "Poll")
-                        .WithMany("PollOptions")
-                        .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Poll");
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.UsersFavoritePosts", b =>
@@ -532,40 +288,14 @@ namespace BulldozerServer.Migrations
 
             modelBuilder.Entity("BulldozerServer.Domain.Group", b =>
                 {
-                    b.Navigation("GroupPolls");
-
-                    b.Navigation("GroupPosts");
-
-                    b.Navigation("JoinRequests");
-
                     b.Navigation("MarketplacePosts");
-
-                    b.Navigation("Memberships");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.Poll", b =>
-                {
-                    b.Navigation("PollOptions");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.PollOption", b =>
-                {
-                    b.Navigation("PollAnswers");
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.User", b =>
                 {
-                    b.Navigation("GroupPosts");
-
-                    b.Navigation("JoinRequests");
-
                     b.Navigation("MarketplacePosts");
 
-                    b.Navigation("Memberships");
-
                     b.Navigation("OwnedGroups");
-
-                    b.Navigation("PollAnswers");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using BulldozerServer.Domain;
 using BulldozerServer.Services;
+using UBB_SE_2024_Popsicles.Services;
 
 namespace BulldozerServer
 {
@@ -29,7 +30,9 @@ namespace BulldozerServer
 
             builder.Services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(connection));
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddScoped<IGroupService, GroupService>();
 
             var app = builder.Build();
 
