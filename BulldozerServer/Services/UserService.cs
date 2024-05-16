@@ -157,11 +157,13 @@ namespace BulldozerServer.Services
             {
                 throw new Exception("User not found");
             }
-            userDto.PostsInCart = foundUser.PostsInCart;
-            userDto.FavoritePosts = foundUser.FavoritePosts;
-            userDto.Groups = foundUser.Groups;
-            userDto.MarketplacePost = foundUser.MarketplacePosts;
-            context.Users.Update(UserMapper.MapUserDtoToUser(userDto));
+            foundUser.Username = userDto.Username;
+            foundUser.FullName = userDto.FullName;
+            foundUser.Email = userDto.Email;
+            foundUser.PhoneNumber = userDto.PhoneNumber;
+            foundUser.Password = userDto.Password;
+            foundUser.BirthDay = userDto.BirthDay;
+            context.Users.Update(foundUser);
             context.SaveChanges();
             return foundUser;
         }

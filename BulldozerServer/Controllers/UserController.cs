@@ -60,30 +60,10 @@ namespace BulldozerServer.Controllers
            return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> UpdateUser(UserDto userDto)
         {
-            Guid userId = Guid.Parse(Request.Query["id"]);
-            if (userId != userDto.UserId)
-            {
-                return BadRequest();
-            }
-            try
-            {
-                await userService.UpdateUserUsername(userDto);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(userId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await userService.UpdateUserUsername(userDto);
             return NoContent();
         }
 
