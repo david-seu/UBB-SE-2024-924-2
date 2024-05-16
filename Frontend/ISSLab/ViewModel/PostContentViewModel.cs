@@ -103,11 +103,6 @@ namespace ISSLab.ViewModel
                     FixedPricePost fixedPriceMarketplacePost = (FixedPricePost)OurMarketplacePost;
                     return fixedPriceMarketplacePost.DeliveryType;
                 }
-                else if (OurMarketplacePost.Description == Constants.AUCTION_POST_TYPE)
-                {
-                    AuctionPost auctionMarketplacePost = (AuctionPost)OurMarketplacePost;
-                    return auctionMarketplacePost.Delivery;
-                }
                 else
                 {
                     return Constants.EMPTY_STRING;
@@ -115,15 +110,10 @@ namespace ISSLab.ViewModel
             }
             set
             {
-                if (OurMarketplacePost.Type == Constants.FIXED_PRICE_POST_TYPE)
+                if (OurMarketplacePost.Description == Constants.FIXED_PRICE_POST_TYPE)
                 {
-                    FixedPriceMarketplacePost fixedPriceMarketplacePost = (FixedPriceMarketplacePost)OurMarketplacePost;
-                    fixedPriceMarketplacePost.Delivery = value;
-                }
-                else if (OurMarketplacePost.Type == Constants.AUCTION_POST_TYPE)
-                {
-                    AuctionMarketplacePost auctionMarketplacePost = (AuctionMarketplacePost)OurMarketplacePost;
-                    auctionMarketplacePost.Delivery = value;
+                    FixedPricePost fixedPriceMarketplacePost = (FixedPricePost)OurMarketplacePost;
+                    fixedPriceMarketplacePost.DeliveryType = value;
                 }
             }
         }
@@ -200,17 +190,17 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return OurMarketplacePost.ItemLocation;
+                return OurMarketplacePost.Location;
             }
         }
 
-        public string ProfilePicture
-        {
-            get
-            {
-                return OurUser.ProfilePicture;
-            }
-        }
+        // public string ProfilePicture
+        //  {
+        //    get
+        //    {
+        //        return OurUser.ProfilePicture;
+        //    }
+        // }
         public string TimePosted
         {
             get
@@ -240,7 +230,7 @@ namespace ISSLab.ViewModel
 
         public void AddPostToFavorites()
         {
-            this.userService.AddPostToFavorites(GroupId, OurMarketplacePost.Id, AccountId);
+            this.userService.AddPostToFavorites(GroupId, OurMarketplacePost.MarketplacePostId, AccountId);
         }
 
         public async void AddPostToCart()
@@ -249,7 +239,7 @@ namespace ISSLab.ViewModel
 
             try
             {
-                await apiService.AddPostToCart(this.GroupId, this.MarketplacePost.Id, this.AccountId);
+                await apiService.AddPostToCart(this.GroupId, this.MarketplacePost.MarketplacePostId, this.AccountId);
                 Console.WriteLine($"Successfully added the post to the cart");
             }
             catch (Exception exception)
@@ -264,16 +254,16 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                if (OurMarketplacePost.Type == Constants.FIXED_PRICE_POST_TYPE)
+                if (OurMarketplacePost.Description == Constants.FIXED_PRICE_POST_TYPE)
                 {
-                    FixedPriceMarketplacePost fixedPriceMarketplacePost = (FixedPriceMarketplacePost)OurMarketplacePost;
-                    TimeSpan timeLeft = fixedPriceMarketplacePost.ExpirationDate - DateTime.Now;
+                    FixedPricePost fixedPriceMarketplacePost = (FixedPricePost)OurMarketplacePost;
+                    TimeSpan timeLeft = fixedPriceMarketplacePost.EndDate - DateTime.Now;
                     return DisplayRemainingTime(timeLeft);
                 }
-                else if (OurMarketplacePost.Type == Constants.AUCTION_POST_TYPE)
+                else if (OurMarketplacePost.Description == Constants.AUCTION_POST_TYPE)
                 {
-                    AuctionMarketplacePost fixedPriceMarketplacePost = (AuctionMarketplacePost)OurMarketplacePost;
-                    TimeSpan timeLeft = fixedPriceMarketplacePost.ExpirationDate - DateTime.Now;
+                    AuctionPost fixedPriceMarketplacePost = (AuctionPost)OurMarketplacePost;
+                    TimeSpan timeLeft = fixedPriceMarketplacePost.EndDate - DateTime.Now;
                     return DisplayRemainingTime(timeLeft);
                 }
                 else
@@ -304,13 +294,13 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                if (OurMarketplacePost.Type == Constants.FIXED_PRICE_POST_TYPE)
+                if (OurMarketplacePost.Description == Constants.FIXED_PRICE_POST_TYPE)
                 {
-                    return Constants.DOLLAR_SIGN + ((FixedPriceMarketplacePost)(OurMarketplacePost)).Price;
+                    return Constants.DOLLAR_SIGN + ((FixedPricePost)(OurMarketplacePost)).Price;
                 }
-                else if (OurMarketplacePost.Type == Constants.AUCTION_POST_TYPE)
+                else if (OurMarketplacePost.Description == Constants.AUCTION_POST_TYPE)
                 {
-                    return Constants.DOLLAR_SIGN + ((AuctionMarketplacePost)(OurMarketplacePost)).Price;
+                    return Constants.DOLLAR_SIGN + ((AuctionPost)(OurMarketplacePost)).CurrentPriceLeader;
                 }
                 else
                 {
@@ -321,18 +311,18 @@ namespace ISSLab.ViewModel
 
         public void UpdateBidPrice()
         {
-            if (OurMarketplacePost.GetType() == typeof(AuctionMarketplacePost))
+            if (OurMarketplacePost.GetType() == typeof(AuctionPost))
             {
-                AuctionMarketplacePost auctionMarketplacePost = (AuctionMarketplacePost)OurMarketplacePost;
-                TimeSpan timeLeft = auctionMarketplacePost.ExpirationDate - DateTime.Now;
+                AuctionPost auctionMarketplacePost = (AuctionPost)OurMarketplacePost;
+                TimeSpan timeLeft = auctionMarketplacePost.EndDate - DateTime.Now;
                 TimeSpan timeSpan = TimeSpan.FromSeconds(Constants.EXPIRATION_DATE_SLIGHT_PROLONGMENT_THRESHOLD_IN_SECONDS);
                 if (timeLeft.TotalSeconds < Constants.EXPIRATION_DATE_SLIGHT_PROLONGMENT_THRESHOLD_IN_SECONDS)
                 {
                     auctionMarketplacePost.SlightlyPostponeExpirationDate();
                     OnPropertyChanged(nameof(AvailableFor));
                 }
-            ((AuctionMarketplacePost)(OurMarketplacePost)).CurrentBidPrice += 5;
-                ((AuctionMarketplacePost)(OurMarketplacePost)).MinimumBidPrice += 5;
+            ((AuctionPost)(OurMarketplacePost)).CurrentBidPrice += 5;
+                ((AuctionPost)(OurMarketplacePost)).MinimumBidPrice += 5;
                 OnPropertyChanged(nameof(BidPrice));
             }
             else
