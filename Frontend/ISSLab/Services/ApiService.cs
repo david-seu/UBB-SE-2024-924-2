@@ -57,7 +57,7 @@ namespace ISSLab.Services
         {
             HttpResponseMessage response = await httpClient.GetAsync("api/groups");
             response.EnsureSuccessStatusCode();
-            IEnumerable<Group> groups = await response.Content.ReadAsAsync<IEnumerable<Group>>();
+            IEnumerable<Group> groups = await response.Content.ReadFromJsonAsync<IEnumerable<Group>>();
             return groups;
         }
 
@@ -65,7 +65,7 @@ namespace ISSLab.Services
         {
             HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
             response.EnsureSuccessStatusCode();
-            IEnumerable<GroupMember> groupMembers = await response.Content.ReadAsAsync<IEnumerable<GroupMember>>();
+            IEnumerable<GroupMember> groupMembers = await response.Content.ReadFromJsonAsync<IEnumerable<GroupMember>>();
             return groupMembers;
         }
 
