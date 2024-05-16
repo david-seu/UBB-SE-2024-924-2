@@ -1,5 +1,6 @@
 ﻿using BulldozerServer.Domain;
 using BulldozerServer.Domain.MarketplacePosts;
+using BulldozerServer.Payloads.DTO;
 using BulldozerServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +23,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
+                MarketplacePostDTO marketplacePostDTO 
                 var context = this.postService.AddMarketplacePost(post);
                 return Ok(context);
             }
@@ -60,7 +62,7 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetMarketplacePosts()
+        public async Task<ActionResult<IEnumerable<MarketplacePostDTO>>> GetMarketplacePosts()
         {
             return await postService.GetMarketplacePosts();
         }
