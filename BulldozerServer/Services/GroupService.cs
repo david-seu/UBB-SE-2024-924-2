@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UBB_SE_2024_Popsicles.Models;
-using UBB_SE_2024_Popsicles.Repositories;
+using BulldozerServer.Domain;
+
 
 namespace UBB_SE_2024_Popsicles.Services
 {
     internal class GroupService : IGroupService
     {
+        private DatabaseContext context;
+
+        public GroupService(DatabaseContext context)
+        {
+            this.context = context;
+        }
+
         private static string defaultGroupName = "New Group";
         private static string defaultGroupDescription = "This is a new group";
         private static string defaultGroupIcon = "default";
@@ -22,19 +29,6 @@ namespace UBB_SE_2024_Popsicles.Services
         // private static bool defaultPostIsPinned = false;
         // private static string defaultPostDescription = "This is a new post";
         // Add the three repos: GroupRepository, GroupMemberRepository, and GroupMembershipRepository
-        private IGroupRepository groupRepository;
-        private IGroupMemberRepository groupMemberRepository;
-        private IGroupMembershipRepository groupMembershipRepository;
-        private IJoinRequestRepository joinRequestsRepository;
-
-        internal GroupService(IGroupRepository groupRepository, IGroupMemberRepository groupMemberRepository, IGroupMembershipRepository groupMembershipRepository, IJoinRequestRepository joinRequestsRepository)
-        {
-            this.groupRepository = groupRepository;
-            this.groupMemberRepository = groupMemberRepository;
-            this.groupMembershipRepository = groupMembershipRepository;
-            this.joinRequestsRepository = joinRequestsRepository;
-        }
-
         public void CreateGroup(Guid groupOwnerId)
         {
             Guid groupId = Guid.NewGuid();
@@ -44,7 +38,7 @@ namespace UBB_SE_2024_Popsicles.Services
             Group newGroup = new Group(groupId, groupOwnerId, defaultGroupName, defaultGroupDescription, defaultGroupIcon, defaultGroupBanner, defaultMaximumNumberOfPostsPerHourPerUser, defaultIsGroupPublic, defaultAllowanceOfPostage, uniqueGroupCode);
 
             // Add the new group to the GroupRepository
-            groupRepository.AddGroup(newGroup);
+            context.Groups.Add(newGroup);
             AddMemberToGroup(groupOwnerId, groupId, "admin");
         }
 
@@ -52,18 +46,27 @@ namespace UBB_SE_2024_Popsicles.Services
             int maximumNumberOfPostsPerHourPerUser, bool isGroupPublic, bool allowanceOfPostageByDefault)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
+            if (context.Groups.Find(groupId) == null)
+            {
+                throw new Exception("Group not found");
+            }
+            Group group = context.Groups.Find(groupId);
 
             Group newGroup = new Group(groupId, group.GroupOwnerId, newGroupName, newGroupDescription, newGroupIcon, newGroupBanner, maximumNumberOfPostsPerHourPerUser, isGroupPublic, allowanceOfPostageByDefault, group.GroupCode);
 
             // Update the group in the GroupRepository
-            groupRepository.UpdateGroup(newGroup);
+            context.Groups.Update(newGroup);
         }
 
         public void DeleteGroup(Guid groupId)
         {
             // Delete the group from the GroupRepository
-            groupRepository.RemoveGroupById(groupId);
+            Group group = context.Groups.Find(groupId);
+            if (group == null)
+            {
+                throw new Exception("Group not found");
+            }
+            context.Groups.Remove(group);
         }
 
         public void AddMemberToGroup(Guid groupMemberId, Guid groupId, string userRole = "user")
