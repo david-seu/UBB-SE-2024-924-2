@@ -1,16 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Facultate\\ISS\\UBB-SE-2024-924-2\\",
+<<<<<<< HEAD
+  "WorkspaceRootPath": "D:\\UBB-SE-2024-924-2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Facultate\\ISS\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\PostContentViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Frontend\\ISSLab\\ViewModel\\PostContentViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\App.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Frontend\\ISSLab\\App.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Facultate\\ISS\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\Services\\PostService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Frontend\\ISSLab\\Services\\PostService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\CreatePostViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Frontend\\ISSLab\\ViewModel\\CreatePostViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\Services\\ApiService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Frontend\\ISSLab\\Services\\ApiService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\MainWindowViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Frontend\\ISSLab\\ViewModel\\MainWindowViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
+=======
+  "WorkspaceRootPath": "C:\\Users\\marcl\\OneDrive\\Documents\\GitHub\\UBB-SE-2024-924-2\\",
+  "Documents": [],
+>>>>>>> addPostToFavorite
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -18,49 +31,86 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+<<<<<<< HEAD
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+=======
+          "SelectedChildIndex": -1,
+          "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1319,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+>>>>>>> addPostToFavorite
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+<<<<<<< HEAD
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ApiService.cs",
+              "DocumentMoniker": "D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\Services\\ApiService.cs",
+              "RelativeDocumentMoniker": "Frontend\\ISSLab\\Services\\ApiService.cs",
+              "ToolTip": "D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\Services\\ApiService.cs",
+              "RelativeToolTip": "Frontend\\ISSLab\\Services\\ApiService.cs",
+              "ViewState": "AQIAAAMAAADAZGZmZmYkwCwAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-14T07:12:41.833Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PostContentViewModel.cs",
-              "DocumentMoniker": "D:\\Facultate\\ISS\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\PostContentViewModel.cs",
-              "RelativeDocumentMoniker": "Frontend\\ISSLab\\ViewModel\\PostContentViewModel.cs",
-              "ToolTip": "D:\\Facultate\\ISS\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\PostContentViewModel.cs",
-              "RelativeToolTip": "Frontend\\ISSLab\\ViewModel\\PostContentViewModel.cs",
-              "ViewState": "AQIAAOEAAAAAAAAAAAAAAPYAAABZAAAA",
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\App.xaml.cs",
+              "RelativeDocumentMoniker": "Frontend\\ISSLab\\App.xaml.cs",
+              "ToolTip": "D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\App.xaml.cs",
+              "RelativeToolTip": "Frontend\\ISSLab\\App.xaml.cs",
+              "ViewState": "AQIAACUAAAAQLzMzM3MvwCYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-14T06:58:54.55Z",
+              "WhenOpened": "2024-05-14T07:11:13.636Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PostService.cs",
-              "DocumentMoniker": "D:\\Facultate\\ISS\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\Services\\PostService.cs",
-              "RelativeDocumentMoniker": "Frontend\\ISSLab\\Services\\PostService.cs",
-              "ToolTip": "D:\\Facultate\\ISS\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\Services\\PostService.cs",
-              "RelativeToolTip": "Frontend\\ISSLab\\Services\\PostService.cs",
-              "ViewState": "AQIAADkAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "CreatePostViewModel.cs",
+              "DocumentMoniker": "D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\CreatePostViewModel.cs",
+              "RelativeDocumentMoniker": "Frontend\\ISSLab\\ViewModel\\CreatePostViewModel.cs",
+              "ToolTip": "D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\CreatePostViewModel.cs",
+              "RelativeToolTip": "Frontend\\ISSLab\\ViewModel\\CreatePostViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-14T06:57:58.782Z",
+              "WhenOpened": "2024-05-14T07:06:12.603Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindowViewModel.cs",
+              "DocumentMoniker": "D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\MainWindowViewModel.cs",
+              "RelativeDocumentMoniker": "Frontend\\ISSLab\\ViewModel\\MainWindowViewModel.cs",
+              "ToolTip": "D:\\UBB-SE-2024-924-2\\Frontend\\ISSLab\\ViewModel\\MainWindowViewModel.cs",
+              "RelativeToolTip": "Frontend\\ISSLab\\ViewModel\\MainWindowViewModel.cs",
+              "ViewState": "AQIAABwAAACALjMzMzMVwA8AAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-14T07:06:14.155Z"
+=======
+>>>>>>> addPostToFavorite
             }
           ]
         }

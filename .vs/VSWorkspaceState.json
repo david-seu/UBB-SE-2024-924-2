@@ -1,0 +1,21 @@
+{
+  "ExpandedNodes": [
+    "",
+<<<<<<< HEAD
+    "\\Frontend",
+    "\\Frontend\\ISSLab",
+    "\\Frontend\\ISSLab\\Services"
+  ],
+  "SelectedNode": "\\Frontend\\ISSLab\\Services\\ApiService.cs",
+=======
+    "\\BulldozerServer",
+    "\\Frontend",
+    "\\Frontend\\ISSLab",
+    "\\Frontend\\ISSLab\\Model",
+    "\\Frontend\\ISSLab\\Model\\Repositories",
+    "\\Frontend\\ISSLab\\ViewModel"
+  ],
+  "SelectedNode": "\\Frontend\\ISSLab\\Model\\Repositories\\UserRepository.cs",
+>>>>>>> addPostToFavorite
+  "PreviewInSolutionExplorer": false
+}

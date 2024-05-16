@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -75,10 +76,23 @@ namespace ISSLab.ViewModel
             LoadPostsCommand(posts);
         }
 
-        public void ChangeToCart()
+        public async void ChangeToCart()
         {
-            List<MarketplacePost> cart = userService.GetPostsFromCart(userId, groupId);
-            LoadPostsCommand(cart);
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                List<MarketplacePost> cart = await apiService.GetPostsFromCart(userId, groupId);
+                Console.WriteLine($"Successfully fetched the posts in the cart");
+
+                LoadPostsCommand(cart);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the posts in the cart: {ex.Message}");
+            }
+
+            apiService.Dispose();
         }
 
         public void LoadPostsCommand(List<MarketplacePost> postsToLoad)

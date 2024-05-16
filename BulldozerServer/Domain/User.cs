@@ -1,4 +1,7 @@
-﻿namespace BulldozerServer.Domain
+﻿using System.ComponentModel.DataAnnotations;
+using BulldozerServer.Domain.MarketplacePosts;
+
+namespace BulldozerServer.Domain
 {
     public class User
     {
@@ -12,6 +15,7 @@
         private DateTime createdDate;
 
         // create public properties for each field
+        [Key]
         public Guid UserId { get => userId; set => userId = value; }
         public string Username { get => username; set => username = value; }
         public string FullName { get => fullName; set => fullName = value; }
@@ -21,5 +25,11 @@
         public DateOnly BirthDay { get => birthDay; set => birthDay = value; }
         public DateTime CreatedDate { get => createdDate; set => createdDate = value; }
 
+        public ICollection<MarketplacePost> PostsInCart { get; set; }
+
+        public ICollection<MarketplacePost> FavoritePosts { get; set; }
+        public ICollection<Group> Groups { get; }
+
+        public ICollection<MarketplacePost> MarketplacePosts { get; } = new List<MarketplacePost>();
     }
 }
