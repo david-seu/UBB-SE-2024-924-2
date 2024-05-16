@@ -27,7 +27,8 @@ namespace ISSLab.Services
             httpClient.BaseAddress = new Uri("http://localhost:64195/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json")); // Setting this header tells the server to send data in JSON format
+                new MediaTypeWithQualityHeaderValue(
+                    "application/json")); // Setting this header tells the server to send data in JSON format
         }
 
         public static ApiService Instance
@@ -38,6 +39,7 @@ namespace ISSLab.Services
                 {
                     instance = new ApiService();
                 }
+
                 return instance;
             }
         }
@@ -50,6 +52,7 @@ namespace ISSLab.Services
 
             return response.Headers.Location;
         }
+
         public async Task<IEnumerable<Group>> GetGroupsAsync()
         {
             HttpResponseMessage response = await httpClient.GetAsync("api/groups");
@@ -70,7 +73,8 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
+                HttpResponseMessage response =
+                    await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
@@ -147,6 +151,7 @@ namespace ISSLab.Services
                 return new List<GroupPost> { };
             }
         }
+
         public async Task<List<Poll>> GetGroupPolls(Guid groupId)
         {
             try
@@ -166,6 +171,8 @@ namespace ISSLab.Services
                 Console.WriteLine($"Json error: {exception.Message}");
                 return new List<Poll> { };
             }
+        }
+
         public async Task<List<Post>> GetFavouritePosts(Guid userId)
         {
             try
@@ -185,13 +192,12 @@ namespace ISSLab.Services
                 // logger call here
                 return new List<Post> { };
             }
-
         }
-
         public void Dispose()
         {
-            httpClient.Dispose();
+                httpClient.Dispose();
         }
     }
 }
+
 
