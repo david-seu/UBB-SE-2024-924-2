@@ -202,6 +202,22 @@ namespace ISSLab.ViewModel
             }
         }
 
+        public Guid UserId
+        {
+            get
+            {
+                return userId;
+            }
+        }
+
+        public Guid GroupId
+        {
+            get
+            {
+                return groupId;
+            }
+        }
+
         private GroupViewModel viewModelCorrespondingToTheCurrentlySelectedGroup;
         public GroupViewModel ViewModelCorrespondingToTheCurrentlySelectedGroup
         {

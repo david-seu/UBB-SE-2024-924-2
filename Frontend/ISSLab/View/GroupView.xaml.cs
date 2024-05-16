@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,9 +56,20 @@ namespace ISSLab.View
 
         private void MarketplaceButton_Click(object sender, RoutedEventArgs e)
         {
+            // throw new Exception();
             // var mainWindowViewModel = new MainWindowViewModel();
             // var mainWindow = new MainWindow(mainWindowViewModel);
             // mainWindow.Show();
+            MainWindowGroupView parentWindow = (MainWindowGroupView)(Window.GetWindow(this));
+            Guid userId = parentWindow.GetUserId();
+            Guid groupId = parentWindow.GetGroupId();
+
+            IChatFactory chatFactory = new ChatFactory();
+            IMainWindowViewModel mainWindowViewModel = new MainWindowViewModel(userId, groupId, chatFactory);
+            MainWindow mainWindow = new MainWindow(mainWindowViewModel);
+            mainWindow.Show();
+
+            parentWindow.Close();
         }
     }
 }
