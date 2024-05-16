@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BulldozerServer.Domain.MarketplacePosts;
 using BulldozerServer.Services;
 using Microsoft.EntityFrameworkCore;
+using BulldozerServer.Payload.DTO;
 
 namespace BulldozerServer.Controllers
 {
@@ -21,14 +22,13 @@ namespace BulldozerServer.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return Ok(await userService.GetUsers());
-            //try
-            //{
-                
-            //}
-            //catch (Exception e)
-            //{
+            // try
+            // {
+            // }
+            // catch (Exception e)
+            // {
             //    return NotFound(e);
-            //}
+            // }
         }
 
         [HttpGet("{id}")]
@@ -46,50 +46,24 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> AddUser(User user)
+        public async Task<ActionResult<UserDto>> AddUser(UserDto userDto)
         {
-            var createdUser = await userService.AddUser(user);
-            if (UserExists(createdUser.Entity.UserId))
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+            var createdUser = await userService.AddUser(userDto);
+            return Ok(createdUser);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(User user)
+        [HttpDelete]
+        public async Task<ActionResult<User>> DeleteUser(Guid userId)
         {
-           userService.RemoveUser(user);
+           // Guid userId = Guid.Parse(Request.Query["id"]);
+           userService.RemoveUser(userId);
            return NoContent();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(Guid id, User user)
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(UserDto userDto)
         {
-            if (id != user.UserId)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                await userService.UpdateUserUsername(id, user.Username);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await userService.UpdateUserUsername(userDto);
             return NoContent();
         }
 

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Xml.Schema;
 using BulldozerServer.Domain;
 using BulldozerServer.Domain.MarketplacePosts;
+using BulldozerServer.Mapper;
+using BulldozerServer.Payload.DTO;
 using ISSLab.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -53,11 +55,11 @@ namespace BulldozerServer.Services
             context.SaveChangesAsync();
         }
 
-        public async Task<EntityEntry<User>> AddUser(User user)
+        public async Task<UserDto> AddUser(UserDto userDto)
         {
-            var addedUser = await context.Users.AddAsync(user);
+            var addedUser = await context.Users.AddAsync(UserMapper.MapUserDtoToUser(userDto));
             await context.SaveChangesAsync();
-            return addedUser;
+            return UserMapper.MapUserToUserDto(addedUser.Entity);
         }
 
         public async Task<List<MarketplacePost>> GetFavoritePosts(Guid userId)
@@ -83,11 +85,10 @@ namespace BulldozerServer.Services
         public Task<List<User>> GetUsers()
         {
             var users = context.Users.ToListAsync();
-            //if (users == null)
-            //{
+            // if (users == null)
+            // {
             //    throw new Exception("No users found");
-            //}
-
+            // }
             return users;
         }
 
@@ -138,27 +139,32 @@ namespace BulldozerServer.Services
             await context.SaveChangesAsync();
         }
 
-        public async void RemoveUser(User user)
+        public void RemoveUser(Guid userId)
         {
-            var userToRemove = await context.Users.FindAsync(user.UserId);
+            var userToRemove = context.Users.Find(userId);
             if (userToRemove == null)
             {
                 throw new Exception("User not found");
             }
             context.Users.Remove(userToRemove);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
 
-        public async Task<User> UpdateUserUsername(Guid userId, string username)
+        public async Task<User> UpdateUserUsername(UserDto userDto)
         {
-            var foundUser = await context.Users.FindAsync(userId);
+            var foundUser = await context.Users.FindAsync(userDto.UserId);
             if (foundUser == null)
             {
                 throw new Exception("User not found");
             }
-            foundUser.Username = username;
+            foundUser.Username = userDto.Username;
+            foundUser.FullName = userDto.FullName;
+            foundUser.Email = userDto.Email;
+            foundUser.PhoneNumber = userDto.PhoneNumber;
+            foundUser.Password = userDto.Password;
+            foundUser.BirthDay = userDto.BirthDay;
             context.Users.Update(foundUser);
-            context.SaveChangesAsync();
+            context.SaveChanges();
             return foundUser;
         }
 
