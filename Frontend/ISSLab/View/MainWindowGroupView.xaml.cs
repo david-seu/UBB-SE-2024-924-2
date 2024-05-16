@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ISSLab.Model.Entities;
+using ISSLab.Domain;
 using ISSLab.ViewModel;
 
 namespace ISSLab.View
@@ -36,7 +36,7 @@ namespace ISSLab.View
         private void GroupListListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listBox = sender as ListBox;
-            var selectedGroup = listBox.SelectedItem as GroupNonMarketplace;
+            var selectedGroup = listBox.SelectedItem as Group;
 
             if (selectedGroup != null)
             {

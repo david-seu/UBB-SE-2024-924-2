@@ -17,7 +17,7 @@
         string MinimumBid { get; set; }
         string PhoneNumber { get; set; }
         string PhoneVisible { get; set; }
-        string Price { get; set; }
+        float Price { get; set; }
         string PriceVisible { get; set; }
         string Type { get; set; }
 

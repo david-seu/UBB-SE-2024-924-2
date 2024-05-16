@@ -1,4 +1,5 @@
-﻿using ISSLab.Model.Entities;
+﻿using ISSLab.Domain;
+using ISSLab.Domain.MarketplacePosts;
 
 namespace ISSLab.Services
 {
@@ -6,14 +7,14 @@ namespace ISSLab.Services
     {
         void AddPostToCart(Guid groupId, Guid postId, Guid userId);
         void AddPostToFavorites(Guid groupId, Guid postId, Guid userId);
-        void AddUser(UserMarketplace user);
+        void AddUser(User user);
         List<MarketplacePost> GetFavoritePosts(Guid groupId, Guid userId);
-        UserMarketplace GetUserById(Guid id);
-        List<UserMarketplace> GetUsers();
+        User GetUserById(Guid id);
+        List<User> GetUsers();
         bool IsUserInGroup(Guid userId, Guid groupId);
         void RemovePostFromCart(Guid groupId, Guid postId, Guid userId);
         void RemovePostFromFavorites(Guid groupId, Guid postId, Guid userId);
-        void RemoveUser(UserMarketplace user);
+        void RemoveUser(User user);
         void UpdateUserUsername(Guid user, string username);
         List<MarketplacePost> GetPostsFromCart(Guid userId, Guid groupId);
     }

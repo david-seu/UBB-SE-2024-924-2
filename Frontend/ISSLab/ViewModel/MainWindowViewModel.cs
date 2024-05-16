@@ -8,7 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ISSLab.Model.Entities;
+using ISSLab.Domain;
+using ISSLab.Domain.MarketplacePosts;
 using ISSLab.Services;
 using ISSLab.View;
 
@@ -100,7 +101,7 @@ namespace ISSLab.ViewModel
             shownPosts.Clear();
             foreach (MarketplacePost currentPostToLoad in postsToLoad)
             {
-                UserMarketplace originalPoster = userService.GetUserById(currentPostToLoad.AuthorId);
+                User originalPoster = userService.GetUserById(currentPostToLoad.AuthorId);
                 shownPosts.Add(new PostContentViewModel(currentPostToLoad, originalPoster, this.userId, this.groupId, this.userService, this.chatFactory));
             }
 
@@ -108,7 +109,7 @@ namespace ISSLab.ViewModel
         }
 
         // main window view model from the other project
-        public ObservableCollection<GroupNonMarketplace> CollectionOfActiveGroups { get; set; }
+        public ObservableCollection<Group> CollectionOfActiveGroups { get; set; }
 
         public MainWindowViewModel()
         {

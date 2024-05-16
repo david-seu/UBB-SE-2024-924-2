@@ -55,9 +55,9 @@ namespace ISSLab.View
 
         private void MarketplaceButton_Click(object sender, RoutedEventArgs e)
         {
-            //var mainWindowViewModel = new MainWindowViewModel();
-            //var mainWindow = new MainWindow(mainWindowViewModel);
-            //mainWindow.Show();
+            // var mainWindowViewModel = new MainWindowViewModel();
+            // var mainWindow = new MainWindow(mainWindowViewModel);
+            // mainWindow.Show();
         }
     }
 }
