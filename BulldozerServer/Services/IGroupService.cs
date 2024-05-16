@@ -14,9 +14,5 @@ namespace UBB_SE_2024_Popsicles.Services
         public List<JoinRequest> GetRequestsToJoinFromGroup(Guid groupId);
         public List<Group> GetAllGroupsUserBelongsTo(Guid groupMemberId);
         public Group GetGroup(Guid groupId);
-        public List<Poll> GetGroupPolls(Guid groupId);
-        public void CreateNewPoll(Guid groupId, Guid groupMemberId, string pollDescription);
-        public void AddNewOptionToAPoll(Guid pollId, Guid groupId, string newPollOption);
-
     }
 }

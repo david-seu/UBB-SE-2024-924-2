@@ -235,37 +235,37 @@ namespace UBB_SE_2024_Popsicles.Services
             }
             return group;
         }
-        public List<Poll> GetGroupPolls(Guid groupId)
-        {
-            // Get the Group from the GroupRepository
-            var polls = context.Polls.Where(poll => poll.GroupId == groupId).ToList();
+        //public List<Poll> GetGroupPolls(Guid groupId)
+        //{
+        //    // Get the Group from the GroupRepository
+        //    var polls = context.Polls.Where(poll => poll.GroupId == groupId).ToList();
 
-            return polls;
-        }
+        //    return polls;
+        //}
 
-        public void CreateNewPoll(Guid groupId, Guid groupMemberId, string pollDescription)
-        {
-            Guid pollId = Guid.NewGuid();
-            GroupPoll newGroupPoll = new GroupPoll(pollId, groupMemberId, pollDescription, groupId);
+        //public void CreateNewPoll(Guid groupId, Guid groupMemberId, string pollDescription)
+        //{
+        //    Guid pollId = Guid.NewGuid();
+        //    GroupPoll newGroupPoll = new GroupPoll(pollId, groupMemberId, pollDescription, groupId);
 
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
+        //    // Get the Group from the GroupRepository
+        //    Group group = groupRepository.GetGroupById(groupId);
 
-            group.ListOfGroupPolls.Add(newGroupPoll);
-        }
+        //    group.ListOfGroupPolls.Add(newGroupPoll);
+        //}
 
-        public void AddNewOptionToAPoll(Guid pollId, Guid groupId, string newPollOption)
-        {
-            Group group = groupRepository.GetGroupById(groupId);
-            GroupPoll groupPoll = group.GetGroupPoll(pollId);
-            if (groupPoll != null)
-            {
-                   groupPoll.AddGroupPollOption(newPollOption);
-            }
-            else
-            {
-                throw new Exception("GroupPoll not found");
-            }
-        }
+        //public void AddNewOptionToAPoll(Guid pollId, Guid groupId, string newPollOption)
+        //{
+        //    Group group = groupRepository.GetGroupById(groupId);
+        //    GroupPoll groupPoll = group.GetGroupPoll(pollId);
+        //    if (groupPoll != null)
+        //    {
+        //           groupPoll.AddGroupPollOption(newPollOption);
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("GroupPoll not found");
+        //    }
+        //}
     }
 }
