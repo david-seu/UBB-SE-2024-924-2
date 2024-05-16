@@ -10,6 +10,17 @@
         private bool isPublic;
         private bool allowanceOfPostage;
 
+        public Group(Guid groupId, Guid userId, string groupName, string description, DateTime createdDate, bool isPublic, bool allowanceOfPostage)
+        {
+            this.groupId = groupId;
+            this.userId = userId;
+            this.groupName = groupName;
+            this.description = description;
+            this.createdDate = createdDate;
+            this.isPublic = isPublic;
+            this.allowanceOfPostage = allowanceOfPostage;
+        }
+
         public Guid GroupId { get => groupId; set => groupId = value; }
         public Guid UserId { get => userId; set => userId = value; }
 

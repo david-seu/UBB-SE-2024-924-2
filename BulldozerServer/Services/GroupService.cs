@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulldozerServer.Domain;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace UBB_SE_2024_Popsicles.Services
 {
@@ -35,8 +35,7 @@ namespace UBB_SE_2024_Popsicles.Services
             // Generate a random group code by slicing a random GUID into a 6-character string
             // This results in a 1 in 2^36 chance of a collision (it should be fine)
             string uniqueGroupCode = Guid.NewGuid().ToString().Substring(0, 6);
-            Group newGroup = new Group(groupId, groupOwnerId, defaultGroupName, defaultGroupDescription, defaultGroupIcon, defaultGroupBanner, defaultMaximumNumberOfPostsPerHourPerUser, defaultIsGroupPublic, defaultAllowanceOfPostage, uniqueGroupCode);
-
+            Group newGroup = new Group(groupId, groupOwnerId, defaultGroupName, defaultGroupDescription, DateTime.Now, true, defaultAllowanceOfPostage);
             // Add the new group to the GroupRepository
             context.Groups.Add(newGroup);
             AddMemberToGroup(groupOwnerId, groupId, "admin");
@@ -59,7 +58,7 @@ namespace UBB_SE_2024_Popsicles.Services
             context.Groups.Update(newGroup);
         }
 
-        public void DeleteGroup(Guid groupId)
+        public async void DeleteGroup(Guid groupId)
         {
             // Delete the group from the GroupRepository
             Group group = context.Groups.Find(groupId);
@@ -68,101 +67,91 @@ namespace UBB_SE_2024_Popsicles.Services
                 throw new Exception("Group not found");
             }
             context.Groups.Remove(group);
+
+            await context.SaveChangesAsync();
         }
 
-        public void AddMemberToGroup(Guid groupMemberId, Guid groupId, string userRole = "user")
+        public async void AddMemberToGroup(Guid groupMemberId, Guid groupId, string userRole = "user")
         {
             Guid groupMembershipId = Guid.NewGuid();
-            DateTime joinDate = DateTime.Now;
+            DateOnly joinDate = DateOnly.FromDateTime(DateTime.Now);
             bool isBannedFromGroup = false;
             bool isTimedOutFromGroup = false;
-            bool bypassPostageRestrictionPostSettings = false;
-            string groupMemberName = groupMemberRepository.GetGroupMemberById(groupMemberId).UserName;
-            GroupMembership newMembership = new GroupMembership(groupMembershipId, groupMemberId, groupMemberName, groupId, userRole, joinDate, isBannedFromGroup, isTimedOutFromGroup, bypassPostageRestrictionPostSettings = false);
-
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-            group.AddMembership(newMembership);
-
-            // Get the GroupMember from the GroupMemberRepository
-            GroupMember groupMember = groupMemberRepository.GetGroupMemberById(groupMemberId);
-            groupMember.AddGroupMembership(newMembership);
-
-            // Add the new GroupMembership to the GroupMembershipRepository
-            groupMembershipRepository.AddGroupMembership(newMembership);
+            bool bypassPostageRestrictionPostSettings = true;
+            if (userRole == "user")
+            {
+                bypassPostageRestrictionPostSettings = false;
+            }
+            Membership newMembership = new Membership(groupId, groupMemberId, joinDate, isBannedFromGroup, isTimedOutFromGroup, bypassPostageRestrictionPostSettings);
+            context.Memberships.Add(newMembership);
+            await context.SaveChangesAsync();
         }
 
-        public void RemoveMemberFromGroup(Guid groupMemberId, Guid groupId)
+        public async void RemoveMemberFromGroup(Guid groupMemberId, Guid groupId)
         {
             // Get the GroupMember from the GroupMemberRepository
-            GroupMember groupMember = groupMemberRepository.GetGroupMemberById(groupMemberId);
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
+            Membership foundMembership = context.Memberships.Find(groupId, groupMemberId);
+            if (foundMembership == null)
+            {
+                throw new Exception("User doesn't belong to this group");
+            }
 
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
-
-            group.RemoveMember(groupMembership.GroupMembershipId);
-            groupMember.RemoveGroupMembership(groupMembership.GroupMembershipId);
-
-            // Delete the GroupMembership from the GroupMembershipRepository
-            groupMembershipRepository.RemoveGroupMembershipById(groupMembership.GroupMembershipId);
+            context.Memberships.Remove(foundMembership);
+            await context.SaveChangesAsync();
         }
 
-        public void BanMemberFromGroup(Guid bannedGroupMemberId, Guid groupId)
+        public async void BanMemberFromGroup(Guid bannedGroupMemberId, Guid groupId)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(bannedGroupMemberId);
-
-            groupMembership.IsBannedFromGroup = true;
-
-            // Update the GroupMembership in the GroupMembershipRepository
-            groupMembershipRepository.UpdateGroupMembership(groupMembership);
+            Membership updateMembership = context.Memberships.Find(groupId, bannedGroupMemberId);
+            if (updateMembership == null)
+            {
+                throw new Exception("User doesn't belong to this group");
+            }
+            updateMembership.IsBanned = true;
+            context.Memberships.Update(updateMembership);
+            await context.SaveChangesAsync();
         }
 
-        public void UnbanMemberFromGroup(Guid unbannedGroupMemberId, Guid groupId)
+        public async void UnbanMemberFromGroup(Guid unbannedGroupMemberId, Guid groupId)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(unbannedGroupMemberId);
-
-            groupMembership.IsBannedFromGroup = false;
-
-            // Update the GroupMembership in the GroupMembershipRepository
-            groupMembershipRepository.UpdateGroupMembership(groupMembership);
+            Membership updateMembership = context.Memberships.Find(groupId, unbannedGroupMemberId);
+            if (updateMembership == null)
+            {
+                throw new Exception("User doesn't belong to this group");
+            }
+            updateMembership.IsBanned = false;
+            context.Memberships.Update(updateMembership);
+            await context.SaveChangesAsync();
         }
 
-        public void TimeoutMemberFromGroup(Guid groupMemberId, Guid groupId)
+        public async void TimeoutMemberFromGroup(Guid groupMemberId, Guid groupId)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
-
-            groupMembership.IsTimedOutFromGroup = true;
-
-            // Update the GroupMembership in the GroupMembershipRepository
-            groupMembershipRepository.UpdateGroupMembership(groupMembership);
+            Membership updateMembership = context.Memberships.Find(groupId, groupMemberId);
+            if (updateMembership == null)
+            {
+                throw new Exception("User doesn't belong to this group");
+            }
+            updateMembership.IsTO = true;
+            context.Memberships.Update(updateMembership);
+            await context.SaveChangesAsync();
         }
 
-        public void EndTimeoutOfMemberFromGroup(Guid groupMemberId, Guid groupId)
+        public async void EndTimeoutOfMemberFromGroup(Guid groupMemberId, Guid groupId)
         {
             // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
-
-            groupMembership.IsTimedOutFromGroup = false;
-
-            // Update the GroupMembership in the GroupMembershipRepository
-            groupMembershipRepository.UpdateGroupMembership(groupMembership);
+            Membership updateMembership = context.Memberships.Find(groupId, groupMemberId);
+            if (updateMembership == null)
+            {
+                throw new Exception("User doesn't belong to this group");
+            }
+            updateMembership.IsTO = false;
+            context.Memberships.Update(updateMembership);
+            await context.SaveChangesAsync();
         }
 
-        /*
-         *  Unknown repo function UpdateGroupMembership
-         */
         public async void ChangeMemberRoleInTheGroup(Guid groupMemberId, Guid groupId, string newGroupRole)
         {
             // Get the Group from the GroupRepository
@@ -207,39 +196,24 @@ namespace UBB_SE_2024_Popsicles.Services
             groupMembershipRepository.UpdateGroupMembership(groupMembership);
         }
 
-        public void AddNewRequestToJoinGroup(Guid groupMemberId, Guid groupId)
+        public async void AddNewRequestToJoinGroup(Guid groupMemberId, Guid groupId)
         {
             Guid joinRequestId = Guid.NewGuid();
-            string groupMemberName = groupMemberRepository.GetGroupMemberById(groupMemberId).UserName;
-            JoinRequest newJoinRequest = new JoinRequest(joinRequestId, groupMemberId, groupMemberName, groupId);
-
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-            // Get the GroupMember from the GroupMemberRepository
-            GroupMember groupMember = groupMemberRepository.GetGroupMemberById(groupMemberId);
-
-            group.AddJoinRequest(newJoinRequest);
-            groupMember.AddActiveJoinRequest(newJoinRequest);
-
-            // Add the new JoinRequest to the RequestRepository
-            joinRequestsRepository.AddJoinRequest(newJoinRequest);
+            var result = context.JoinRequests.Add(new JoinRequest(joinRequestId,groupMemberId, groupId));
+            await context.SaveChangesAsync();
         }
 
         public void AcceptRequestToJoinGroup(Guid joinRequestId)
         {
-            // Get the JoinRequest from the RequestRepository
-            JoinRequest joinRequest = joinRequestsRepository.GetJoinRequestById(joinRequestId);
-            Group group = groupRepository.GetGroupById(joinRequest.GroupId);
-
-            GroupMember groupMember = groupMemberRepository.GetGroupMemberById(joinRequest.GroupMemberId);
-
-            group.RemoveJoinRequest(joinRequest.JoinRequestId);
-            groupMember.RemoveActiveJoinRequest(joinRequest.JoinRequestId);
-
-            AddMemberToGroup(joinRequest.GroupMemberId, joinRequest.GroupId, defaultGroupRole);
-
-            // Delete the JoinRequest from the RequestRepository
-            joinRequestsRepository.RemoveJoinRequestById(joinRequest.JoinRequestId);
+            var request = context.JoinRequests.Find(joinRequestId);
+            if (request == null)
+            {
+                throw new Exception("User didnt request to join this group");
+            }
+            Guid groupId = request.GroupId;
+            Guid userId = request.UserId;
+            context.Memberships.Add(new Membership(groupId, userId));
+            context.JoinRequests.ExecuteDelete()
         }
 
         public void RejectRequestToJoinGroup(Guid joinRequestId)
