@@ -17,25 +17,25 @@ namespace ISSLab.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
-        private IPostService postService;
-        private IUserService userService;
+        // private IPostService postService;
+        // private IUserService userService;
         private ObservableCollection<IPostContentViewModel> shownPosts;
         private Guid userId;
         private Guid groupId;
         private ICreatePostViewModel postCreationViewModel;
         private IChatFactory chatFactory;
 
-        public MainWindowViewModel(IPostService givenPostService, IUserService givenUserService, Guid userId, Guid groupId, IChatFactory chatFactory)
+        public MainWindowViewModel(Guid userId, Guid groupId, IChatFactory chatFactory)
         {
-            this.postService = givenPostService;
-            this.userService = givenUserService;
+            // this.postService = givenPostService;
+            // this.userService = givenUserService;
             this.userId = userId;
             this.groupId = groupId;
             this.chatFactory = chatFactory;
 
             shownPosts = new ObservableCollection<IPostContentViewModel>();
 
-            postCreationViewModel = new CreatePostViewModel(userId, groupId, postService);
+            postCreationViewModel = new CreatePostViewModel(userId, groupId);
 
             // LoadPostsCommand(postService.GetPosts());
             ChangeToMarketPlace();
@@ -103,7 +103,7 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<MarketplacePost> cart = await apiService.GetPostsFromCart(userId, groupId);
+                List<MarketplacePost> cart = await apiService.GetPostsFromCart(userId);
                 Console.WriteLine($"Successfully fetched the posts in the cart");
 
                 LoadPostsCommand(cart);
@@ -124,8 +124,8 @@ namespace ISSLab.ViewModel
             {
                 try
                 {
-                    User reveivedUser = await apiService.GetUserById(currentPostToLoad.AuthorId);
-                    shownPosts.Add(new PostContentViewModel(currentPostToLoad, reveivedUser, this.userId, this.groupId, this.userService, this.chatFactory));
+                    User reveivedUser = await apiService.GetUserById(currentPostToLoad.AuthorId.Value);
+                    shownPosts.Add(new PostContentViewModel(currentPostToLoad, reveivedUser, this.userId, this.groupId, this.chatFactory));
                 }
                 catch (Exception ex)
                 {
@@ -155,11 +155,13 @@ namespace ISSLab.ViewModel
             // TODO: Replace this with a call to the repository
             CollectionOfActiveGroups = new ObservableCollection<Group>
             {
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 5", "Description 5", "robotics-Group", "woman", 50, true, true, "5481f5"),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true)
                 // groups created with the Renewals GroupMarketplace entity
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),

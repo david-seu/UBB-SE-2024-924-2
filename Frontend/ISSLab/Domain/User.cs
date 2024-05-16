@@ -27,7 +27,7 @@ namespace ISSLab.Domain
             CreatedDate = createdDate;
             PostsInCart = postsInCart;
             FavoritePosts = favoritePosts;
-            Groups = groups;
+            OwnedGroups = groups;
             MarketplacePosts = marketplacePosts;
         }
         public User(Guid userId, string username, string fullName, string password, string email, string phoneNumber)
@@ -59,11 +59,19 @@ namespace ISSLab.Domain
         public DateOnly BirthDay { get => birthDay; set => birthDay = value; }
         public DateTime CreatedDate { get => createdDate; set => createdDate = value; }
 
-        public ICollection<MarketplacePost> PostsInCart { get; set; }
+        public ICollection<MarketplacePost> PostsInCart { get; set; } = new List<MarketplacePost>();
 
-        public ICollection<MarketplacePost> FavoritePosts { get; set; }
-        public ICollection<Group> Groups { get; }
+        public ICollection<MarketplacePost> FavoritePosts { get; set; } = new List<MarketplacePost>();
+        public ICollection<Group> OwnedGroups { get; } = new List<Group>();
 
         public ICollection<MarketplacePost> MarketplacePosts { get; } = new List<MarketplacePost>();
+        public ICollection<Group> GroupsPartOf { get; } = new List<Group>();
+        public ICollection<Membership> Memberships { get; } = new List<Membership>();
+
+        public ICollection<Group> GroupsTryingToJoin { get; } = new List<Group>();
+        public ICollection<Request> JoinRequests { get; } = new List<Request>();
+
+        public ICollection<PollOption> SelectedPollOptions { get; } = new List<PollOption>();
+        public ICollection<PollAnswer> PollAnswers { get; } = new List<PollAnswer>();
     }
 }

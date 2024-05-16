@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,57 +10,48 @@ namespace ISSLab.Domain
 {
     public class Poll
     {
-        public Guid Id { get; }
-        public Guid OwnerId { get; }
-        public Guid GroupId { get; }
-        private List<string> Tags { get; set; }
-        public string SpecificToRole { get; set; }
-        public bool IsPinned { get; set; }
-        public string Description { get; set; }
-        public List<string> Options { get; set; }
-        public bool ResultsVisible { get; set; }
-        public bool IsMultipleChoice { get; set; }
-        public bool IsAnonymous { get; set; }
-        public bool IsLive { get; set; }
-        public DateTime EndTime { get; set; }
-        public List<Vote> Votes { get; set; }
+        private Guid pollId;
+        private Guid userId;
+        private Guid groupId;
+        private string description;
+        private DateOnly creationDate;
+        private DateOnly endDate;
+        private bool isPinned;
+        private bool isVisible;
+        private bool isMultipleChoice;
+        private bool isAnonymous;
+        private List<Vote> votes;
+
+        [Key]
+        public Guid PollId { get => pollId; }
+        public Guid OwnerId { get => userId; }
+        public Guid GroupId { get => groupId; }
+        public string Description { get => description; set => description = value; }
+        public DateOnly CreationDate { get => creationDate; }
+        public DateOnly EndDate { get => endDate; set => endDate = value; }
+        public bool IsPinned { get => isPinned; set => isPinned = value; }
+        public bool IsVisible { get => isVisible; set => isVisible = value; }
+        public bool IsMultipleChoice { get => isMultipleChoice; set => isMultipleChoice = value; }
+        public bool IsAnonymous { get => isAnonymous; set => isAnonymous = value; }
+
+        public Group Group { get; }
+
+        public ICollection<PollOption> PollOptions { get; } = new List<PollOption>();
+
+        public List<Vote> Votes { get => votes; set => votes = value; }
 
         public Poll(Guid id, Guid ownerId, string description, Guid groupId)
         {
-            GroupId = groupId;
-            Id = id;
-            OwnerId = ownerId;
-            Description = description;
+            this.groupId = groupId;
+            this.pollId = id;
+            this.userId = ownerId;
+            this.description = description;
 
-            ResultsVisible = true;
-            IsMultipleChoice = true;
-            IsAnonymous = false;
-            IsLive = true;
+            this.isVisible = true;
+            this.IsMultipleChoice = true;
+            this.IsAnonymous = false;
 
-            Tags = new List<string>();
-            Options = new List<string>();
             Votes = new List<Vote>();
-            SpecificToRole = string.Empty;
-        }
-
-        public void AddOption(string option)
-        {
-            Options.Add(option);
-        }
-
-        public void RemoveOption(string option)
-        {
-            Options.Remove(option);
-        }
-
-        public void AddTag(string tag)
-        {
-            Tags.Add(tag);
-        }
-
-        public void RemoveTag(string tag)
-        {
-            Tags.Remove(tag);
         }
 
         public Vote GetVote(Guid voteId)
