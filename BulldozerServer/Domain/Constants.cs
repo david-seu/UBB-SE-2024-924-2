@@ -16,7 +16,7 @@ namespace BulldozerServer.Domain
         public const string EXTENDED_DONATION_POST_TYPE = "DonationPost";
         public const string FIXED_PRICE_POST_TYPE = "FixedPrice";
         public const string EXTENDED_FIXED_PRICE_POST_TYPE = "FixedPricePost";
-        public const string DEFAULT_POST_TYPE = "post";
+        public const string DEFAULT_POST_TYPE = "NormalPost";
 
         public const string SELLING_MESSAGE_DEFAULT_CONTENT = "SELLING POST: " + "";
         public const string BUYING_MESSAGE_DEFAULT_CONTENT = "I'm interested in buying your product!";
