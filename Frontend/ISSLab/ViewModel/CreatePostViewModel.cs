@@ -1,4 +1,5 @@
-﻿using ISSLab.Model.Entities;
+﻿using ISSLab.Domain;
+using ISSLab.Domain.MarketplacePosts;
 using ISSLab.Services;
 
 namespace ISSLab.ViewModel
@@ -30,7 +31,7 @@ namespace ISSLab.ViewModel
 
         private string type;
         private string phoneNumber;
-        private string price;
+        private float price;
         private string condition;
         private string delivery;
         private string availability;
@@ -190,7 +191,7 @@ namespace ISSLab.ViewModel
                 OnPropertyChanged(nameof(PhoneNumber));
             }
         }
-        public string Price
+        public float Price
         {
             get
             {
@@ -272,9 +273,8 @@ namespace ISSLab.ViewModel
 
         public async void CreateDonationPost()
         {
-            // for some reason, MarketplacePost is NOT of type Post
-            MarketplacePost donationMarketplacePost = new DonationMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, Constants.EMPTY_STRING,
-                Description, Constants.EMPTY_STRING, phoneNumber, donationLink, Constants.DONATION_POST_TYPE, true);
+            MarketplacePost donationMarketplacePost = new DonationPost(Guid.NewGuid(), accountId, groupId, Constants.EMPTY_STRING,
+                Description, Constants.EMPTY_STRING, Constants.EMPTY_STRING, DateTime.Now, DateTime.Now, true, true, donationLink, Price);
             // postService.AddPost(donationMarketplacePost);
             // Getting the ApiService instance
             ApiService apiService = ApiService.Instance;
@@ -296,8 +296,8 @@ namespace ISSLab.ViewModel
 
         public async void CreateFixedPricePost()
         {
-            MarketplacePost fixedPriceMarketplace = new FixedPriceMarketplacePost(Constants.EMPTY_STRING, accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING,
-                PhoneNumber, float.Parse(Price), DateTime.Now.AddMonths(3), Delivery, Guid.Empty, Constants.FIXED_PRICE_POST_TYPE, false);
+            MarketplacePost fixedPriceMarketplace = new FixedPricePost(Guid.NewGuid(), accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING, Constants.EMPTY_STRING,
+              DateTime.Now, DateTime.Now, true, true, Price, false, Delivery);
             // postService.AddPost(fixedPriceMarketplace);
             // Getting the ApiService instance
             ApiService apiService = ApiService.Instance;
@@ -322,7 +322,7 @@ namespace ISSLab.ViewModel
         {
             Type = Constants.EMPTY_STRING;
             PhoneNumber = Constants.EMPTY_STRING;
-            Price = Constants.EMPTY_STRING;
+            Price = 0;
             Condition = Constants.EMPTY_STRING;
             Delivery = Constants.EMPTY_STRING;
             Availability = Constants.EMPTY_STRING;

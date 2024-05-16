@@ -8,10 +8,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ISSLab.Services;
-using ISSLab.View;
 using ISSLab.Domain;
 using ISSLab.Domain.MarketplacePosts;
+using ISSLab.Services;
+using ISSLab.View;
 
 namespace ISSLab.ViewModel
 {
@@ -65,34 +65,16 @@ namespace ISSLab.ViewModel
                 OnPropertyChanged(nameof(ShownPosts));
             }
         }
-        public async void ChangeToFavorites()
+        public void ChangeToFavorites()
         {
-            ApiService apiService = ApiService.Instance;
-
-            try
-            {
-                List<MarketplacePost> favoritedPosts = await apiService.GetFavouritePosts(this.groupId);
-                LoadPostsCommand(favoritedPosts);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while fetching the posts in favorites: {ex.Message}");
-            }
+            List<MarketplacePost> favoritedPosts = userService.GetFavoritePosts(groupId, userId);
+            LoadPostsCommand(favoritedPosts);
         }
 
-        public async void ChangeToMarketPlace()
+        public void ChangeToMarketPlace()
         {
-            ApiService apiService = ApiService.Instance;
-
-            try
-            {
-                List<MarketplacePost> posts = await apiService.GetMarketplacePosts();
-                LoadPostsCommand(posts);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while fetching the posts in favorites: {ex.Message}");
-            }
+            List<MarketplacePost> posts = postService.GetPosts();
+            LoadPostsCommand(posts);
         }
 
         public async void ChangeToCart()
@@ -114,18 +96,11 @@ namespace ISSLab.ViewModel
             apiService.Dispose();
         }
 
-        public async void LoadPostsCommand(List<MarketplacePost> postsToLoad)
+        public void LoadPostsCommand(List<MarketplacePost> postsToLoad)
         {
-            ApiService apiService = ApiService.Instance;
             shownPosts.Clear();
             foreach (MarketplacePost currentPostToLoad in postsToLoad)
             {
-                try
-                {
-                    User user = await apiService.GetUserById(currentPostToLoad.AuthorId);
-                    shownPosts.Add(new PostContentViewModel(currentPostToLoad, user, this.userId, this.groupId, this.userService, this.chatFactory));
-
-                }
                 User originalPoster = userService.GetUserById(currentPostToLoad.AuthorId);
                 shownPosts.Add(new PostContentViewModel(currentPostToLoad, originalPoster, this.userId, this.groupId, this.userService, this.chatFactory));
             }
@@ -134,7 +109,7 @@ namespace ISSLab.ViewModel
         }
 
         // main window view model from the other project
-        public ObservableCollection<GroupNonMarketplace> CollectionOfActiveGroups { get; set; }
+        public ObservableCollection<Group> CollectionOfActiveGroups { get; set; }
 
         public MainWindowViewModel()
         {

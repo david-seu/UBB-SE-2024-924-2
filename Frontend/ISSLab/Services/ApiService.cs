@@ -44,7 +44,7 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<Uri> AddPostAsync(Post post)
+        public async Task<Uri> AddPostAsync(MarketplacePost post)
         {
             try
             {
@@ -157,27 +157,6 @@ namespace ISSLab.Services
                 return new List<MarketplacePost> { };
             }
         }
-        public async Task<User> GetUserById(Guid userId)
-        {
-            try
-            {
-                HttpResponseMessage response =
-                    await httpClient.GetAsync($"api/getUserById?userId={userId}");
-                response.EnsureSuccessStatusCode();
-
-                return await response.Content.ReadFromJsonAsync<User>();
-            }
-            catch (HttpRequestException exception)
-            {
-                Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
-                return new User { };
-            }
-            catch (JsonException exception)
-            {
-                Console.WriteLine($"Json error: {exception.Message}");
-                return new User { };
-            }
-        }
 
         public async Task<Uri> AddPostToCart(Guid groupId, Guid postId, Guid userId)
         {
@@ -277,24 +256,24 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<MarketplacePost>> GetFavouritePosts(Guid userId)
+        public async Task<List<Post>> GetFavouritePosts(Guid userId)
         {
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync($"api/getFavouritePosts?userId={userId}");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
             }
             catch (HttpRequestException exception)
             {
                 // logger call here
-                return new List<MarketplacePost> { };
+                return new List<Post> { };
             }
             catch (JsonException exception)
             {
                 // logger call here
-                return new List<MarketplacePost> { };
+                return new List<Post> { };
             }
         }
         public async Task<List<MarketplacePost>> GetMarketplacePosts()
