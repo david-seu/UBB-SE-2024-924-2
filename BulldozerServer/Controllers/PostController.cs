@@ -1,5 +1,6 @@
 ﻿using BulldozerServer.Domain;
 using BulldozerServer.Domain.MarketplacePosts;
+using BulldozerServer.Mapper;
 using BulldozerServer.Payloads.DTO;
 using BulldozerServer.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                MarketplacePostDTO marketplacePostDTO 
+                MarketplacePostDTO marketplacePostDTO
                 var context = this.postService.AddMarketplacePost(post);
                 return Ok(context);
             }
