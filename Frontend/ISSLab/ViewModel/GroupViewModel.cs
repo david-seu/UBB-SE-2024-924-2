@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using ISSLab.ViewModel;
-using ISSLab.Domain
+using ISSLab.Domain;
 using ISSLab.Services;
 
 namespace ISSLab.ViewModel

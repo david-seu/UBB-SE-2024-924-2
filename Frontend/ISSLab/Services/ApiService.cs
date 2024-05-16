@@ -44,7 +44,7 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<Uri> AddPostAsync(Post post)
+        public async Task<Uri> AddPostAsync(MarketplacePost post)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<Post>> GetPostsFromCart(Guid userId, Guid groupId)
+        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
         {
             try
             {
@@ -144,17 +144,17 @@ namespace ISSLab.Services
                     await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<Post>>();
+                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
             }
             catch (HttpRequestException exception)
             {
                 Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
-                return new List<Post> { };
+                return new List<MarketplacePost> { };
             }
             catch (JsonException exception)
             {
                 Console.WriteLine($"Json error: {exception.Message}");
-                return new List<Post> { };
+                return new List<MarketplacePost> { };
             }
         }
 
