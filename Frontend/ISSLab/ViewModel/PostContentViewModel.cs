@@ -94,24 +94,18 @@ namespace ISSLab.ViewModel
             set { OurMarketplacePost.Description = value; }
         }
 
-        // public string Contact
-        // {
-        //    get { return OurMarketplacePost.; }
-        //    set { OurMarketplacePost.Contacts = value; }
-        // }
-
         public string Delivery
         {
             get
             {
                 if (OurMarketplacePost.Description == Constants.FIXED_PRICE_POST_TYPE)
                 {
-                    FixedPriceMarketplacePost fixedPriceMarketplacePost = (FixedPriceMarketplacePost)OurMarketplacePost;
-                    return fixedPriceMarketplacePost.Delivery;
+                    FixedPricePost fixedPriceMarketplacePost = (FixedPricePost)OurMarketplacePost;
+                    return fixedPriceMarketplacePost.DeliveryType;
                 }
-                else if (OurMarketplacePost.Type == Constants.AUCTION_POST_TYPE)
+                else if (OurMarketplacePost.Description == Constants.AUCTION_POST_TYPE)
                 {
-                    AuctionMarketplacePost auctionMarketplacePost = (AuctionMarketplacePost)OurMarketplacePost;
+                    AuctionPost auctionMarketplacePost = (AuctionPost)OurMarketplacePost;
                     return auctionMarketplacePost.Delivery;
                 }
                 else

@@ -10,7 +10,6 @@ namespace ISSLab.ViewModel
         string BidPrice { get; }
         string BidPriceVisible { get; set; }
         string BuyButtonVisible { get; set; }
-        string Contact { get; set; }
         string Delivery { get; set; }
         string Description { get; set; }
         string DonationButtonVisible { get; set; }
