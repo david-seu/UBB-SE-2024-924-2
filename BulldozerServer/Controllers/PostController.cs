@@ -24,13 +24,13 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                MarketplacePostDTO marketplacePostDTO
-                var context = this.postService.AddMarketplacePost(post);
+                MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                var context = this.postService.AddMarketplacePost(marketplacePostDTO);
                 return Ok(context);
             }
             catch (Exception ex)
             {
-                return NotFound();
+                return NotFound(new { Message = ex.Message });
             }
         }
 
@@ -39,33 +39,50 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                var context = this.postService.RemoveMarketplacePost(post);
+                MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                var context = this.postService.RemoveMarketplacePost(marketplacePostDTO);
                 return Ok(context);
             }
             catch (Exception ex)
             {
-                return NotFound();
+                return NotFound(new { Message = ex.Message });
             }
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetMarketplacePostById(Guid id)
+        public async Task<IActionResult> GetMarketplacePostById(Guid id)
         {
             try
             {
-                var post = this.postService.GetMarketplacePostById(id);
-                return Ok(post);
+                var post = await this.postService.GetMarketplacePostById(id);
+                MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                return Ok(marketplacePostDTO);
             }
             catch (Exception ex)
             {
-                return NotFound();
+                return NotFound(new { Message = ex.Message });
             }
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MarketplacePostDTO>>> GetMarketplacePosts()
         {
-            return await postService.GetMarketplacePosts();
+            var result = await postService.GetMarketplacePosts();
+
+            if (result == null || result.Value == null)
+            {
+                return NotFound();
+            }
+
+            var posts = result.Value;
+
+            var marketplacePostDTOs = new List<MarketplacePostDTO>();
+            foreach (var post in posts)
+            {
+                marketplacePostDTOs.Add(MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post));
+            }
+
+            return Ok(marketplacePostDTOs);
         }
     }
 }

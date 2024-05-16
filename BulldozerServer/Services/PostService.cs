@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BulldozerServer.Domain;
 using BulldozerServer.Domain.MarketplacePosts;
+using BulldozerServer.Mapper;
+using BulldozerServer.Payloads.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -27,14 +29,16 @@ namespace BulldozerServer.Services
             return await databaseContext.MarketplacePost.ToListAsync();
         }
 
-        public async Task<EntityEntry<MarketplacePost>> AddMarketplacePost(MarketplacePost marketplacePost)
+        public async Task<EntityEntry<MarketplacePost>> AddMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
+            var marketplacePost = MarketplacePostMapper.MapMarketplacePostDTOToMarketplacePost(marketplacePostDTO);
             var context = databaseContext.MarketplacePost.Add(marketplacePost);
             await databaseContext.SaveChangesAsync();
             return context;
         }
-        public async Task<EntityEntry> RemoveMarketplacePost(MarketplacePost marketplacePost)
+        public async Task<EntityEntry> RemoveMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
+            var marketplacePost = MarketplacePostMapper.MapMarketplacePostDTOToMarketplacePost(marketplacePostDTO);
             var postToDelete = await databaseContext.MarketplacePost.FindAsync(marketplacePost.MarketplacePostId);
             if (postToDelete == null)
             {
