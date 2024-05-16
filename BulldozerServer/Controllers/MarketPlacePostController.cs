@@ -10,11 +10,11 @@ namespace BulldozerServer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PostController : Controller
+    public class MarketPlacePostController : Controller
     {
         private IPostService postService;
 
-        public PostController(IPostService postService)
+        public MarketPlacePostController(IPostService postService)
         {
             this.postService = postService;
         }
@@ -24,7 +24,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                //MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                // MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
                 var context = this.postService.AddMarketplacePost(marketplacePostDTO);
                 return Ok(context);
             }
@@ -39,7 +39,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                //MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
+                // MarketplacePostDTO marketplacePostDTO = MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post);
                 var context = this.postService.RemoveMarketplacePost(marketplacePostDTO);
                 return Ok(context);
             }

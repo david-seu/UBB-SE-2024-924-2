@@ -81,7 +81,7 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpGet("{userId}/cart")]
-        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetPostsFromCart(Guid userId, Guid groupId)
+        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetPostsFromCart(Guid userId)
         {
             try
             {
@@ -89,12 +89,12 @@ namespace BulldozerServer.Controllers
             }
             catch (Exception e)
             {
-                return NotFound();
+                return NotFound(e);
             }
         }
 
         [HttpPost("{userId}/cart/{postId}")]
-        public async Task<ActionResult<User>> AddPostToCart(Guid userId, Guid postId, Guid groupId)
+        public async Task<ActionResult<User>> AddPostToCart(Guid userId, Guid postId)
         {
             try
             {
