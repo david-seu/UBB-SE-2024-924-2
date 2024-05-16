@@ -5,12 +5,12 @@ namespace BulldozerServer.Domain
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<User> User { get; set; }
-        public DbSet<Group> Group { get; set; }
-        public DbSet<MarketplacePost> MarketplacePost { get; set; }
-        public DbSet<FixedPricePost> FixedPricePost { get; set; }
-        public DbSet<AuctionPost> AuctionPost { get; set; }
-        public DbSet<DonationPost> DonationPost { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<MarketplacePost> MarketplacePosts { get; set; }
+        public DbSet<FixedPricePost> FixedPricePosts { get; set; }
+        public DbSet<AuctionPost> AuctionPosts { get; set; }
+        public DbSet<DonationPost> DonationPosts { get; set; }
 
         #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)

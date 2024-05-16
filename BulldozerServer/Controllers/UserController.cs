@@ -1,9 +1,7 @@
 ﻿using BulldozerServer.Domain;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
 using BulldozerServer.Domain.MarketplacePosts;
 using BulldozerServer.Services;
-using ISSLab.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BulldozerServer.Controllers
