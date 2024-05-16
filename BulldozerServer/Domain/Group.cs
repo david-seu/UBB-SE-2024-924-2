@@ -15,7 +15,7 @@ namespace BulldozerServer.Domain
         public Group(Guid groupId, Guid userId, string groupName, string description, DateTime createdDate, bool isPublic, bool allowanceOfPostage)
         {
             this.groupId = groupId;
-            this.userId = userId;
+            this.ownerId = userId;
             this.groupName = groupName;
             this.description = description;
             this.createdDate = createdDate;

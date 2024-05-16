@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using BulldozerServer.Domain;
@@ -38,7 +39,16 @@ namespace UBB_SE_2024_Popsicles.Services
             }
             Group group = GroupMapper.GroupDTOToGroup(groupDTO);
             var addResult = context.Groups.Add(group);
-            AddMemberToGroup(group.UserId, group.GroupId, "admin");
+            MembershipDTO membershipDTO = new MembershipDTO
+            {
+                GroupId = group.GroupId,
+                UserId = group.OwnerId,
+                JoinDate = DateOnly.FromDateTime(DateTime.Now),
+                IsAdmin = true,
+                IsTO = false,
+                IsBanned = false
+            };
+            await AddMemberToGroup(membershipDTO);
 
             await context.SaveChangesAsync();
             return addResult;
@@ -147,37 +157,22 @@ namespace UBB_SE_2024_Popsicles.Services
         {
             Guid postId = Guid.NewGuid();
             DateTime postDate = DateTime.Now;
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            GroupMembership groupMembership = group.GetMembershipFromGroupMemberId(groupMemberId);
-
-            if (groupMembership.BypassPostageRestriction || group.AllowanceOfPostage)
+            Group? group = context.Groups.Find(groupId);
+            if (group == null)
             {
-                GroupPost newPost = new GroupPost(postId, groupMemberId, postContent, postImage, groupId);
-                group.ListOfGroupPosts.Add(newPost);
+                throw new Exception("Group not found");
             }
-            else
+
+            Membership? groupMembership = group.Memberships.FirstOrDefault(m => m.UserId == groupMemberId);
+            if (groupMembership == null)
             {
-                int postCount = 0;
-                foreach (GroupPost post in group.ListOfGroupPosts)
-                {
-                    if (post.PostOwnerId == groupMemberId && post.PostageDateTime.Date == postDate.Date)
-                    {
-                        postCount++;
-                    }
-                }
+                throw new Exception("User not in group");
+            }
 
-                if (postCount < group.MaximumNumberOfPostsPerHourPerUser)
-                {
-                    GroupPost newPost = new GroupPost(postId, groupMemberId, postContent, postImage, groupId);
-
-                    group.ListOfGroupPosts.Add(newPost);
-                }
-                else
-                {
-                    throw new Exception("Post limit exceeded");
-                }
+            if (groupMembership.IsAdmin || group.AllowanceOfPostage)
+            {
+                GroupPost newPost = new GroupPost(postId, groupMemberId, groupId, postContent, postImage, DateTime.Now, false, false);
+                group.GroupPosts.Add(newPost);
             }
         }
 
@@ -243,38 +238,6 @@ namespace UBB_SE_2024_Popsicles.Services
                 throw new Exception("Can't find group");
             }
             return group;
-        }
-        public List<Poll> GetGroupPolls(Guid groupId)
-        {
-            // Get the Group from the GroupRepository
-            var polls = context.Polls.Where(poll => poll.GroupId == groupId).ToList();
-
-            return polls;
-        }
-
-        public void CreateNewPoll(Guid groupId, Guid groupMemberId, string pollDescription)
-        {
-            Guid pollId = Guid.NewGuid();
-            GroupPoll newGroupPoll = new GroupPoll(pollId, groupMemberId, pollDescription, groupId);
-
-            // Get the Group from the GroupRepository
-            Group group = groupRepository.GetGroupById(groupId);
-
-            group.ListOfGroupPolls.Add(newGroupPoll);
-        }
-
-        public void AddNewOptionToAPoll(Guid pollId, Guid groupId, string newPollOption)
-        {
-            Group group = groupRepository.GetGroupById(groupId);
-            GroupPoll groupPoll = group.GetGroupPoll(pollId);
-            if (groupPoll != null)
-            {
-                   groupPoll.AddGroupPollOption(newPollOption);
-            }
-            else
-            {
-                throw new Exception("GroupPoll not found");
-            }
         }
     }
 }

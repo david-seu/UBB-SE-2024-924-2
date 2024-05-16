@@ -8,7 +8,6 @@ using BulldozerServer.Domain;
 using BulldozerServer.Domain.MarketplacePosts;
 using BulldozerServer.Mapper;
 using BulldozerServer.Payload.DTO;
-using ISSLab.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -105,10 +104,10 @@ namespace BulldozerServer.Services
             {
                 throw new Exception("Group not found");
             }
-            return foundUser.Groups.Contains(foundGroup);
+            return foundUser.GroupsPartOf.Contains(foundGroup);
         }
 
-        public async void RemovePostFromCart(Guid groupId, Guid postId, Guid userId)
+        public async void RemovePostFromCart(Guid postId, Guid userId)
         {
             var foundUser = await context.Users.FindAsync(userId);
             if (foundUser == null)
@@ -124,7 +123,7 @@ namespace BulldozerServer.Services
             await context.SaveChangesAsync();
         }
 
-        public async void RemovePostFromFavorites(Guid groupId, Guid postId, Guid userId)
+        public async void RemovePostFromFavorites(Guid postId, Guid userId)
         {
             var foundUser = await context.Users.FindAsync(userId);
             if (foundUser == null)
