@@ -42,16 +42,9 @@ namespace ISSLab.ViewModel
             FetchPosts();
             FetchPolls();
             FetchGroupMembers();
+            FetchRequestsToJoinGroup();
 
             // TODO: Fetch posts and members from the repository
-            RequestsToJoinTheGroup = new ObservableCollection<Request>()
-            {
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Vasile", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Andrei", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Maria", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Gabriel", Guid.NewGuid())
-            };
-
             List<PollViewModel> pollViewModels = new List<PollViewModel>();
             foreach (Poll poll in CollectionOfPolls)
             {
@@ -71,6 +64,30 @@ namespace ISSLab.ViewModel
 
                 PostsMadeInTheGroupChat = new ObservableCollection<GroupPost>(
                 groupPosts.Select(post => new GroupPost(post.Id, post.OwnerId, post.Description, post.Image, post.GroupId)));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
+            }
+
+            // nu il folositi ca strica tot (Bianca asa o zis)
+            // apiService.Dispose();
+        }
+
+        public async void FetchRequestsToJoinGroup()
+        {
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                List<Request> requestsToJoinGroup =
+                    await apiService.GetRequestsToJoinGroup(GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel
+                        .Id);
+                Console.WriteLine($"Successfully fetched the group posts");
+
+                RequestsToJoinTheGroup = new ObservableCollection<Request>(
+                    requestsToJoinGroup.Select(request =>
+                        new Request(request.Id, request.GroupMemberId, request.GroupMemberName, request.GroupId)));
             }
             catch (Exception ex)
             {
