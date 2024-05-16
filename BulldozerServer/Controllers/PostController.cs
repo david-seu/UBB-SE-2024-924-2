@@ -10,27 +10,45 @@ namespace BulldozerServer.Controllers
     [Route("api/[controller]")]
     public class PostController : Controller
     {
-        private readonly DatabaseContext databaseContext;
         private PostService postService;
 
-        public PostController(DatabaseContext databaseContext, PostService postService)
+        public PostController(PostService postService)
         {
-            this.databaseContext = databaseContext;
             this.postService = postService;
         }
 
         [HttpPost]
         public IActionResult AddPost(MarketplacePost post)
         {
-            var context = this.postService.AddPost(post);
-            if (context == null)
+            try
+            {
+                var context = this.postService.AddPost(post);
+                return Ok(context);
+            }
+            catch (Exception ex)
             {
                 return NotFound();
             }
-            else
+        }
+
+        [HttpDelete]
+        public IActionResult RemovePost(MarketplacePost post)
+        {
+            try
             {
+                var context = this.postService.RemovePost(post);
                 return Ok(context);
             }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet{id}]
+        public IActionResult GetPostById(Guid id)
+        {
+            try { }
         }
     }
 }
