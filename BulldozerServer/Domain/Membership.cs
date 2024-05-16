@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,7 @@ namespace BulldozerServer.Domain
             this.isAdmin = false;
         }
 
+        [Key]
         public Guid GroupId { get => groupId; }
         public Guid UserId { get => userId; }
         public DateOnly JoinDate { get => joinDate; }
