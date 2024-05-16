@@ -32,7 +32,7 @@
                 <Border.Background>
                     <ImageBrush
                         x:Name="UserIcon"
-                        ImageSource="../resources/images/user-profile-picture.jpg"
+                        ImageSource="../resources/images/catei.png"
                         Stretch="Fill" />
                 </Border.Background>
             </Border>
@@ -82,7 +82,7 @@
         <Image
             x:Name="ContentPost"
             Grid.Row="2"
-            Source="../resources/images/user-profile-picture.jpg"
+            Source="../resources/images/catei.png"
             Stretch="Fill" />
         <!--  End of Third Row  -->
 

@@ -358,8 +358,9 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                int interested = OurMarketplacePost.InterestStatuses.FindAll(interest => interest.Interested).Count;
-                return interested.ToString() + " interested";
+                // int interested = OurMarketplacePost.InterestStatuses.FindAll(interest => interest.Interested).Count;
+                // return interested.ToString() + " interested";
+                return " ";
             }
         }
 
@@ -383,8 +384,9 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                int uninterested = OurMarketplacePost.InterestStatuses.FindAll(interest => !interest.Interested).Count;
-                return uninterested.ToString() + " uninterested";
+                // int uninterested = OurMarketplacePost.InterestStatuses.FindAll(interest => !interest.Interested).Count;
+                // return uninterested.ToString() + " uninterested";
+                return " ";
             }
         }
 

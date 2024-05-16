@@ -24,7 +24,7 @@ namespace ISSLab.Services
         {
             httpClient = new HttpClient();
             // TODO: Use actual server port number here
-            httpClient.BaseAddress = new Uri("http://localhost:64195/");
+            httpClient.BaseAddress = new Uri("https://localhost:32778/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue(
@@ -138,7 +138,7 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
+                HttpResponseMessage response = await httpClient.GetAsync($"api/Group/{groupId}/members");
                 response.EnsureSuccessStatusCode();
                 List<User> groupMembers =
                     await response.Content.ReadFromJsonAsync<List<User>>();
@@ -222,7 +222,7 @@ namespace ISSLab.Services
                     userId
                 };
 
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync($"api/User/{userId}/cart/{postId}", data);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync($"api/User/{userId}/favoritePosts/{postId}", data);
                 response.EnsureSuccessStatusCode();
 
                 Uri uri = response.Headers.Location;
@@ -251,7 +251,7 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPosts?groupId={groupId}");
+                HttpResponseMessage response = await httpClient.GetAsync($"api/{groupId}/posts");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<Post>>();
@@ -292,7 +292,7 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPolls?groupId={groupId}");
+                HttpResponseMessage response = await httpClient.GetAsync($"api/Group/{groupId}/join-requests");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<Request>>();
