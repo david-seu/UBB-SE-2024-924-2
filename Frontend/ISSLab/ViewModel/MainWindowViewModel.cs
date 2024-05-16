@@ -17,25 +17,25 @@ namespace ISSLab.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
-        private IPostService postService;
-        private IUserService userService;
+        // private IPostService postService;
+        // private IUserService userService;
         private ObservableCollection<IPostContentViewModel> shownPosts;
         private Guid userId;
         private Guid groupId;
         private ICreatePostViewModel postCreationViewModel;
         private IChatFactory chatFactory;
 
-        public MainWindowViewModel(IPostService givenPostService, IUserService givenUserService, Guid userId, Guid groupId, IChatFactory chatFactory)
+        public MainWindowViewModel(Guid userId, Guid groupId, IChatFactory chatFactory)
         {
-            this.postService = givenPostService;
-            this.userService = givenUserService;
+            // this.postService = givenPostService;
+            // this.userService = givenUserService;
             this.userId = userId;
             this.groupId = groupId;
             this.chatFactory = chatFactory;
 
             shownPosts = new ObservableCollection<IPostContentViewModel>();
 
-            postCreationViewModel = new CreatePostViewModel(userId, groupId, postService);
+            postCreationViewModel = new CreatePostViewModel(userId, groupId);
 
             // LoadPostsCommand(postService.GetPosts());
             ChangeToMarketPlace();
@@ -125,7 +125,7 @@ namespace ISSLab.ViewModel
                 try
                 {
                     User reveivedUser = await apiService.GetUserById(currentPostToLoad.AuthorId.Value);
-                    shownPosts.Add(new PostContentViewModel(currentPostToLoad, reveivedUser, this.userId, this.groupId, this.userService, this.chatFactory));
+                    shownPosts.Add(new PostContentViewModel(currentPostToLoad, reveivedUser, this.userId, this.groupId, this.chatFactory));
                 }
                 catch (Exception ex)
                 {

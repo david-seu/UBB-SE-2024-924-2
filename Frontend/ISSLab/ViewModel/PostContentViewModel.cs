@@ -19,7 +19,7 @@ namespace ISSLab.ViewModel
         public static string MINUTES_AGO = " minutes ago";
         public static string SECONDS_AGO = " seconds ago";
 
-        private IUserService userService;
+        // private IUserService userService;
         public Guid GroupId { get; set; }
         private MarketplacePost OurMarketplacePost { get; set; }
         public Guid AccountId { get; set; }
@@ -31,9 +31,9 @@ namespace ISSLab.ViewModel
         private string bidPriceVisible;
         private DispatcherTimer timer;
         public IChatFactory OurChatFactory { get; }
-        public PostContentViewModel(MarketplacePost marketplacePost, User user, Guid accountId, Guid groupId, IUserService userService, IChatFactory chatFactory) : base()
+        public PostContentViewModel(MarketplacePost marketplacePost, User user, Guid accountId, Guid groupId, IChatFactory chatFactory) : base()
         {
-            this.userService = userService;
+            // this.userService = userService;
             this.GroupId = groupId;
             this.AccountId = accountId;
             this.OurMarketplacePost = marketplacePost;
@@ -228,9 +228,19 @@ namespace ISSLab.ViewModel
             return OurMarketplacePost;
         }
 
-        public void AddPostToFavorites()
+        public async void AddPostToFavorites()
         {
-            this.userService.AddPostToFavorites(GroupId, OurMarketplacePost.MarketplacePostId, AccountId);
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                await apiService.AddPostToFavorite(this.MarketplacePost.MarketplacePostId, this.AccountId);
+                Console.WriteLine($"Successfully added the post to the cart");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"Error while adding the post to the cart: {exception.Message}");
+            }
         }
 
         public async void AddPostToCart()

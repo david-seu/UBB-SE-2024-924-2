@@ -6,7 +6,7 @@ namespace ISSLab.ViewModel
 {
     public class CreatePostViewModel : ViewModelBase, ICreatePostViewModel
     {
-        private IPostService postService; // TODO: REMOVE
+        /*private IPostService postService;*/ // TODO: REMOVE
         private Guid groupId;
         private Guid accountId;
 
@@ -20,9 +20,9 @@ namespace ISSLab.ViewModel
         private string isAuction;
         private string minimumBid;
 
-        public CreatePostViewModel(Guid accountId, Guid groupId, IPostService postService) : base()
+        public CreatePostViewModel(Guid accountId, Guid groupId) : base()
         {
-            this.postService = postService;
+            // this.postService = postService;
             this.groupId = groupId;
             this.accountId = accountId;
             IsDonation = Constants.COLLAPSED_VISIBILITY;
@@ -281,7 +281,7 @@ namespace ISSLab.ViewModel
             try
             {
                 // Calling the AddPostAsync method
-                Uri location = await apiService.AddPostAsync(donationMarketplacePost);
+                Uri location = await apiService.AddMarketplacePostAsync(donationMarketplacePost);
                 Console.WriteLine($"Post added successfully at {location}");
             }
             catch (Exception ex)
@@ -305,7 +305,7 @@ namespace ISSLab.ViewModel
             try
             {
                 // Calling the AddPostAsync method
-                Uri location = await apiService.AddPostAsync(fixedPriceMarketplace);
+                Uri location = await apiService.AddMarketplacePostAsync(fixedPriceMarketplace);
                 Console.WriteLine($"Post added successfully at {location}");
             }
             catch (Exception ex)

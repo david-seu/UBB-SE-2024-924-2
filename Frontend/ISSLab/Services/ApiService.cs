@@ -212,6 +212,40 @@ namespace ISSLab.Services
                 return null;
             }
         }
+        public async Task<Uri> AddPostToFavorite(Guid postId, Guid userId)
+        {
+            try
+            {
+                var data = new
+                {
+                    postId,
+                    userId
+                };
+
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync($"api/User/{userId}/cart/{postId}", data);
+                response.EnsureSuccessStatusCode();
+
+                Uri uri = response.Headers.Location;
+
+                Console.WriteLine($"Post added to favorite successfully. URI: {uri}");
+
+                return uri;
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                Console.WriteLine("Failed to add post to favorite.");
+
+                return null;
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart due to JSON parsing error.");
+
+                return null;
+            }
+        }
 
         public async Task<List<Post>> GetGroupPosts(Guid groupId)
         {
