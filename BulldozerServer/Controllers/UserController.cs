@@ -63,7 +63,7 @@ namespace BulldozerServer.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UserDto userDto)
         {
-            await userService.UpdateUserUsername(userDto);
+            await userService.UpdateUser(userDto);
             return NoContent();
         }
 
@@ -85,7 +85,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                return await userService.GetPostsFromCart(userId, groupId);
+                return await userService.GetPostsFromCart(userId);
             }
             catch (Exception e)
             {
@@ -98,7 +98,7 @@ namespace BulldozerServer.Controllers
         {
             try
             {
-                userService.AddPostToCart(groupId, postId, userId);
+                userService.AddPostToCart(postId, userId);
                 return Ok();
             }
             catch (Exception e)
@@ -108,11 +108,11 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpPost("{userId}/favoritePosts/{postId}")]
-        public async Task<ActionResult<User>> AddPostToFavorites(Guid userId, Guid postId, Guid groupId)
+        public async Task<ActionResult<User>> AddPostToFavorites(Guid userId, Guid postId)
         {
             try
             {
-                userService.AddPostToFavorites(groupId, postId, userId);
+                userService.AddPostToFavorites(postId, userId);
                 return Ok();
             }
             catch (Exception e)
@@ -122,11 +122,11 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpDelete("{userId}/cart/{postId}")]
-        public async Task<ActionResult<User>> RemovePostFromCart(Guid userId, Guid postId, Guid groupId)
+        public async Task<ActionResult<User>> RemovePostFromCart(Guid userId, Guid postId)
         {
             try
             {
-                userService.RemovePostFromCart(groupId, postId, userId);
+                userService.RemovePostFromCart(postId, userId);
                 return Ok();
             }
             catch (Exception e)
@@ -136,11 +136,11 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpDelete("{userId}/favoritePosts/{postId}")]
-        public async Task<ActionResult<User>> RemovePostFromFavorites(Guid userId, Guid postId, Guid groupId)
+        public async Task<ActionResult<User>> RemovePostFromFavorites(Guid userId, Guid postId)
         {
             try
             {
-                userService.RemovePostFromFavorites(groupId, postId, userId);
+                userService.RemovePostFromFavorites(postId, userId);
                 return Ok();
             }
             catch (Exception e)

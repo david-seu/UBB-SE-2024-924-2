@@ -23,7 +23,7 @@ namespace BulldozerServer.Services
             this.context = context;
         }
 
-        public async void AddPostToCart(Guid groupId, Guid postId, Guid userId)
+        public async void AddPostToCart(Guid postId, Guid userId)
         {
             var foundUser = await context.Users.FindAsync(userId);
             if (foundUser == null)
@@ -39,7 +39,7 @@ namespace BulldozerServer.Services
             context.SaveChangesAsync();
         }
 
-        public async void AddPostToFavorites(Guid groupId, Guid postId, Guid userId)
+        public async void AddPostToFavorites(Guid postId, Guid userId)
         {
             var foundUser = await context.Users.FindAsync(userId);
             if (foundUser == null)
@@ -57,6 +57,7 @@ namespace BulldozerServer.Services
 
         public async Task<UserDto> AddUser(UserDto userDto)
         {
+            // comments
             var addedUser = await context.Users.AddAsync(UserMapper.MapUserDtoToUser(userDto));
             await context.SaveChangesAsync();
             return UserMapper.MapUserToUserDto(addedUser.Entity);
@@ -150,7 +151,7 @@ namespace BulldozerServer.Services
             context.SaveChanges();
         }
 
-        public async Task<User> UpdateUserUsername(UserDto userDto)
+        public async Task<User> UpdateUser(UserDto userDto)
         {
             var foundUser = await context.Users.FindAsync(userDto.UserId);
             if (foundUser == null)
@@ -168,7 +169,7 @@ namespace BulldozerServer.Services
             return foundUser;
         }
 
-        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
+        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId)
         {
             var foundUser = await context.Users.FindAsync(userId);
             if (foundUser == null)
