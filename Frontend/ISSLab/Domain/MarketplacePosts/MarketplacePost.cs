@@ -17,6 +17,7 @@ namespace ISSLab.Domain.MarketplacePosts
         private bool isPromoted;
         private bool isActive;
         private string type;
+        private List<InterestStatus> interestStatuses;
 
         [Key]
         public Guid MarketplacePostId { get => marketplacePostId; }
@@ -45,6 +46,8 @@ namespace ISSLab.Domain.MarketplacePosts
         public ICollection<User> PeopleThatFavored { get; } = new List<User>();
 
         public ICollection<User> PeopleThatPlacedInCart { get; } = new List<User>();
+        public List<InterestStatus> InterestStatuses { get => interestStatuses; }
+
 
         public MarketplacePost(Guid marketplacePostId, Guid authorId, Guid groupId, string title, string description, string mediaContent,
             string location, DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive)

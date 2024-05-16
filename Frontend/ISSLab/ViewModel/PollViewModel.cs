@@ -48,65 +48,65 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return PollThatIsEncapsulatedByThisInstanceOnViewModel.EndTime.ToString();
+                return PollThatIsEncapsulatedByThisInstanceOnViewModel.EndDate.ToString();
             }
             set
             {
-                PollThatIsEncapsulatedByThisInstanceOnViewModel.EndTime = DateTime.Parse(value);
+                PollThatIsEncapsulatedByThisInstanceOnViewModel.EndDate = DateOnly.Parse(value);
                 OnPropertyChanged(nameof(DueDateOfThePollInStringFormat));
             }
         }
 
-        public string FirstPossibleOptionOfThePoll
-        {
-            get
-            {
-                return PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[0];
-            }
-            set
-            {
-                PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[0] = value;
-                OnPropertyChanged(nameof(FirstPossibleOptionOfThePoll));
-            }
-        }
+        // public PollOption FirstPossibleOptionOfThePoll
+        // {
+        //    get
+        //    {
+        //        return PollThatIsEncapsulatedByThisInstanceOnViewModel.PollOptions.First();
+        //    }
+        //    set
+        //    {
+        //        PollThatIsEncapsulatedByThisInstanceOnViewModel.PollOptions.First() = value;
+        //        //OnPropertyChanged(nameof(FirstPossibleOptionOfThePoll));
+        //    }
+        // }
 
-        public string SecondPossibleOptionOfThePoll
-        {
-            get
-            {
-                return PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[1];
-            }
-            set
-            {
-                PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[1] = value;
-                OnPropertyChanged(nameof(SecondPossibleOptionOfThePoll));
-            }
-        }
+        // public string SecondPossibleOptionOfThePoll
+        // {
+        //    get
+        //    {
+        //        return PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[1];
+        //    }
+        //    set
+        //    {
+        //        PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[1] = value;
+        //        OnPropertyChanged(nameof(SecondPossibleOptionOfThePoll));
+        //    }
+        // }
 
-        public string ThirdPossibleOptionOfThePoll
-        {
-            get
-            {
-                return PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[2];
-            }
-            set
-            {
-                PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[2] = value;
-                OnPropertyChanged(nameof(ThirdPossibleOptionOfThePoll));
-            }
-        }
+        // public string ThirdPossibleOptionOfThePoll
+        // {
+        //    get
+        //    {
+        //        return PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[2];
+        //    }
+        //    set
+        //    {
+        //        PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[2] = value;
+        //        OnPropertyChanged(nameof(ThirdPossibleOptionOfThePoll));
+        //    }
+        // }
 
-        public string FourthPossibleOptionOfThePoll
-        {
-            get
-            {
-                return PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[3];
-            }
-            set
-            {
-                PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[3] = value;
-                OnPropertyChanged(nameof(FourthPossibleOptionOfThePoll));
-            }
-        }
+        // public string FourthPossibleOptionOfThePoll
+        // {
+        //    get
+        //    {
+        //        return PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[3];
+        //    }
+        //    set
+        //    {
+        //        PollThatIsEncapsulatedByThisInstanceOnViewModel.Options[3] = value;
+        //        OnPropertyChanged(nameof(FourthPossibleOptionOfThePoll));
+        //    }
+        // }
     }
 }
