@@ -1,4 +1,6 @@
 ﻿using BulldozerServer.Domain;
+using BulldozerServer.Domain.MarketplacePosts;
+using BulldozerServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 
@@ -6,49 +8,29 @@ namespace BulldozerServer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PostService : Controller
+    public class PostController : Controller
     {
-        // private readonly IPostRepository postRepository;
+        private readonly DatabaseContext databaseContext;
+        private PostService postService;
 
-        // public PostService(IPostRepository postRepository)
-        // {
-        //    this.postRepository = postRepository;
-        // }
-
-        // [HttpDelete("{id}")]
-        // public IActionResult RemovePost(Post post)
-        // {
-        //    postRepository.RemovePost(post.Id);
-        //    return Ok();
-        // }
-    }
-}
-        private readonly IPostRepository postRepository;
-
-        public PostService(IPostRepository postRepository)
+        public PostController(DatabaseContext databaseContext, PostService postService)
         {
-            this.postRepository = postRepository;
+            this.databaseContext = databaseContext;
+            this.postService = postService;
         }
 
         [HttpPost]
-        public IActionResult AddPost(Post post)
+        public IActionResult AddPost(MarketplacePost post)
         {
-            if (post == null)
+            var context = this.postService.AddPost(post);
+            if (context == null)
             {
-                return BadRequest("Post is null");
+                return NotFound();
             }
-
-            if (!ModelState.IsValid)
+            else
             {
-                return BadRequest(ModelState);
+                return Ok(context);
             }
-
-            postRepository.AddPost(post);
-
-            //return CreatedAtAction(nameof(AddPost), new { id = post.Id }, post);  Location header that contains the URI of the newly created post
-            return Ok();
         }
-
-
     }
 }
