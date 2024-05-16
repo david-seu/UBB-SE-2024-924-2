@@ -44,11 +44,11 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<Uri> AddPostAsync(MarketplacePost post)
+        public async Task<Uri> AddMarketplacePostAsync(MarketplacePost post)
         {
             try
             {
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPost", post);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/MarketplacePost", post);
                 response.EnsureSuccessStatusCode();
 
                 Uri uri = response.Headers.Location;
@@ -118,7 +118,7 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/getUserById?userId={userId}");
+                HttpResponseMessage response = await httpClient.GetAsync($"api/User/{userId}");
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadFromJsonAsync<User>();
             }
@@ -156,12 +156,12 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
+        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId)
         {
             try
             {
                 HttpResponseMessage response =
-                    await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
+                    await httpClient.GetAsync($"api/User/{userId}/cart");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
@@ -178,18 +178,17 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<Uri> AddPostToCart(Guid groupId, Guid postId, Guid userId)
+        public async Task<Uri> AddPostToCart(Guid postId, Guid userId)
         {
             try
             {
                 var data = new
                 {
-                    groupId,
                     postId,
                     userId
                 };
 
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPostToCart", data);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync($"api/User/{userId}/cart/{postId}", data);
                 response.EnsureSuccessStatusCode();
 
                 Uri uri = response.Headers.Location;
@@ -280,7 +279,7 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/getFavouritePosts?userId={userId}");
+                HttpResponseMessage response = await httpClient.GetAsync($"api/User/{userId}/favoritePosts");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
@@ -300,7 +299,7 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync("api/getMarketplacePosts");
+                HttpResponseMessage response = await httpClient.GetAsync("api/MarketplacePost");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
