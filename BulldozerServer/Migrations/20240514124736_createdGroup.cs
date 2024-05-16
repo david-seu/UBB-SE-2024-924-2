@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BulldozerServer.Migrations
 {
     /// <inheritdoc />
-    public partial class createdGroup : Migration
+    public partial class CreatedGroup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -10,13 +10,12 @@ namespace BulldozerServer
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var connection = String.Empty;
+            var connection = string.Empty;
             if (builder.Environment.IsDevelopment())
             {
                 builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
@@ -42,7 +41,6 @@ namespace BulldozerServer
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-                
 
             app.MapControllers();
 
