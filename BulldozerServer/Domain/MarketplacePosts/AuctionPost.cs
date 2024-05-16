@@ -1,6 +1,6 @@
 ﻿namespace BulldozerServer.Domain.MarketplacePosts
 {
-    public class AuctionPost : MarketplacePost
+    public class AuctionPost : FixedPricePost
     {
         private Guid currentPriceLeader;
         private double currentBidPrice;
@@ -11,9 +11,9 @@
         public double MinimumBidPrice { get => minimumBidPrice; set => minimumBidPrice = value; }
 
         public AuctionPost(Guid marketplacePostId, Guid authorId, Guid groupId, string title, string description, string mediaContent, string location,
-                               DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive, Guid currentPriceLeader, double currentBidPrice,
-                               double minimumBidPrice)
-            : base(marketplacePostId, authorId, groupId, title, description, mediaContent, location, creationDate, endDate, isPromoted, isActive)
+            DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive, double price, bool isNegotiable, string deliveryType, Guid currentPriceLeader,
+            double currentBidPrice, double minimumBidPrice)
+            : base(marketplacePostId, authorId, groupId, title, description, mediaContent, location, creationDate, endDate, isPromoted, isActive, price, isNegotiable, deliveryType)
         {
             this.currentPriceLeader = currentPriceLeader;
             this.currentBidPrice = currentBidPrice;
