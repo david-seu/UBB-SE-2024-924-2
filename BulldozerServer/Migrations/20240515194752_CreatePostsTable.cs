@@ -35,13 +35,12 @@ namespace BulldozerServer.Migrations
                         column: x => x.GroupId,
                         principalTable: "Group",
                         principalColumn: "GroupId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_MarketplacePost_User_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.SetNull);
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -59,13 +58,13 @@ namespace BulldozerServer.Migrations
                         column: x => x.PostsInCartMarketplacePostId,
                         principalTable: "MarketplacePost",
                         principalColumn: "MarketplacePostId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Cart_User_PeopleThatPlacedInCartUserId",
                         column: x => x.PeopleThatPlacedInCartUserId,
                         principalTable: "User",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,13 +82,13 @@ namespace BulldozerServer.Migrations
                         column: x => x.FavoritePostsMarketplacePostId,
                         principalTable: "MarketplacePost",
                         principalColumn: "MarketplacePostId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_PostFavors_User_PeopleThatFavoredUserId",
                         column: x => x.PeopleThatFavoredUserId,
                         principalTable: "User",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
