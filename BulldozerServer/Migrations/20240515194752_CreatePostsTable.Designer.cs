@@ -4,6 +4,7 @@ using BulldozerServer.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulldozerServer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240515194752_CreatePostsTable")]
+    partial class CreatePostsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,11 +74,6 @@ namespace BulldozerServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
-
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -105,10 +103,6 @@ namespace BulldozerServer.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("MarketplacePost");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("MarketplacePost");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.User", b =>
@@ -176,53 +170,6 @@ namespace BulldozerServer.Migrations
                     b.HasIndex("PeopleThatFavoredUserId");
 
                     b.ToTable("PostFavors");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.DonationPost", b =>
-                {
-                    b.HasBaseType("BulldozerServer.Domain.MarketplacePosts.MarketplacePost");
-
-                    b.Property<double>("CurrentDonationAmount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("DonationLink")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("DonationPost");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.FixedPricePost", b =>
-                {
-                    b.HasBaseType("BulldozerServer.Domain.MarketplacePosts.MarketplacePost");
-
-                    b.Property<string>("DeliveryType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsNegotiable")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.HasDiscriminator().HasValue("FixedPricePost");
-                });
-
-            modelBuilder.Entity("BulldozerServer.Domain.MarketplacePosts.AuctionPost", b =>
-                {
-                    b.HasBaseType("BulldozerServer.Domain.MarketplacePosts.FixedPricePost");
-
-                    b.Property<double>("CurrentBidPrice")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("CurrentPriceLeader")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("MinimumBidPrice")
-                        .HasColumnType("float");
-
-                    b.HasDiscriminator().HasValue("AuctionPost");
                 });
 
             modelBuilder.Entity("BulldozerServer.Domain.Group", b =>
