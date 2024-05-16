@@ -123,14 +123,14 @@ namespace ISSLab.ViewModel
             CurrentActiveUser = mockGroupMember;
 
             FetchGroups();
-            // CollectionOfActiveGroups = new ObservableCollection<GroupNonMarketplace>
-            // {
-            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
-            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
-            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
-            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),
-            //     new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 5", "Description 5", "robotics-GroupNonMarketplace", "woman", 50, true, true, "5481f5"),
-            // };
+            CollectionOfActiveGroups = new ObservableCollection<GroupNonMarketplace>
+             {
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),
+                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 5", "Description 5", "robotics-GroupNonMarketplace", "woman", 50, true, true, "5481f5"),
+             };
             CurrentlySelectedGroupMarketplace = CollectionOfActiveGroups[0];
         }
         public async void FetchGroups()
