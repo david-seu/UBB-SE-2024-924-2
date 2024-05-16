@@ -1,4 +1,5 @@
-﻿using ISSLab.Model.Entities;
+﻿using ISSLab.Domain.MarketplacePosts;
+using ISSLab.Model.Entities;
 
 namespace ISSLab.ViewModel
 {

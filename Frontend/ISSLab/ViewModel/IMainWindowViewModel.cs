@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using ISSLab.Domain.MarketplacePosts;
 using ISSLab.Model.Entities;
 
 namespace ISSLab.ViewModel

@@ -47,11 +47,11 @@ namespace ISSLab.ViewModel
             {
                 this.donationButtonVisible = Constants.VISIBLE_VISIBILITY;
             }
-            else if (this.OurMarketplacePost.Type == Constants.FIXED_PRICE_POST_TYPE)
+            else if (this.OurMarketplacePost.Description == Constants.FIXED_PRICE_POST_TYPE)
             {
                 this.buyButtonVisible = Constants.VISIBLE_VISIBILITY;
             }
-            else if (this.OurMarketplacePost.Type == Constants.AUCTION_POST_TYPE)
+            else if (this.OurMarketplacePost.Description == Constants.AUCTION_POST_TYPE)
             {
                 this.buyButtonVisible = Constants.VISIBLE_VISIBILITY;
                 this.bidButtonVisible = Constants.VISIBLE_VISIBILITY;
@@ -94,17 +94,17 @@ namespace ISSLab.ViewModel
             set { OurMarketplacePost.Description = value; }
         }
 
-        public string Contact
-        {
-            get { return OurMarketplacePost.Contacts; }
-            set { OurMarketplacePost.Contacts = value; }
-        }
+        // public string Contact
+        // {
+        //    get { return OurMarketplacePost.; }
+        //    set { OurMarketplacePost.Contacts = value; }
+        // }
 
         public string Delivery
         {
             get
             {
-                if (OurMarketplacePost.Type == Constants.FIXED_PRICE_POST_TYPE)
+                if (OurMarketplacePost.Description == Constants.FIXED_PRICE_POST_TYPE)
                 {
                     FixedPriceMarketplacePost fixedPriceMarketplacePost = (FixedPriceMarketplacePost)OurMarketplacePost;
                     return fixedPriceMarketplacePost.Delivery;
