@@ -1,5 +1,4 @@
-﻿using ISSLab.Model.Entities;
-
+﻿
 namespace ISSLab.Domain
 {
     public class Group

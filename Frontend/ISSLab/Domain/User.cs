@@ -39,6 +39,17 @@ namespace ISSLab.Domain
             Email = email;
             PhoneNumber = phoneNumber;
         }
+        public User()
+        {
+            UserId = Guid.Empty;
+            Username = Constants.EMPTY_STRING;
+            FullName = Constants.EMPTY_STRING;
+            Password = Constants.EMPTY_STRING;
+            Email = Constants.EMPTY_STRING;
+            PhoneNumber = Constants.EMPTY_STRING;
+            BirthDay = DateOnly.MinValue;
+            CreatedDate = DateTime.MinValue;
+        }
         public Guid UserId { get => userId; set => userId = value; }
         public string Username { get => username; set => username = value; }
         public string FullName { get => fullName; set => fullName = value; }
