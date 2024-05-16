@@ -37,7 +37,8 @@ namespace ISSLab.ViewModel
 
             postCreationViewModel = new CreatePostViewModel(userId, groupId, postService);
 
-            LoadPostsCommand(postService.GetPosts());
+            // LoadPostsCommand(postService.GetPosts());
+            ChangeToMarketPlace();
         }
 
         public ICreatePostViewModel PostCreationViewModel

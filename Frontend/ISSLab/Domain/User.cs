@@ -65,7 +65,5 @@ namespace ISSLab.Domain
         public ICollection<Group> Groups { get; }
 
         public ICollection<MarketplacePost> MarketplacePosts { get; } = new List<MarketplacePost>();
-
-        
     }
 }
