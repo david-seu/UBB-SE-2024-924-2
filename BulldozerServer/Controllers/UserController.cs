@@ -1,6 +1,7 @@
 ﻿using BulldozerServer.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
+using BulldozerServer.Services;
 using ISSLab.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,25 +11,27 @@ namespace BulldozerServer.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        private readonly IUserService userService;
 
-        public UserController(DatabaseContext dbContext)
+        public UserController(IUserService service)
         {
-            _context = dbContext;
+            userService = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await userService.GetUsers();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUser(Guid id)
         {
-            var user = await _context.Users.FindAsync(id);
-
-            if (user == null)
+            try
+            {
+                var user = await userService.GetUserById(id);
+            }
+            catch (Exception e)
             {
                 return NotFound();
             }
@@ -39,10 +42,8 @@ namespace BulldozerServer.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> AddUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            await userService.AddUser(user);
+           
         }
 
         [HttpDelete("{id}")]
@@ -95,27 +96,4 @@ namespace BulldozerServer.Controllers
         }
     }
 }
-    public class UserController : Controller
-    {
-        private readonly IUserRepository userRepository;
 
-        public UserController(IUserRepository userRepository)
-        {
-            this.userRepository = userRepository;
-        }
-
-
-        [HttpGet("GetCartPosts")]
-        public IActionResult GetCartPosts(Guid userId)
-        {
-            var cartPosts = userRepository.GetCartPosts(userId);
-
-            if (cartPosts == null || !cartPosts.Any())
-            {
-                return NotFound("Cart is empty");
-            }
-
-            return Ok(cartPosts);
-        }
-    }
-}
