@@ -18,11 +18,11 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddPost(MarketplacePost post)
+        public IActionResult AddMarketplacePost(MarketplacePost post)
         {
             try
             {
-                var context = this.postService.AddPost(post);
+                var context = this.postService.AddMarketplacePost(post);
                 return Ok(context);
             }
             catch (Exception ex)
@@ -32,11 +32,11 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpDelete]
-        public IActionResult RemovePost(MarketplacePost post)
+        public IActionResult RemoveMarketplacePost(MarketplacePost post)
         {
             try
             {
-                var context = this.postService.RemovePost(post);
+                var context = this.postService.RemoveMarketplacePost(post);
                 return Ok(context);
             }
             catch (Exception ex)
@@ -46,11 +46,11 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetPostById(Guid id)
+        public IActionResult GetMarketplacePostById(Guid id)
         {
             try
             {
-                var post = this.postService.GetPostById(id);
+                var post = this.postService.GetMarketplacePostById(id);
                 return Ok(post);
             }
             catch (Exception ex)
@@ -60,9 +60,9 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetPosts()
+        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetMarketplacePosts()
         {
-            return await postService.GetPosts();
+            return await postService.GetMarketplacePosts();
         }
     }
 }

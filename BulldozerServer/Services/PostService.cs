@@ -22,18 +22,18 @@ namespace BulldozerServer.Services
             this.databaseContext = posts;
         }
 
-        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetPosts()
+        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetMarketplacePosts()
         {
             return await databaseContext.MarketplacePost.ToListAsync();
         }
 
-        public async Task<EntityEntry<MarketplacePost>> AddPost(MarketplacePost marketplacePost)
+        public async Task<EntityEntry<MarketplacePost>> AddMarketplacePost(MarketplacePost marketplacePost)
         {
             var context = databaseContext.MarketplacePost.Add(marketplacePost);
             await databaseContext.SaveChangesAsync();
             return context;
         }
-        public async Task<EntityEntry> RemovePost(MarketplacePost marketplacePost)
+        public async Task<EntityEntry> RemoveMarketplacePost(MarketplacePost marketplacePost)
         {
             var postToDelete = await databaseContext.MarketplacePost.FindAsync(marketplacePost.MarketplacePostId);
             if (postToDelete == null)
@@ -44,7 +44,7 @@ namespace BulldozerServer.Services
             await databaseContext.SaveChangesAsync();
             return context;
         }
-        public async Task<MarketplacePost> GetPostById(Guid id)
+        public async Task<MarketplacePost> GetMarketplacePostById(Guid id)
         {
             var postToDelete = await databaseContext.MarketplacePost.FindAsync(id);
             if (postToDelete == null)
