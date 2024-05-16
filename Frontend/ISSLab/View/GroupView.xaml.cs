@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ISSLab.Model;
+using ISSLab;
 using ISSLab.ViewModel;
 
 namespace ISSLab.View
@@ -52,5 +52,12 @@ namespace ISSLab.View
                 PostsListBox.Visibility = Visibility.Collapsed;
                 GroupSettings.Visibility = Visibility.Collapsed;
             }
+
+        private void MarketplaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            //var mainWindowViewModel = new MainWindowViewModel();
+            //var mainWindow = new MainWindow(mainWindowViewModel);
+            //mainWindow.Show();
         }
+    }
 }

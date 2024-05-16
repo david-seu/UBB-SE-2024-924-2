@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Windows.Threading;
@@ -247,9 +248,21 @@ namespace ISSLab.ViewModel
             this.userService.AddPostToFavorites(GroupId, OurMarketplacePost.Id, AccountId);
         }
 
-        public void AddPostToCart()
+        public async void AddPostToCart()
         {
-            this.userService.AddPostToCart(GroupId, OurMarketplacePost.Id, AccountId);
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                await apiService.AddPostToCart(this.GroupId, this.MarketplacePost.Id, this.AccountId);
+                Console.WriteLine($"Successfully added the post to the cart");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"Error while adding the post to the cart: {exception.Message}");
+            }
+
+            apiService.Dispose();
         }
 
         public string AvailableFor

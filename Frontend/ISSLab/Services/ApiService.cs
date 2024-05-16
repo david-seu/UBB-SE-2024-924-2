@@ -8,7 +8,8 @@ using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ISSLab.Model.Entities;
+using ISSLab.Domain;
+using ISSLab.Domain.MarketplacePosts;
 using ISSLab.Services;
 
 namespace ISSLab.Services
@@ -26,7 +27,8 @@ namespace ISSLab.Services
             httpClient.BaseAddress = new Uri("http://localhost:64195/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json")); // Setting this header tells the server to send data in JSON format
+                new MediaTypeWithQualityHeaderValue(
+                    "application/json")); // Setting this header tells the server to send data in JSON format
         }
 
         public static ApiService Instance
@@ -37,44 +39,269 @@ namespace ISSLab.Services
                 {
                     instance = new ApiService();
                 }
+
                 return instance;
             }
         }
 
-        public async Task<Uri> AddPostAsync(MarketplacePost post)
-        {
-            // might need to use this in the hardcoded posts functions as well
-            HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPost", post);
-            response.EnsureSuccessStatusCode();
-
-            return response.Headers.Location;
-        }
-
-        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
+        public async Task<Uri> AddPostAsync(Post post)
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPost", post);
+                response.EnsureSuccessStatusCode();
+
+                Uri uri = response.Headers.Location;
+
+                Console.WriteLine($"Post added successfully. URI: {uri}");
+
+                return uri;
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                Console.WriteLine("Failed to add post.");
+
+                return null;
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart due to JSON parsing error.");
+
+                return null;
+            }
+        }
+
+        public async Task<List<Post>> GetPosts()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getPosts");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<Post> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Post> { };
+            }
+        }
+        public async Task<List<Group>> GetGroupsAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync("api/groups");
+                response.EnsureSuccessStatusCode();
+                List<Group> groups = await response.Content.ReadFromJsonAsync<List<Group>>();
+                return groups;
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
+                return new List<Group> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Group> { };
+            }
+        }
+
+        public async Task<List<User>> GetGroupMembers(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+                List<User> groupMembers =
+                    await response.Content.ReadFromJsonAsync<List<User>>();
+                return groupMembers;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Http error: {ex.Message}"); // should use the logger we implemented
+                return new List<User> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<User> { };
+            }
+        }
+
+        public async Task<List<Post>> GetPostsFromCart(Guid userId, Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response =
+                    await httpClient.GetAsync($"api/getPostsFromCart?userId={userId}&groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
+                return new List<Post> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Post> { };
+            }
+        }
+
+        public async Task<Uri> AddPostToCart(Guid groupId, Guid postId, Guid userId)
+        {
+            try
+            {
+                var data = new
+                {
+                    groupId,
+                    postId,
+                    userId
+                };
+
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/addPostToCart", data);
+                response.EnsureSuccessStatusCode();
+
+                Uri uri = response.Headers.Location;
+
+                Console.WriteLine($"Post added to cart successfully. URI: {uri}");
+
+                return uri;
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart.");
+
+                return null;
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                Console.WriteLine("Failed to add post to cart due to JSON parsing error.");
+
+                return null;
+            }
+        }
+
+        public async Task<List<Post>> GetGroupPosts(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPosts?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<Post> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Post> { };
+            }
+        }
+
+        public async Task<List<Poll>> GetGroupPolls(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPolls?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Poll>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<Poll> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Poll> { };
+            }
+        }
+        public async Task<List<Request>> GetRequestsToJoinGroup(Guid groupId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getGroupPolls?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Request>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}");
+                return new List<Request> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Request> { };
+            }
+        }
+
+        public async Task<List<Post>> GetFavouritePosts(Guid userId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getFavouritePosts?userId={userId}");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<Post>>();
+            }
+            catch (HttpRequestException exception)
+            {
+                // logger call here
+                return new List<Post> { };
+            }
+            catch (JsonException exception)
+            {
+                // logger call here
+                return new List<Post> { };
+            }
+        }
+        public async Task<List<MarketplacePost>> GetMarketplacePosts()
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync("api/getMarketplacePosts");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
             }
             catch (HttpRequestException exception)
             {
-                Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
+                // call logger
                 return new List<MarketplacePost> { };
             }
             catch (JsonException exception)
             {
-                Console.WriteLine($"Json error: {exception.Message}");
+                // call logger
                 return new List<MarketplacePost> { };
             }
         }
 
         public void Dispose()
         {
-            httpClient.Dispose();
+                httpClient.Dispose();
         }
     }
 }
+
 

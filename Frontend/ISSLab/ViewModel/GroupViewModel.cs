@@ -2,8 +2,11 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using ISSLab.Domain;
 using ISSLab.Model.Entities;
 using ISSLab.ViewModel;
+using ISSLab.Services;
+using User = ISSLab.Domain.User;
 
 namespace ISSLab.ViewModel
 {
@@ -19,7 +22,7 @@ namespace ISSLab.ViewModel
             get; set;
         }
 
-        public ObservableCollection<GroupMember> GroupMembers
+        public ObservableCollection<User> GroupMembers
         {
             get; set;
         }
@@ -29,64 +32,21 @@ namespace ISSLab.ViewModel
             get; set;
         }
 
-        public ObservableCollection<GroupPost> PostsMadeInTheGroupChat
+        public ObservableCollection<Post> PostsMadeInTheGroupChat
         {
             get; set;
         }
 
-        public GroupViewModel(GroupNonMarketplace selectedGroupMarketplace)
+        public GroupViewModel(Group selectedGroup)
         {
-            GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel = selectedGroupMarketplace;
+            GroupThatIsEncapsulatedByThisInstanceOnViewModel = selectedGroup;
+
+            FetchPosts();
+            FetchPolls();
+            FetchRequestsToJoinGroup();
+            FetchGroupMembers();
 
             // TODO: Fetch posts and members from the repository
-            GroupMembers = new ObservableCollection<GroupMember>
-            {
-                new GroupMember(Guid.NewGuid(), "Denis", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Andreea", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Dorian Pop", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Razvan", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Cristi", "admin", "denis@ubb.ro", "0749999345", "I am stupid."),
-                new GroupMember(Guid.NewGuid(), "Cristos", "admin", "denis@ubb.ro", "0749999345", "I am stupid.")
-            };
-
-            RequestsToJoinTheGroup = new ObservableCollection<Request>()
-            {
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Vasile", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Andrei", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Maria", Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), "Gabriel", Guid.NewGuid())
-            };
-
-            PostsMadeInTheGroupChat = new ObservableCollection<GroupPost>
-            {
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid()),
-                new GroupPost(Guid.NewGuid(), Guid.NewGuid(), "This is a description", "This is an image", Guid.NewGuid())
-            };
-
-            List<Poll> polls = new List<Poll>
-            {
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "Mergeti la Untold?", Guid.NewGuid()),
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "Il votati pe Boc?", Guid.NewGuid()),
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "V-ati facut la ISS?", Guid.NewGuid()),
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "Ati semnat pentru Sosoaca?", Guid.NewGuid()),
-                new Poll(Guid.NewGuid(), Guid.NewGuid(), "Iti place Aqua Carpatica?", Guid.NewGuid()),
-            };
-            foreach (Poll poll in polls)
-            {
-                poll.AddOption("Da");
-                poll.AddOption("Nu");
-                poll.AddOption("Poate");
-                poll.AddOption("Nu vreau sa raspund");
-            }
-            CollectionOfPolls = new ObservableCollection<Poll>(polls);
 
             List<PollViewModel> pollViewModels = new List<PollViewModel>();
             foreach (Poll poll in CollectionOfPolls)
@@ -94,6 +54,98 @@ namespace ISSLab.ViewModel
                 pollViewModels.Add(new PollViewModel(poll));
             }
             CollectionOfViewModelsForEachIndividualPoll = new ObservableCollection<PollViewModel>(pollViewModels);
+        }
+
+        public async void FetchPosts()
+        {
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                List<Post> groupPosts = await apiService.GetGroupPosts(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
+                Console.WriteLine($"Successfully fetched the group posts");
+
+                PostsMadeInTheGroupChat = new ObservableCollection<Post>(
+                groupPosts.Select(post => new Post(post.MediaContent, post.AuthorId, post.GroupId, post.ItemLocation, post.Description, post.Title, post.Contacts, post.Type, post.Confirmed)));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
+            }
+
+            // nu il folositi ca strica tot (Bianca asa o zis)
+            // apiService.Dispose();
+        }
+
+        public async void FetchRequestsToJoinGroup()
+        {
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                List<Request> requestsToJoinGroup =
+                    await apiService.GetRequestsToJoinGroup(GroupThatIsEncapsulatedByThisInstanceOnViewModel
+                        .Id);
+                Console.WriteLine($"Successfully fetched the group posts");
+
+                RequestsToJoinTheGroup = new ObservableCollection<Request>(
+                    requestsToJoinGroup.Select(request =>
+                        new Request(request.Id, request.GroupMemberId, request.GroupMemberName, request.GroupId)));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
+            }
+
+            // nu il folositi ca strica tot (Bianca asa o zis)
+            // apiService.Dispose();
+        }
+
+        public async void FetchGroupMembers()
+        {
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                List<User> groupMembers = await apiService.GetGroupMembers(GroupThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                Console.WriteLine($"Successfully fetched the group members");
+
+                GroupMembers = new ObservableCollection<User>(
+                    groupMembers.Select(member => new User(member.UserId, member.Username, member.Password, member.Email, member.PhoneNumber, member.FullName)));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the group MEMBERS: {ex.Message}");
+            }
+
+            // nu il folositi ca strica tot (Bianca asa o zis)
+            // apiService.Dispose();
+        }
+
+        public async void FetchPolls()
+        {
+            ApiService apiService = ApiService.Instance;
+
+            try
+            {
+                List<Poll> groupPolls = await apiService.GetGroupPolls(GroupThatIsEncapsulatedByThisInstanceOnViewModel.Id);
+                Console.WriteLine($"Successfully fetched the group polls");
+
+                foreach (Poll poll in groupPolls)
+                {
+                    poll.AddOption("Yes");
+                    poll.AddOption("No");
+                    poll.AddOption("Maybe");
+                    poll.AddOption("I don't want to answer");
+                }
+                CollectionOfPolls = new ObservableCollection<Poll>(groupPolls);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the group POLLS: {ex.Message}");
+            }
+
+            apiService.Dispose();
         }
 
         private Poll currentlySelectedPoll;
@@ -125,8 +177,8 @@ namespace ISSLab.ViewModel
         }
 
         // ???
-        private GroupNonMarketplace groupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel;
-        public GroupNonMarketplace GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel
+        private Group groupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel;
+        public Group GroupThatIsEncapsulatedByThisInstanceOnViewModel
         {
             get
             {
@@ -135,7 +187,7 @@ namespace ISSLab.ViewModel
             set
             {
                 this.groupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel = value;
-                OnPropertyChanged(nameof(GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel));
+                OnPropertyChanged(nameof(GroupThatIsEncapsulatedByThisInstanceOnViewModel));
             }
         }
 
@@ -143,30 +195,30 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Name;
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Name;
             }
             set
             {
-                GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Name = value;
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.Name = value;
                 // TODO: notify somehow the main window view model that Name has changed
                 OnPropertyChanged(nameof(GroupName));
             }
         }
 
-        public string DirectoryPathToTheGroupsBannerImageFile
-        {
-            get
-            {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.BannerPath;
-            }
-        }
-        // GroupNonMarketplace Settings Tab
+        // public string DirectoryPathToTheGroupsBannerImageFile
+        // {
+        //    get
+        //    {
+        //        return GroupThatIsEncapsulatedByThisInstanceOnViewModel.;
+        //    }
+        // }
+        // Group Settings Tab
         public string NameOfTheGroupsOwner
         {
             // TODO: Fetch owner name from the repository
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.OwnerId.ToString();
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.OwnerId.ToString();
             }
         }
 
@@ -175,7 +227,7 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.GroupCode;
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupCode;
             }
         }
 
@@ -183,7 +235,7 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.CreatedAt.ToString();
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.CreatedAt.ToString();
             }
         }
 
@@ -191,7 +243,7 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.MemberCount.ToString();
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.MemberCount.ToString();
             }
         }
 
@@ -199,7 +251,7 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Posts.Count.ToString();
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Posts.Count.ToString();
             }
         }
 
@@ -209,7 +261,7 @@ namespace ISSLab.ViewModel
             {
                 // ma everva ca afisa 0. DACA codul ar merge, ai folosi ca mai sus
                 return RequestsToJoinTheGroup.Count.ToString();
-                // return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.RequestCount.ToString();
+                // return GroupThatIsEncapsulatedByThisInstanceOnViewModel.RequestCount.ToString();
             }
         }
 
@@ -217,11 +269,11 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.IsPublic == true ? "Public" : "Private";
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.IsPublic == true ? "Public" : "Private";
             }
             set
             {
-                GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.IsPublic = value == "Public";
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.IsPublic = value == "Public";
                 OnPropertyChanged(nameof(IsTheGroupPublicToOutsiders));
             }
         }
@@ -237,11 +289,11 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Description;
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Description;
             }
             set
             {
-                GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Description = value;
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.Description = value;
                 OnPropertyChanged(nameof(DescriptionOfTheGroup));
             }
         }
@@ -250,11 +302,11 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.MaxPostsPerHourPerUser.ToString();
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.MaxPostsPerHourPerUser.ToString();
             }
             set
             {
-                GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.MaxPostsPerHourPerUser = int.Parse(value);
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.MaxPostsPerHourPerUser = int.Parse(value);
                 OnPropertyChanged(nameof(MaximumAmountOfPostsAllowed));
             }
         }
@@ -263,11 +315,11 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.CanMakePostsByDefault == true ? "Yes" : "No";
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.CanMakePostsByDefault == true ? "Yes" : "No";
             }
             set
             {
-                GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.CanMakePostsByDefault = value == "Yes";
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.CanMakePostsByDefault = value == "Yes";
                 OnPropertyChanged(nameof(AllowanceOfPostageOnTheGroupChat));
             }
         }
@@ -284,11 +336,11 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Icon;
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Icon;
             }
             set
             {
-                GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Icon = value;
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.Icon = value;
                 // TODO: notify somehow the main window view model that IconPath has changed
                 // OnPropertyChanged("IconPath");
                 OnPropertyChanged(nameof(NameOfTheGroupsIcon));
@@ -299,11 +351,11 @@ namespace ISSLab.ViewModel
         {
             get
             {
-                return GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Banner;
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Banner;
             }
             set
             {
-                GroupMarketplaceThatIsEncapsulatedByThisInstanceOnViewModel.Banner = value;
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.Banner = value;
                 OnPropertyChanged(nameof(NameOfTheGroupsBanner));
                 OnPropertyChanged("BannerPath");
             }

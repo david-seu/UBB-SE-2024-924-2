@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
-namespace BulldozerServer.Domain.MarketplacePosts
+namespace ISSLab.Domain.MarketplacePosts
 {
     public class MarketplacePost
     {
         private Guid marketplacePostId;
-        private Guid? authorId;
+        private Guid authorId;
         private Guid groupId;
         private string title;
         private string description;
@@ -16,29 +15,22 @@ namespace BulldozerServer.Domain.MarketplacePosts
         private DateTime? endDate;
         private bool isPromoted;
         private bool isActive;
-        private string type;
 
         [Key]
-        public Guid MarketplacePostId { get => marketplacePostId; set => marketplacePostId = value; }
+        public Guid MarketplacePostId { get => marketplacePostId; }
 
-        [AllowNull]
-        public Guid? AuthorId { get => authorId; set => authorId = value; }
+        public Guid AuthorId { get => authorId; set => authorId = value; }
         public Guid GroupId { get => groupId; set => groupId = value; }
         public string Title { get => title; set => title = value; }
         public string Description { get => description; set => description = value; }
-        [AllowNull]
         public string? MediaContent { get => mediaContent; set => mediaContent = value; }
-        [AllowNull]
         public string? Location { get => location; set => location = value; }
         public DateTime CreationDate { get => creationDate; set => creationDate = value; }
-        [AllowNull]
         public DateTime? EndDate { get => endDate; set => endDate = value; }
         public bool IsPromoted { get => isPromoted; set => isPromoted = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
 
-        public string Type { get => type; set => type = value; }
-
-        public User? Author { get; set; }
+        public User Author { get; set; }
 
         public Group Group { get; set; }
 
