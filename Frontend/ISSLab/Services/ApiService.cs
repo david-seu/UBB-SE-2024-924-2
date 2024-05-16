@@ -114,6 +114,26 @@ namespace ISSLab.Services
             }
         }
 
+        public async Task<User> GetUserById(Guid userId)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/getUserById?userId={userId}");
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadFromJsonAsync<User>();
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
+                return new User { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new User { };
+            }
+        }
+
         public async Task<List<User>> GetGroupMembers(Guid groupId)
         {
             try
@@ -256,24 +276,24 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<Post>> GetFavouritePosts(Guid userId)
+        public async Task<List<MarketplacePost>> GetFavouritePosts(Guid userId)
         {
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync($"api/getFavouritePosts?userId={userId}");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<Post>>();
+                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
             }
             catch (HttpRequestException exception)
             {
                 // logger call here
-                return new List<Post> { };
+                return new List<MarketplacePost> { };
             }
             catch (JsonException exception)
             {
                 // logger call here
-                return new List<Post> { };
+                return new List<MarketplacePost> { };
             }
         }
         public async Task<List<MarketplacePost>> GetMarketplacePosts()

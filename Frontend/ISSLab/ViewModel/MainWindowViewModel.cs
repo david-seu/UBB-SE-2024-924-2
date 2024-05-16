@@ -65,16 +65,32 @@ namespace ISSLab.ViewModel
                 OnPropertyChanged(nameof(ShownPosts));
             }
         }
-        public void ChangeToFavorites()
+        public async void ChangeToFavorites()
         {
-            List<MarketplacePost> favoritedPosts = userService.GetFavoritePosts(groupId, userId);
-            LoadPostsCommand(favoritedPosts);
+            ApiService apiService = ApiService.Instance;
+            try
+            {
+                List<MarketplacePost> favoritedPosts = await apiService.GetFavouritePosts(this.userId);
+                LoadPostsCommand(favoritedPosts);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the posts to favorite: {ex.Message}");
+            }
         }
 
-        public void ChangeToMarketPlace()
+        public async void ChangeToMarketPlace()
         {
-            List<MarketplacePost> posts = postService.GetPosts();
-            LoadPostsCommand(posts);
+            ApiService apiService = ApiService.Instance;
+            try
+            {
+                List<MarketplacePost> posts = await apiService.GetMarketplacePosts();
+                LoadPostsCommand(posts);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the posts to marketplace: {ex.Message}");
+            }
         }
 
         public async void ChangeToCart()
@@ -96,13 +112,21 @@ namespace ISSLab.ViewModel
             apiService.Dispose();
         }
 
-        public void LoadPostsCommand(List<MarketplacePost> postsToLoad)
+        public async void LoadPostsCommand(List<MarketplacePost> postsToLoad)
         {
+            ApiService apiService = ApiService.Instance;
             shownPosts.Clear();
             foreach (MarketplacePost currentPostToLoad in postsToLoad)
             {
-                User originalPoster = userService.GetUserById(currentPostToLoad.AuthorId);
-                shownPosts.Add(new PostContentViewModel(currentPostToLoad, originalPoster, this.userId, this.groupId, this.userService, this.chatFactory));
+                try
+                {
+                    User reveivedUser = await apiService.GetUserById(currentPostToLoad.AuthorId);
+                    shownPosts.Add(new PostContentViewModel(currentPostToLoad, reveivedUser, this.userId, this.groupId, this.userService, this.chatFactory));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error while fetching the posts in the cart: {ex.Message}");
+                }
             }
 
             OnPropertyChanged(nameof(ShownPosts));
@@ -142,9 +166,9 @@ namespace ISSLab.ViewModel
             CurrentlySelectedGroupMarketplace = CollectionOfActiveGroups[0];
         }
 
-        private GroupMember currentActiveUser;
+        private User currentActiveUser;
 
-        public GroupMember CurrentActiveUser
+        public User CurrentActiveUser
         {
             get
             {
@@ -157,8 +181,8 @@ namespace ISSLab.ViewModel
             }
         }
 
-        private GroupNonMarketplace currentlySelectedGroupMarketplace;
-        public GroupNonMarketplace CurrentlySelectedGroupMarketplace
+        private Group currentlySelectedGroupMarketplace;
+        public Group CurrentlySelectedGroupMarketplace
         {
             get
             {
