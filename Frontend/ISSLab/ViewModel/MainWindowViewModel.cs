@@ -66,6 +66,9 @@ namespace ISSLab.ViewModel
                 OnPropertyChanged(nameof(ShownPosts));
             }
         }
+
+        public Guid IdOfActiveUser { get; set; }
+
         public async void ChangeToFavorites()
         {
             ApiService apiService = ApiService.Instance;
@@ -145,17 +148,18 @@ namespace ISSLab.ViewModel
             // GroupMembershipRepository groupMembershipRepository = new GroupMembershipRepository(sqlConnection);
             // RequestsRepository requestsRepository = new RequestsRepository(sqlConnection);
             Guid idOfCurrentMockUser = new Guid("44d5aa9a-b0f4-4e36-a21e-bdc33b97b5a5");
-            GroupMember mockGroupMember = new GroupMember(idOfCurrentMockUser, "Dorian", "admin", "dorian@ubb.ro", "0725702312", "No paper, no pencil but I am still drawing attention.");
+            IdOfActiveUser = idOfCurrentMockUser;
+            User mockGroupMember = new User(idOfCurrentMockUser, "Dorian", "admin", "dorian@ubb.ro", "0725702312", "No paper, no pencil but I am still drawing attention.");
             CurrentActiveUser = mockGroupMember;
 
             // TODO: Replace this with a call to the repository
-            CollectionOfActiveGroups = new ObservableCollection<GroupNonMarketplace>
+            CollectionOfActiveGroups = new ObservableCollection<Group>
             {
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),
-                 new GroupNonMarketplace(Guid.NewGuid(), Guid.NewGuid(), "GroupNonMarketplace 5", "Description 5", "robotics-GroupNonMarketplace", "woman", 50, true, true, "5481f5"),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1", "basket-boys", "animals", 10, true, true, "5481f1"),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 2", "Description 2", "cute-girls", "lights", 20, false, false, "5481f2"),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 3", "Description 3", "tech-research", "moon", 30, true, true, "5481f3"),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 4", "Description 4", "tennis-club", "nature", 40, false, false, "5481f4"),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 5", "Description 5", "robotics-Group", "woman", 50, true, true, "5481f5"),
                 // groups created with the Renewals GroupMarketplace entity
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),
