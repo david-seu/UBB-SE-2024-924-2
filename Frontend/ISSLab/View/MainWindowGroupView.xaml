@@ -43,7 +43,7 @@
                 Margin="5"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                Content="{Binding CurrentActiveUser.Username}" />
+                Content="{Binding CurrentActiveUser.FullName}" />
         </Grid>
 
         <ListBox
