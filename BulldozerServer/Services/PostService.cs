@@ -35,7 +35,7 @@ namespace BulldozerServer.Services
         }
         public async Task<EntityEntry> RemovePost(MarketplacePost marketplacePost)
         {
-            var postToDelete = databaseContext.MarketplacePost.FindAsync(marketplacePost.MarketplacePostId);
+            var postToDelete = await databaseContext.MarketplacePost.FindAsync(marketplacePost.MarketplacePostId);
             if (postToDelete == null)
             {
                 throw new Exception("Post doesn't exist!");
@@ -46,6 +46,11 @@ namespace BulldozerServer.Services
         }
         public async Task<MarketplacePost> GetPostById(Guid id)
         {
+            var postToDelete = await databaseContext.MarketplacePost.FindAsync(id);
+            if (postToDelete == null)
+            {
+                throw new Exception("Post doesn't exist!");
+            }
             var context = await databaseContext.MarketplacePost.FindAsync(id);
             return context;
         }
