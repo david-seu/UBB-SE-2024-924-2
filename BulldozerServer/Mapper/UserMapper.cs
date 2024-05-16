@@ -18,8 +18,12 @@ namespace BulldozerServer.Mapper
             userDto.CreatedDate = user.CreatedDate;
             userDto.PostsInCart = user.PostsInCart;
             userDto.FavoritePosts = user.FavoritePosts;
-            userDto.Groups = user.GroupsPartOf;
-            userDto.MarketplacePost = user.MarketplacePosts;
+            userDto.GroupsPartOf = user.GroupsPartOf;
+            userDto.GroupsTryingToJoin = user.GroupsTryingToJoin;
+            userDto.MarketplacePosts = user.MarketplacePosts;
+            userDto.JoinRequests = user.JoinRequests;
+            userDto.OwnedGroups = user.OwnedGroups;
+            userDto.Memberships = user.Memberships;
             return userDto;
         }
 
@@ -36,8 +40,13 @@ namespace BulldozerServer.Mapper
             user.CreatedDate = userDto.CreatedDate;
             user.PostsInCart = userDto.PostsInCart;
             user.FavoritePosts = userDto.FavoritePosts;
-            user.GroupsPartOf = userDto.Groups;
-            user.MarketplacePosts = userDto.MarketplacePost;
+            user.GroupsPartOf = userDto.GroupsPartOf;
+            user.GroupsTryingToJoin = userDto.GroupsTryingToJoin;
+            user.JoinRequests = userDto.JoinRequests;
+            user.OwnedGroups = userDto.OwnedGroups;
+            user.MarketplacePosts = userDto.MarketplacePosts;
+            user.Memberships = userDto.Memberships;
+
             return user;
         }
     }

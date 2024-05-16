@@ -1,6 +1,5 @@
 ﻿using BulldozerServer.Domain.MarketplacePosts;
 using BulldozerServer.Domain;
-
 namespace BulldozerServer.Payload.DTO
 {
     public class UserDto
@@ -13,7 +12,7 @@ namespace BulldozerServer.Payload.DTO
         private string phoneNumber;
         private DateOnly birthDay;
         private DateTime createdDate;
-
+        // create public properties for each field
         public Guid UserId { get => userId; set => userId = value; }
         public string Username { get => username; set => username = value; }
         public string FullName { get => fullName; set => fullName = value; }
@@ -26,8 +25,18 @@ namespace BulldozerServer.Payload.DTO
         public ICollection<MarketplacePost> PostsInCart { get; set; } = new List<MarketplacePost>();
 
         public ICollection<MarketplacePost> FavoritePosts { get; set; } = new List<MarketplacePost>();
-        public ICollection<Group> Groups { get; set; } = new List<Group>();
+        public ICollection<Group> OwnedGroups { get; set; } = new List<Group>();
 
-        public ICollection<MarketplacePost> MarketplacePost { get; set; } = new List<MarketplacePost>();
+        public ICollection<MarketplacePost> MarketplacePosts { get; set; } = new List<MarketplacePost>();
+
+        public ICollection<Group> GroupsPartOf { get; set; } = new List<Group>();
+        public ICollection<Membership> Memberships { get; set; } = new List<Membership>();
+
+        public ICollection<Group> GroupsTryingToJoin { get; set; } = new List<Group>();
+        public ICollection<JoinRequest> JoinRequests { get; set; } = new List<JoinRequest>();
+
+        public ICollection<PollOption> SelectedPollOptions { get; set; } = new List<PollOption>();
+        public ICollection<PollAnswer> PollAnswers { get; set; } = new List<PollAnswer>();
+        public ICollection<GroupPost> GroupPosts { get; set; } = new List<GroupPost>();
     }
 }
