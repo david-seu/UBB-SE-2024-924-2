@@ -49,7 +49,9 @@ namespace ISSLab
 
         private void OnClickBackToGroupPage(object sender, RoutedEventArgs e)
         {
-            // NavigationService?.Navigate(new Uri("MainWindowGroupView.xaml", UriKind.Relative));
+            var groupWindow = new MainWindowGroupView();
+            groupWindow.Show();
+            this.Hide();
         }
 
         private void OnClickedCreateMarketplacePost(object sender, RoutedEventArgs e)
