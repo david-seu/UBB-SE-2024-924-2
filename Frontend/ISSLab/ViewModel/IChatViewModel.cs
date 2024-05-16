@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using ISSLab.Domain;
+using ISSLab.Domain.MarketplacePosts;
 using ISSLab.Model.Entities;
 
 namespace ISSLab.ViewModel
@@ -7,7 +9,7 @@ namespace ISSLab.ViewModel
     {
         ObservableCollection<Message> AllMessages { get; set; }
         MarketplacePost RefferedMarketplacePost { get; set; }
-        UserMarketplace ChatUser { get; set; }
+        User ChatUser { get; set; }
 
         void AddMessage(Message message);
         void SendBuyingMessage(string imagePath);

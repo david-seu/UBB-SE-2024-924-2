@@ -8,16 +8,18 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
 using ISSLab.Model.Entities;
+using ISSLab.Domain.MarketplacePosts;
+using ISSLab.Domain;
 
 namespace ISSLab.ViewModel
 {
     public class ChatViewModel : IChatViewModel
     {
         public ObservableCollection<Message> AllMessages { get; set; }
-        public UserMarketplace ChatUser { get; set; }
+        public User ChatUser { get; set; }
         public MarketplacePost RefferedMarketplacePost { get; set; }
 
-        public ChatViewModel(UserMarketplace user, MarketplacePost marketplacePost)
+        public ChatViewModel(User user, MarketplacePost marketplacePost)
         {
             AllMessages = new ObservableCollection<Message>();
             this.ChatUser = user;
