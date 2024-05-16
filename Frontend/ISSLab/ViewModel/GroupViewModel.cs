@@ -136,10 +136,10 @@ namespace ISSLab.ViewModel
 
                 foreach (Poll poll in groupPolls)
                 {
-                    poll.AddOption("Yes");
-                    poll.AddOption("No");
-                    poll.AddOption("Maybe");
-                    poll.AddOption("I don't want to answer");
+                    poll.PollOptions.Add(new PollOption(poll.PollId, "Yes"));
+                    poll.PollOptions.Add(new PollOption(poll.PollId, "No"));
+                    poll.PollOptions.Add(new PollOption(poll.PollId, "Maybe"));
+                    poll.PollOptions.Add(new PollOption(poll.PollId, "I don't want to answer"));
                 }
                 CollectionOfPolls = new ObservableCollection<Poll>(groupPolls);
             }
@@ -148,7 +148,6 @@ namespace ISSLab.ViewModel
                 Console.WriteLine($"Error while fetching the group POLLS: {ex.Message}");
             }
 
-            apiService.Dispose();
         }
 
         private Poll currentlySelectedPoll;
@@ -216,35 +215,12 @@ namespace ISSLab.ViewModel
             }
         }
 
-        public string UniqueGroupCode
-        {
-            get
-            {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupCode;
-            }
-        }
 
         public string DateOfCreationInStringFormat
         {
             get
             {
                 return GroupThatIsEncapsulatedByThisInstanceOnViewModel.CreatedDate.ToString();
-            }
-        }
-
-        public string MemberCounterInStringFormat
-        {
-            get
-            {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.MemberCount.ToString();
-            }
-        }
-
-        public string PostCounterInStringFormat
-        {
-            get
-            {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Posts.Count.ToString();
             }
         }
 
@@ -291,28 +267,15 @@ namespace ISSLab.ViewModel
             }
         }
 
-        public string MaximumAmountOfPostsAllowed
-        {
-            get
-            {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.MaxPostsPerHourPerUser.ToString();
-            }
-            set
-            {
-                GroupThatIsEncapsulatedByThisInstanceOnViewModel.MaxPostsPerHourPerUser = int.Parse(value);
-                OnPropertyChanged(nameof(MaximumAmountOfPostsAllowed));
-            }
-        }
-
         public string AllowanceOfPostageOnTheGroupChat
         {
             get
             {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.CanMakePostsByDefault == true ? "Yes" : "No";
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.AllowanceOfPostage == true ? "Yes" : "No";
             }
             set
             {
-                GroupThatIsEncapsulatedByThisInstanceOnViewModel.CanMakePostsByDefault = value == "Yes";
+                GroupThatIsEncapsulatedByThisInstanceOnViewModel.AllowanceOfPostage = value == "Yes";
                 OnPropertyChanged(nameof(AllowanceOfPostageOnTheGroupChat));
             }
         }
@@ -324,35 +287,6 @@ namespace ISSLab.ViewModel
             AllowanceOfPostageOnTheGroupChat = AllowanceOfPostageOnTheGroupChat == "Yes" ? "No" : "Yes";
         }
 
-        /// cum plm poate fi o iconita string???
-        public string NameOfTheGroupsIcon
-        {
-            get
-            {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Icon;
-            }
-            set
-            {
-                GroupThatIsEncapsulatedByThisInstanceOnViewModel.Icon = value;
-                // TODO: notify somehow the main window view model that IconPath has changed
-                // OnPropertyChanged("IconPath");
-                OnPropertyChanged(nameof(NameOfTheGroupsIcon));
-            }
-        }
-
-        public string NameOfTheGroupsBanner
-        {
-            get
-            {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.Banner;
-            }
-            set
-            {
-                GroupThatIsEncapsulatedByThisInstanceOnViewModel.Banner = value;
-                OnPropertyChanged(nameof(NameOfTheGroupsBanner));
-                OnPropertyChanged("BannerPath");
-            }
-        }
         // Requests
         public RelayCommand AcceptJoinRequestCommand => new RelayCommand(execute => AcceptJoinRequest());
 

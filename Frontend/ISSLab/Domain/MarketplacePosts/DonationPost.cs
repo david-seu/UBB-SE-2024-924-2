@@ -22,4 +22,5 @@
             this.currentDonationAmount = 0;
         }
     }
+
 }
