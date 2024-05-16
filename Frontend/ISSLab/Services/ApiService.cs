@@ -53,20 +53,47 @@ namespace ISSLab.Services
             return response.Headers.Location;
         }
 
-        public async Task<IEnumerable<Group>> GetGroupsAsync()
+        public async Task<List<Group>> GetGroupsAsync()
         {
-            HttpResponseMessage response = await httpClient.GetAsync("api/groups");
-            response.EnsureSuccessStatusCode();
-            IEnumerable<Group> groups = await response.Content.ReadFromJsonAsync<IEnumerable<Group>>();
-            return groups;
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync("api/groups");
+                response.EnsureSuccessStatusCode();
+                List<Group> groups = await response.Content.ReadFromJsonAsync<List<Group>>();
+                return groups;
+            }
+            catch (HttpRequestException exception)
+            {
+                Console.WriteLine($"Http error: {exception.Message}"); // should use the logger we implemented
+                return new List<Group> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<Group> { };
+            }
         }
 
-        public async Task<IEnumerable<GroupMember>> GetGroupMembers(Guid groupId)
+        public async Task<List<GroupMember>> GetGroupMembers(Guid groupId)
         {
-            HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
-            response.EnsureSuccessStatusCode();
-            IEnumerable<GroupMember> groupMembers = await response.Content.ReadFromJsonAsync<IEnumerable<GroupMember>>();
-            return groupMembers;
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"api/groupMembers?groupId={groupId}");
+                response.EnsureSuccessStatusCode();
+                List<GroupMember> groupMembers =
+                    await response.Content.ReadFromJsonAsync<List<GroupMember>>();
+                return groupMembers;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Http error: {ex.Message}"); // should use the logger we implemented
+                return new List<GroupMember> { };
+            }
+            catch (JsonException exception)
+            {
+                Console.WriteLine($"Json error: {exception.Message}");
+                return new List<GroupMember> { };
+            }
         }
 
         public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId, Guid groupId)
