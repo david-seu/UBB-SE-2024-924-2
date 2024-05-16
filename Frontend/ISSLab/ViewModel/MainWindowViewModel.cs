@@ -103,7 +103,7 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<MarketplacePost> cart = await apiService.GetPostsFromCart(userId, groupId);
+                List<MarketplacePost> cart = await apiService.GetPostsFromCart(userId);
                 Console.WriteLine($"Successfully fetched the posts in the cart");
 
                 LoadPostsCommand(cart);
