@@ -17,8 +17,8 @@ namespace ISSLab
         {
             base.OnStartup(e);
 
-            Guid userId = Guid.NewGuid();
-            Guid groupId = Guid.NewGuid();
+            Guid userId = new Guid("D631DD7F-7CEF-406E-8038-02CE21712396");
+            Guid groupId = new Guid("4B00B25A-AA7E-4134-BA86-01D577020C97");
 
             DataSet dataSet = new DataSet();
 

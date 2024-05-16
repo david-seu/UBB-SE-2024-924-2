@@ -152,13 +152,23 @@ namespace ISSLab.ViewModel
             User mockGroupMember = new User(idOfCurrentMockUser, "Dorian", "admin", "dorian@ubb.ro", "0725702312", "No paper, no pencil but I am still drawing attention.");
             CurrentActiveUser = mockGroupMember;
 
-            CollectionOfActiveGroups fetchGroups;
+            // TODO: Replace this with a call to the repository
+            CollectionOfActiveGroups = new ObservableCollection<Group>
+            {
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true)
                 // groups created with the Renewals GroupMarketplace entity
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),
                 // new GroupMarketplace("name1", "description1", "type1", "path1"),
+            };
 
             CurrentlySelectedGroupMarketplace = CollectionOfActiveGroups[0];
         }
