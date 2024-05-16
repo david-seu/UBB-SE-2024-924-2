@@ -60,12 +60,9 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpGet("{}")]
-        public IActionResult GetPosts()
+        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetPosts()
         {
-            try
-            {
-                v
-            }
+            return await postService.GetPosts();
         }
     }
 }
