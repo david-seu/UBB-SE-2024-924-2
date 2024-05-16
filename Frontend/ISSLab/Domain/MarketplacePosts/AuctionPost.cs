@@ -1,4 +1,4 @@
-﻿namespace BulldozerServer.Domain.MarketplacePosts
+﻿namespace ISSLab.Domain.MarketplacePosts
 {
     public class AuctionPost : MarketplacePost
     {
