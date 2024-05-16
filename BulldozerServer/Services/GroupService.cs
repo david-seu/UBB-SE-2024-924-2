@@ -22,15 +22,6 @@ namespace UBB_SE_2024_Popsicles.Services
             this.context = context;
         }
 
-        /*private static string defaultGroupName = "New Group";
-        private static string defaultGroupDescription = "This is a new group";
-        private static string defaultGroupIcon = "default";
-        private static string defaultGroupBanner = "default";
-        private static int defaultMaximumNumberOfPostsPerHourPerUser = 5;
-        private static bool defaultIsGroupPublic = false;
-        private static bool defaultAllowanceOfPostage = false;
-        private static string defaultGroupRole = "user";*/
-
         public async Task<EntityEntry<Group>> CreateGroup(GroupDTO groupDTO)
         {
             if (context.Groups.Find(groupDTO.GroupId) != null)
