@@ -133,7 +133,7 @@ namespace ISSLab.ViewModel
                 }
             }
 
-            OnPropertyChanged(nameof(ShownPosts));
+            // OnPropertyChanged(nameof(ShownPosts));
         }
 
         // main window view model from the other project
@@ -151,26 +151,47 @@ namespace ISSLab.ViewModel
             IdOfActiveUser = idOfCurrentMockUser;
             User mockGroupMember = new User(idOfCurrentMockUser, "Dorian", "admin", "dorian@ubb.ro", "0725702312", "No paper, no pencil but I am still drawing attention.");
             CurrentActiveUser = mockGroupMember;
+            CollectionOfActiveGroups = new ObservableCollection<Group>();
 
-            // TODO: Replace this with a call to the repository
-            CollectionOfActiveGroups = new ObservableCollection<Group>
+            // CollectionOfActiveGroups = new ObservableCollection<Group>
+            // {
+            //    // new Group(, Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+            //    // new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+            //    // new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+            //    // new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+            //    // new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+            //    // new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
+            //    // new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true)
+            //    //// groups created with the Renewals GroupMarketplace entity
+            //    // new GroupMarketplace("name1", "description1", "type1", "path1"),
+            //    // new GroupMarketplace("name1", "description1", "type1", "path1"),
+            //    // new GroupMarketplace("name1", "description1", "type1", "path1"),
+            //    // new GroupMarketplace("name1", "description1", "type1", "path1"),
+            //    // new GroupMarketplace("name1", "description1", "type1", "path1"),
+            // };
+           FetchGroups();
+        }
+
+        public async void FetchGroups()
+        {
+            ApiService apiService = ApiService.Instance;
+
+            try
             {
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true),
-                 new Group(Guid.NewGuid(), Guid.NewGuid(), "Group 1", "Description 1",  true, true)
-                // groups created with the Renewals GroupMarketplace entity
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-                // new GroupMarketplace("name1", "description1", "type1", "path1"),
-            };
+                List<Group> groups = await apiService.GetGroupsAsync();
+                Console.WriteLine($"Successfully fetched the groups");
 
-            CurrentlySelectedGroupMarketplace = CollectionOfActiveGroups[0];
+                CollectionOfActiveGroups.Clear();
+                foreach (Group currentGroup in groups)
+                {
+                    CollectionOfActiveGroups.Add(currentGroup);
+                }
+                CurrentlySelectedGroupMarketplace = CollectionOfActiveGroups[0];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while fetching the group POSTS: {ex.Message}");
+            }
         }
 
         private User currentActiveUser;

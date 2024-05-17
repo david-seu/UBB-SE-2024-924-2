@@ -167,11 +167,11 @@ namespace UBB_SE_2024_Popsicles.Services
             }
         }
 
-        public ICollection<MarketplacePost> GetGroupPosts(Guid groupId)
+        public ICollection<GroupPostDTO> GetGroupPosts(Guid groupId)
         {
-            // Get the Group from the GroupRepository
-            Group group = context.Groups.Find(groupId);
-            return group.MarketplacePosts;
+            var posts = context.GroupPosts.Where(post => post.GroupId == groupId).ToList();
+
+            return posts.Select(post => GroupPostMapper.GroupPostToGroupPostDTO(post)).ToList();
         }
 
         public List<User> GetGroupMembers(Guid groupId)
@@ -231,9 +231,10 @@ namespace UBB_SE_2024_Popsicles.Services
             return group;
         }
 
-        public async Task<List<Group>> GetGroups()
+        public List<GroupDTO> GetGroups()
         {
-            return await context.Groups.ToListAsync();
+            List<Group> groups = context.Groups.ToList();
+            return groups.Select(group => GroupMapper.GroupToGroupDTO(group)).ToList();
         }
     }
 }

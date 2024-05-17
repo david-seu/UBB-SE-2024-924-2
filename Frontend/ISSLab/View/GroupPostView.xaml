@@ -49,7 +49,7 @@
                         x:Name="UserNameGroupNameLabel"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="Dorian Pop" />
+                        Content= "{Binding PostContent}" />
                 </Grid>
                 <!--  Second Column: Time of the post  -->
                 <Grid Grid.Row="1">

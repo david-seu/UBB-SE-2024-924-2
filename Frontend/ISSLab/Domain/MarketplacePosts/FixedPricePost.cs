@@ -26,5 +26,4 @@
             this.deliveryType = Constants.EMPTY_STRING;
         }
     }
-
 }

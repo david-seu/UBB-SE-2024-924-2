@@ -9,18 +9,17 @@ namespace BulldozerServer.Mapper
         {
             GroupDTO groupDTO = new GroupDTO();
             groupDTO.GroupId = group.GroupId;
-            groupDTO.UserId = group.OwnerId;
+            groupDTO.OwnerId = group.OwnerId;
             groupDTO.CreatedDate = group.CreatedDate;
             groupDTO.Description = group.Description;
             groupDTO.GroupName = group.GroupName;
             groupDTO.AllowanceOfPostage = group.AllowanceOfPostage;
-            groupDTO.MarketplacePosts = group.MarketplacePosts;
             return groupDTO;
         }
 
         public static Group GroupDTOToGroup(GroupDTO groupDTO)
         {
-            return new Group(groupDTO.GroupId, groupDTO.UserId, groupDTO.GroupName, groupDTO.Description, groupDTO.CreatedDate, groupDTO.IsPublic, groupDTO.AllowanceOfPostage);
+            return new Group(groupDTO.GroupId, groupDTO.OwnerId, groupDTO.GroupName, groupDTO.Description, groupDTO.CreatedDate, groupDTO.IsPublic, groupDTO.AllowanceOfPostage);
         }
     }
 }

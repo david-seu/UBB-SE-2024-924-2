@@ -29,12 +29,12 @@ namespace BulldozerServer.Services
             return await databaseContext.MarketplacePosts.ToListAsync();
         }
 
-        public async Task<EntityEntry<MarketplacePost>> AddMarketplacePost(MarketplacePostDTO marketplacePostDTO)
+        public MarketplacePostDTO AddMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
             var marketplacePost = MarketplacePostMapper.MapMarketplacePostDTOToMarketplacePost(marketplacePostDTO);
             var context = databaseContext.MarketplacePosts.Add(marketplacePost);
-            await databaseContext.SaveChangesAsync();
-            return context;
+            databaseContext.SaveChanges();
+            return MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(context.Entity);
         }
         public async Task<EntityEntry> RemoveMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {

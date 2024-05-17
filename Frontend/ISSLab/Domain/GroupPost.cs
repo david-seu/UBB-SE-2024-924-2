@@ -1,8 +1,6 @@
-﻿using BulldozerServer.Domain;
-
-namespace BulldozerServer.Payload.DTO
+﻿namespace ISSLab.Domain
 {
-    public class GroupPostDTO
+    public class GroupPost
     {
         private Guid groupPostId;
         private Guid? authorId;
@@ -28,5 +26,21 @@ namespace BulldozerServer.Payload.DTO
         public bool IsPinned { get => isPinned; set => isPinned = value; }
 
         public bool AdminOnly { get => adminOnly; set => adminOnly = value; }
+
+        public GroupPost(Guid groupPostId, Guid? authorId, Guid groupId, string? mediaContent, DateTime creationDate, string postImage, bool isPinned, bool adminOnly)
+        {
+            GroupPostId = groupPostId;
+            AuthorId = authorId;
+            GroupId = groupId;
+            PostContent = mediaContent;
+            CreationDate = creationDate;
+            PostImage = postImage;
+            IsPinned = isPinned;
+            AdminOnly = adminOnly;
+        }
+
+        public GroupPost()
+        {
+        }
     }
 }

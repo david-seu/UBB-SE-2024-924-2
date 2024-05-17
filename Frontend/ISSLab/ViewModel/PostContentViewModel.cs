@@ -366,17 +366,16 @@ namespace ISSLab.ViewModel
 
         public void AddInterests()
         {
-            var existingInterest = OurMarketplacePost.InterestStatuses.FirstOrDefault(interest => interest.InterestedUserId == OurUser.UserId && interest.PostId == OurMarketplacePost.MarketplacePostId);
-
-            if (existingInterest != null)
-            {
-                OurMarketplacePost.InterestStatuses.Remove(existingInterest);
-            }
-            else
-            {
-                OurMarketplacePost.InterestStatuses.Add(new InterestStatus(OurUser.UserId, OurMarketplacePost.MarketplacePostId, true));
-            }
-
+        // {
+        //    var existingInterest = OurMarketplacePost.InterestStatuses.FirstOrDefault(interest => interest.InterestedUserId == OurUser.UserId && interest.PostId == OurMarketplacePost.MarketplacePostId);
+        //    if (existingInterest != null)
+        //    {
+        //        OurMarketplacePost.InterestStatuses.Remove(existingInterest);
+        //    }
+        //    else
+        //    {
+        //        OurMarketplacePost.InterestStatuses.Add(new InterestStatus(OurUser.UserId, OurMarketplacePost.MarketplacePostId, true));
+        //    }
             OnPropertyChanged(nameof(Interests));
         }
 
@@ -392,16 +391,15 @@ namespace ISSLab.ViewModel
 
         public void AddUninterests()
         {
-            var existingUninterest = OurMarketplacePost.InterestStatuses.FirstOrDefault(interest => interest.InterestedUserId == OurUser.UserId && interest.PostId == OurMarketplacePost.MarketplacePostId && !interest.Interested);
-
-            if (existingUninterest != null)
-            {
-                OurMarketplacePost.InterestStatuses.Remove(existingUninterest);
-            }
-            else
-            {
-                OurMarketplacePost.InterestStatuses.Add(new InterestStatus(OurUser.UserId, OurMarketplacePost.MarketplacePostId, false));
-            }
+            // var existingUninterest = OurMarketplacePost.InterestStatuses.FirstOrDefault(interest => interest.InterestedUserId == OurUser.UserId && interest.PostId == OurMarketplacePost.MarketplacePostId && !interest.Interested);
+            // if (existingUninterest != null)
+            // {
+            //    OurMarketplacePost.InterestStatuses.Remove(existingUninterest);
+            // }
+            // else
+            // {
+            //    OurMarketplacePost.InterestStatuses.Add(new InterestStatus(OurUser.UserId, OurMarketplacePost.MarketplacePostId, false));
+            // }s
             OnPropertyChanged(nameof(Uninterests));
         }
 

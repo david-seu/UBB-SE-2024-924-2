@@ -235,9 +235,9 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Group>>> GetGroups()
+        public async Task<ActionResult<List<GroupDTO>>> GetGroups()
         {
-            return await groupService.GetGroups();
+            return groupService.GetGroups();
         }
     }
 }

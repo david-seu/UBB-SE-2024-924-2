@@ -47,7 +47,7 @@ namespace BulldozerServer.Domain.MarketplacePosts
         public ICollection<User> PeopleThatPlacedInCart { get; } = new List<User>();
 
         public MarketplacePost(Guid marketplacePostId, Guid authorId, Guid groupId, string title, string description, string mediaContent,
-            string location, DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive)
+            string location, DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive, string type)
         {
             this.marketplacePostId = marketplacePostId;
             this.authorId = authorId;
@@ -60,6 +60,7 @@ namespace BulldozerServer.Domain.MarketplacePosts
             this.endDate = endDate;
             this.isPromoted = isPromoted;
             this.isActive = isActive;
+            this.type = type;
         }
 
         public MarketplacePost()

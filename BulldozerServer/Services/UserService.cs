@@ -8,6 +8,7 @@ using BulldozerServer.Domain;
 using BulldozerServer.Domain.MarketplacePosts;
 using BulldozerServer.Mapper;
 using BulldozerServer.Payload.DTO;
+using BulldozerServer.Payloads.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -38,20 +39,21 @@ namespace BulldozerServer.Services
             context.SaveChangesAsync();
         }
 
-        public async void AddPostToFavorites(Guid postId, Guid userId)
+        public void AddPostToFavorites(Guid postId, Guid userId)
         {
-            var foundUser = await context.Users.FindAsync(userId);
+            var foundUser = context.Users.Find(userId);
             if (foundUser == null)
             {
                 throw new Exception("User not found");
             }
-            var foundPost = await context.MarketplacePosts.FindAsync(postId);
+            var foundPost = context.MarketplacePosts.Find(postId);
             if (foundPost == null)
             {
                 throw new Exception("Post not found");
             }
-            foundUser.FavoritePosts.Add(foundPost);
-            context.SaveChangesAsync();
+            UsersFavoritePosts usersFavoritePosts = new UsersFavoritePosts { UserId = userId, MarketplacePostId = postId };
+            var result = context.UsersFavoritePosts.Add(usersFavoritePosts);
+            context.SaveChanges();
         }
 
         public async Task<UserDto> AddUser(UserDto userDto)
@@ -62,14 +64,15 @@ namespace BulldozerServer.Services
             return UserMapper.MapUserToUserDto(addedUser.Entity);
         }
 
-        public async Task<List<MarketplacePost>> GetFavoritePosts(Guid userId)
+        public async Task<List<MarketplacePostDTO>> GetFavoritePosts(Guid userId)
         {
             var foundUser = await context.Users.FindAsync(userId);
             if (foundUser == null)
             {
                 throw new Exception("User not found");
             }
-            return foundUser.FavoritePosts.ToList();
+            var favoritePosts = context.MarketplacePosts.Where(post => post.AuthorId == userId).ToList();
+            return favoritePosts.Select(post => MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post)).ToList();
         }
 
         public async Task<User> GetUserById(Guid id)

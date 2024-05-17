@@ -10,7 +10,7 @@
 
         public DonationPost(Guid marketplacePostId, Guid authorId, Guid groupId, string title, string description, string mediaContent, string location,
                        DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive, string donationLink, double currentDonationAmount)
-            : base(marketplacePostId, authorId, groupId, title, description, mediaContent, location, creationDate, endDate, isPromoted, isActive)
+            : base(marketplacePostId, authorId, groupId, title, description, mediaContent, location, creationDate, endDate, isPromoted, isActive, "Donation")
         {
             this.donationLink = donationLink;
             this.currentDonationAmount = currentDonationAmount;

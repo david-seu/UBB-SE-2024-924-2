@@ -77,10 +77,5 @@ namespace ISSLab.View
         {
             // TODO: Implement CreateGroupButton_Click
         }
-
-        private void GroupView_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

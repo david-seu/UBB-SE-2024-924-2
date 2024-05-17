@@ -23,18 +23,7 @@ namespace BulldozerServer.Mapper
         }
         public static MarketplacePost MapMarketplacePostDTOToMarketplacePost(MarketplacePostDTO marketplacePostDTO)
         {
-            MarketplacePost marketplacePost = new MarketplacePost();
-            marketplacePost.MarketplacePostId = marketplacePostDTO.MarketplacePostId;
-            marketplacePost.AuthorId = marketplacePostDTO.AuthorId;
-            marketplacePost.GroupId = marketplacePostDTO.GroupId;
-            marketplacePost.Title = marketplacePostDTO.Title;
-            marketplacePost.Description = marketplacePostDTO.Description;
-            marketplacePost.MediaContent = marketplacePostDTO.MediaContent;
-            marketplacePost.Location = marketplacePostDTO.Location;
-            marketplacePost.CreationDate = marketplacePostDTO.CreationDate;
-            marketplacePost.EndDate = marketplacePostDTO.EndDate;
-            marketplacePost.IsPromoted = marketplacePostDTO.IsPromoted;
-            marketplacePost.IsActive = marketplacePostDTO.IsActive;
+            MarketplacePost marketplacePost = new MarketplacePost(Guid.NewGuid(), (Guid)marketplacePostDTO.AuthorId, marketplacePostDTO.GroupId, marketplacePostDTO.Title, marketplacePostDTO.Description, marketplacePostDTO.MediaContent, marketplacePostDTO.Location, marketplacePostDTO.CreationDate, marketplacePostDTO.EndDate, marketplacePostDTO.IsPromoted, marketplacePostDTO.IsActive, marketplacePostDTO.Type);
             return marketplacePost;
         }
     }

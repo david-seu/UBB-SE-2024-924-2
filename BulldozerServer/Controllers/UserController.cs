@@ -4,6 +4,7 @@ using BulldozerServer.Domain.MarketplacePosts;
 using BulldozerServer.Services;
 using Microsoft.EntityFrameworkCore;
 using BulldozerServer.Payload.DTO;
+using BulldozerServer.Payloads.DTO;
 
 namespace BulldozerServer.Controllers
 {
@@ -55,7 +56,7 @@ namespace BulldozerServer.Controllers
         [HttpDelete]
         public async Task<ActionResult<User>> DeleteUser(Guid userId)
         {
-           // Guid userId = Guid.Parse(Request.Query["id"]);
+           // Guid ownerId = Guid.Parse(Request.Query["id"]);
            userService.RemoveUser(userId);
            return NoContent();
         }
@@ -68,11 +69,12 @@ namespace BulldozerServer.Controllers
         }
 
         [HttpGet("{userId}/favoritePosts")]
-        public async Task<ActionResult<IEnumerable<MarketplacePost>>> GetFavoritePosts(Guid userId)
+        public async Task<ActionResult<IEnumerable<MarketplacePostDTO>>> GetFavoritePosts(Guid userId)
         {
             try
             {
-                return await userService.GetFavoritePosts(userId);
+                List<MarketplacePostDTO> marketplacePosts = await userService.GetFavoritePosts(userId);
+                return Ok(marketplacePosts);
             }
             catch (Exception e)
             {

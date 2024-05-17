@@ -24,7 +24,7 @@ namespace ISSLab
 
             IChatFactory chatFactory = new ChatFactory();
 
-            // User connectedUser = new User(userId, "Soundboard1", "Dorian", DateOnly.Parse("11.12.2003"), "../Resources/Images/Dorian.jpeg", "fsdgfd", DateTime.Parse("10.04.2024"), new List<Guid>(), new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
+            // User connectedUser = new User(ownerId, "Soundboard1", "Dorian", DateOnly.Parse("11.12.2003"), "../Resources/Images/Dorian.jpeg", "fsdgfd", DateTime.Parse("10.04.2024"), new List<Guid>(), new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             // User userOne = new User("Vini", "Vinicius Junior", DateOnly.Parse("11.12.2003"), "../Resources/Images/Vini.png", "fdsfsdfds");
             // User userTwo = new User("DDoorian", "Pop Dorian", DateOnly.Parse("12.12.2003"), "../Resources/Images/Dorian.jpeg", "bcvbc");
 

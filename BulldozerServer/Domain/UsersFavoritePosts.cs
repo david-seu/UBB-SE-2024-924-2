@@ -11,7 +11,7 @@ namespace BulldozerServer.Domain
         private Guid userId;
         private Guid marketplacePostId;
 
-        public Guid UserId { get => userId; }
-        public Guid MarketplacePostId { get => marketplacePostId; }
+        public Guid UserId { get => userId; set => userId = value; }
+        public Guid MarketplacePostId { get => marketplacePostId; set => marketplacePostId = value; }
     }
 }

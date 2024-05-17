@@ -7,7 +7,7 @@ namespace BulldozerServer.Services
 {
     public interface IPostService
     {
-        Task<EntityEntry<MarketplacePost>> AddMarketplacePost(MarketplacePostDTO marketplacePostDTO);
+        MarketplacePostDTO AddMarketplacePost(MarketplacePostDTO marketplacePostDTO);
         Task<MarketplacePost> GetMarketplacePostById(Guid id);
         Task<ActionResult<IEnumerable<MarketplacePost>>> GetMarketplacePosts();
         Task<EntityEntry> RemoveMarketplacePost(MarketplacePostDTO marketplacePostDTO);

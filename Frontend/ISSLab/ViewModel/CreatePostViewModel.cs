@@ -296,8 +296,10 @@ namespace ISSLab.ViewModel
 
         public async void CreateFixedPricePost()
         {
-            MarketplacePost fixedPriceMarketplace = new FixedPricePost(Guid.NewGuid(), accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING, Constants.EMPTY_STRING,
-              DateTime.Now, DateTime.Now, true, true, Price, false, Delivery);
+            // MarketplacePost fixedPriceMarketplace = new FixedPricePost(Guid.NewGuid(), accountId, groupId, "Cluj", Description, Constants.EMPTY_STRING, Constants.EMPTY_STRING,
+            //  DateTime.Now, DateTime.Now, true, true, Price, false, Delivery);
+            MarketplacePost post = new MarketplacePost(Guid.NewGuid(), accountId, groupId, "Nacho", Description, Constants.EMPTY_STRING, "Cluj", DateTime.Now, null, true, true);
+            post.Type = "NormalPost";
             // postService.AddPost(fixedPriceMarketplace);
             // Getting the ApiService instance
             ApiService apiService = ApiService.Instance;
@@ -305,7 +307,7 @@ namespace ISSLab.ViewModel
             try
             {
                 // Calling the AddPostAsync method
-                Uri location = await apiService.AddMarketplacePostAsync(fixedPriceMarketplace);
+                Uri location = await apiService.AddMarketplacePostAsync(post);
                 Console.WriteLine($"Post added successfully at {location}");
             }
             catch (Exception ex)
@@ -313,8 +315,6 @@ namespace ISSLab.ViewModel
                 Console.WriteLine($"Error: {ex.Message}");
             }
 
-            // Dispose of ApiService when done
-            apiService.Dispose();
             ResetFields();
         }
 

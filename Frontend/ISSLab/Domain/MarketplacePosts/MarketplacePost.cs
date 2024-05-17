@@ -17,37 +17,21 @@ namespace ISSLab.Domain.MarketplacePosts
         private bool isPromoted;
         private bool isActive;
         private string type;
-        private List<InterestStatus> interestStatuses;
 
-        [Key]
-        public Guid MarketplacePostId { get => marketplacePostId; }
+        public Guid MarketplacePostId { get => marketplacePostId; set => marketplacePostId = value; }
 
-        [AllowNull]
         public Guid? AuthorId { get => authorId; set => authorId = value; }
         public Guid GroupId { get => groupId; set => groupId = value; }
         public string Title { get => title; set => title = value; }
         public string Description { get => description; set => description = value; }
-        [AllowNull]
         public string? MediaContent { get => mediaContent; set => mediaContent = value; }
-        [AllowNull]
         public string? Location { get => location; set => location = value; }
         public DateTime CreationDate { get => creationDate; set => creationDate = value; }
-        [AllowNull]
         public DateTime? EndDate { get => endDate; set => endDate = value; }
         public bool IsPromoted { get => isPromoted; set => isPromoted = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
 
         public string Type { get => type; set => type = value; }
-
-        public User? Author { get; set; }
-
-        public Group Group { get; set; }
-
-        public ICollection<User> PeopleThatFavored { get; } = new List<User>();
-
-        public ICollection<User> PeopleThatPlacedInCart { get; } = new List<User>();
-        public List<InterestStatus> InterestStatuses { get => interestStatuses; }
-
 
         public MarketplacePost(Guid marketplacePostId, Guid authorId, Guid groupId, string title, string description, string mediaContent,
             string location, DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive)
@@ -65,19 +49,22 @@ namespace ISSLab.Domain.MarketplacePosts
             this.isActive = isActive;
         }
 
+        // public MarketplacePost(Guid authorId, Guid groupId, string title, string description, string mediaContent,
+        //    string location, DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive)
+        // {
+        //    this.authorId = authorId;
+        //    this.groupId = groupId;
+        //    this.title = title;
+        //    this.description = description;
+        //    this.mediaContent = mediaContent;
+        //    this.location = location;
+        //    this.creationDate = creationDate;
+        //    this.endDate = endDate;
+        //    this.isPromoted = isPromoted;
+        //    this.isActive = isActive;
+        // }
         public MarketplacePost()
         {
-            this.marketplacePostId = Guid.NewGuid();
-            this.authorId = Guid.NewGuid();
-            this.groupId = Guid.NewGuid();
-            this.title = Constants.EMPTY_STRING;
-            this.description = Constants.EMPTY_STRING;
-            this.mediaContent = Constants.EMPTY_STRING;
-            this.location = Constants.EMPTY_STRING;
-            this.creationDate = DateTime.Now;
-            this.endDate = null;
-            this.isPromoted = false;
-            this.isActive = true;
         }
     }
 }

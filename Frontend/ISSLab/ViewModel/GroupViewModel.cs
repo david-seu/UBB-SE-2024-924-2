@@ -30,7 +30,7 @@ namespace ISSLab.ViewModel
             get; set;
         }
 
-        public ObservableCollection<Post> PostsMadeInTheGroupChat
+        public ObservableCollection<GroupPost> PostsMadeInTheGroupChat
         {
             get; set;
         }
@@ -39,35 +39,37 @@ namespace ISSLab.ViewModel
         {
             GroupThatIsEncapsulatedByThisInstanceOnViewModel = selectedGroup;
 
+            FetchGroupMembers();
             FetchPosts();
             FetchPolls();
 
             // TODO: Fetch posts and members from the repository
-            GroupMembers = new ObservableCollection<User>
-            {
-                new User(Guid.NewGuid(), "Denis", "Denis Popescu", "admin", "denis@ubb.ro", "0749999345"),
-                new User(Guid.NewGuid(), "Andreea", "Andreea Popescu", "admin", "denis@ubb.ro", "0749999345"),
-                new User(Guid.NewGuid(), "Dorian Pop", "Dorian Pop Popescu", "admin", "denis@ubb.ro", "0749999345"),
-                new User(Guid.NewGuid(), "Razvan", "Razvan Popescu", "admin", "denis@ubb.ro", "0749999345"),
-                new User(Guid.NewGuid(), "Cristi", "Cristi Popescu", "admin", "denis@ubb.ro", "0749999345"),
-                new User(Guid.NewGuid(), "Cristos", "Cristos Popescu", "admin", "denis@ubb.ro", "0749999345")
-            };
+            // GroupMembers = new ObservableCollection<User>
+            // {
+            //    new User(Guid.NewGuid(), "Denis", "Denis Popescu", "admin", "denis@ubb.ro", "0749999345"),
+            //    new User(Guid.NewGuid(), "Andreea", "Andreea Popescu", "admin", "denis@ubb.ro", "0749999345"),
+            //    new User(Guid.NewGuid(), "Dorian Pop", "Dorian Pop Popescu", "admin", "denis@ubb.ro", "0749999345"),
+            //    new User(Guid.NewGuid(), "Razvan", "Razvan Popescu", "admin", "denis@ubb.ro", "0749999345"),
+            //    new User(Guid.NewGuid(), "Cristi", "Cristi Popescu", "admin", "denis@ubb.ro", "0749999345"),
+            //    new User(Guid.NewGuid(), "Cristos", "Cristos Popescu", "admin", "denis@ubb.ro", "0749999345")
+            // };
 
-            RequestsToJoinTheGroup = new ObservableCollection<Request>()
-            {
-                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
-                new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
-            };
+            // RequestsToJoinTheGroup = new ObservableCollection<Request>()
+            // {
+            //    new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+            //    new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+            //    new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+            //    new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+            //    new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+            //    new Request(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
+            // };
+            FetchRequestsToJoinGroup();
 
             List<PollViewModel> pollViewModels = new List<PollViewModel>();
-            foreach (Poll poll in CollectionOfPolls)
-            {
-                pollViewModels.Add(new PollViewModel(poll));
-            }
+            // foreach (Poll poll in CollectionOfPolls)
+            // {
+            //    pollViewModels.Add(new PollViewModel(poll));
+            // }
             CollectionOfViewModelsForEachIndividualPoll = new ObservableCollection<PollViewModel>(pollViewModels);
         }
 
@@ -77,11 +79,14 @@ namespace ISSLab.ViewModel
 
             try
             {
-                List<Post> groupPosts = await apiService.GetGroupPosts(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
+                List<GroupPost> groupPosts = await apiService.GetGroupPosts(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
                 Console.WriteLine($"Successfully fetched the group posts");
 
-                PostsMadeInTheGroupChat = new ObservableCollection<Post>(
-                groupPosts.Select(post => new Post(post.MediaContent, post.AuthorId, post.GroupId, post.ItemLocation, post.Description, post.Title, post.Contacts, post.Type, post.Confirmed)));
+                PostsMadeInTheGroupChat = new ObservableCollection<GroupPost>();
+                foreach (GroupPost post in groupPosts)
+                {
+                    PostsMadeInTheGroupChat.Add(post);
+                }
             }
             catch (Exception ex)
             {
@@ -212,7 +217,7 @@ namespace ISSLab.ViewModel
             // TODO: Fetch owner name from the repository
             get
             {
-                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.UserId.ToString();
+                return GroupThatIsEncapsulatedByThisInstanceOnViewModel.OwnerId.ToString();
             }
         }
 
@@ -229,7 +234,8 @@ namespace ISSLab.ViewModel
             get
             {
                 // ma everva ca afisa 0. DACA codul ar merge, ai folosi ca mai sus
-                return RequestsToJoinTheGroup.Count.ToString();
+                // return RequestsToJoinTheGroup.Count.ToString();
+                return " ";
                 // return GroupThatIsEncapsulatedByThisInstanceOnViewModel.RequestCount.ToString();
             }
         }

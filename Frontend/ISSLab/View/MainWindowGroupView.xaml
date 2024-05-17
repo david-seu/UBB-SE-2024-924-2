@@ -88,7 +88,7 @@
                     <Setter Property="CornerRadius" Value="10" />
                 </Style>
             </Button.Resources>
-            Create GroupMarketplace
+            Create Group
         </Button>
 
         <controls:GroupView

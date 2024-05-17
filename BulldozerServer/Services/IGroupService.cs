@@ -20,7 +20,7 @@ namespace UBB_SE_2024_Popsicles.Services
         void RejectRequestToJoinGroup(Guid joinRequestId);
 
         void CreateNewPostOnGroupChat(Guid groupId, Guid groupMemberId, string postContent, string postImage);
-        ICollection<MarketplacePost> GetGroupPosts(Guid groupId);
+        ICollection<GroupPostDTO> GetGroupPosts(Guid groupId);
 
         List<User> GetGroupMembers(Guid groupId);
         bool IsUserInGroup(Guid groupId, Guid groupMemberId);
@@ -28,6 +28,6 @@ namespace UBB_SE_2024_Popsicles.Services
         List<JoinRequest> GetRequestsToJoinFromGroup(Guid groupId);
         List<Group> GetAllGroupsUserBelongsTo(Guid groupMemberId);
         Group GetGroup(Guid groupId);
-       Task<List<Group>> GetGroups();
+        List<GroupDTO> GetGroups();
     }
 }

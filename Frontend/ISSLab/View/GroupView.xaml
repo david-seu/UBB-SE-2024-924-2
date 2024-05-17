@@ -184,7 +184,7 @@
                 ItemsSource="{Binding PostsMadeInTheGroupChat}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <controls:GroupPostView MaxWidth="450" MaxHeight="560" />
+                        <controls:GroupPostView MaxWidth="450" MaxHeight="560"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

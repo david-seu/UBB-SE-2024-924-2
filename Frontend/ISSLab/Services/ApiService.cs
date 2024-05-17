@@ -24,7 +24,7 @@ namespace ISSLab.Services
         {
             httpClient = new HttpClient();
             // TODO: Use actual server port number here
-            httpClient.BaseAddress = new Uri("https://localhost:32778/");
+            httpClient.BaseAddress = new Uri("https://localhost:32770/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue(
@@ -48,7 +48,21 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/MarketplacePost", post);
+                var data = new
+                {
+                    post.GroupId,
+                    post.AuthorId,
+                    post.Title,
+                    post.Description,
+                    post.MediaContent,
+                    post.Location,
+                    post.CreationDate,
+                    post.EndDate,
+                    post.IsPromoted,
+                    post.IsActive,
+                    post.Type
+                };
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/MarketPlacePost", data);
                 response.EnsureSuccessStatusCode();
 
                 Uri uri = response.Headers.Location;
@@ -97,7 +111,7 @@ namespace ISSLab.Services
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync("api/groups");
+                HttpResponseMessage response = await httpClient.GetAsync("api/Group");
                 response.EnsureSuccessStatusCode();
                 List<Group> groups = await response.Content.ReadFromJsonAsync<List<Group>>();
                 return groups;
@@ -218,8 +232,8 @@ namespace ISSLab.Services
             {
                 var data = new
                 {
-                    postId,
-                    userId
+                    userId,
+                    postId
                 };
 
                 HttpResponseMessage response = await httpClient.PostAsJsonAsync($"api/User/{userId}/favoritePosts/{postId}", data);
@@ -247,24 +261,24 @@ namespace ISSLab.Services
             }
         }
 
-        public async Task<List<Post>> GetGroupPosts(Guid groupId)
+        public async Task<List<GroupPost>> GetGroupPosts(Guid groupId)
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"api/{groupId}/posts");
+                HttpResponseMessage response = await httpClient.GetAsync($"api/Group/{groupId}/posts");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<Post>>();
+                return await response.Content.ReadFromJsonAsync<List<GroupPost>>();
             }
             catch (HttpRequestException exception)
             {
                 Console.WriteLine($"Http error: {exception.Message}");
-                return new List<Post> { };
+                return new List<GroupPost> { };
             }
             catch (JsonException exception)
             {
                 Console.WriteLine($"Json error: {exception.Message}");
-                return new List<Post> { };
+                return new List<GroupPost> { };
             }
         }
 
@@ -336,7 +350,8 @@ namespace ISSLab.Services
                 HttpResponseMessage response = await httpClient.GetAsync("api/MarketplacePost");
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
+                List<MarketplacePost> posts = await response.Content.ReadFromJsonAsync<List<MarketplacePost>>();
+                return posts;
             }
             catch (HttpRequestException exception)
             {

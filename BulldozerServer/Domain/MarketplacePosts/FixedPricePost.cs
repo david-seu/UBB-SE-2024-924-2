@@ -12,7 +12,7 @@
 
         public FixedPricePost(Guid marketplacePostId, Guid authorId, Guid groupId, string title, string description, string mediaContent, string location,
             DateTime creationDate, DateTime? endDate, bool isPromoted, bool isActive, double price, bool isNegotiable, string deliveryType)
-            : base(marketplacePostId, authorId, groupId, title, description, mediaContent, location, creationDate, endDate, isPromoted, isActive)
+            : base(marketplacePostId, authorId, groupId, title, description, mediaContent, location, creationDate, endDate, isPromoted, isActive, "NormalPost")
         {
             this.price = price;
             this.isNegotiable = isNegotiable;
