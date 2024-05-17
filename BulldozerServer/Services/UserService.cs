@@ -23,20 +23,21 @@ namespace BulldozerServer.Services
             this.context = context;
         }
 
-        public async void AddPostToCart(Guid postId, Guid userId)
+        public void AddPostToCart(Guid postId, Guid userId)
         {
-            var foundUser = await context.Users.FindAsync(userId);
+            var foundUser = context.Users.Find(userId);
             if (foundUser == null)
             {
                 throw new Exception("User not found");
             }
-            var foundPost = await context.MarketplacePosts.FindAsync(postId);
+            var foundPost = context.MarketplacePosts.Find(postId);
             if (foundPost == null)
             {
                 throw new Exception("Post not found");
             }
-            foundUser.PostsInCart.Add(foundPost);
-            context.SaveChangesAsync();
+            Cart cart = new Cart { UserId = userId, MarketplacePostId = postId };
+            context.Cart.Add(cart);
+            context.SaveChanges();
         }
 
         public void AddPostToFavorites(Guid postId, Guid userId)
@@ -171,14 +172,24 @@ namespace BulldozerServer.Services
             return foundUser;
         }
 
-        public async Task<List<MarketplacePost>> GetPostsFromCart(Guid userId)
+        public async Task<List<MarketplacePostDTO>> GetPostsFromCart(Guid userId)
         {
             var foundUser = await context.Users.FindAsync(userId);
             if (foundUser == null)
             {
                 throw new Exception("User not found");
             }
-            return foundUser.PostsInCart.ToList();
+            List<Guid> postIds = context.Cart.Where(cart => cart.UserId == userId).Select(cart => cart.MarketplacePostId).ToList();
+            List<MarketplacePostDTO> posts = new List<MarketplacePostDTO>();
+            foreach (Guid id in postIds)
+            {
+                var post = await context.MarketplacePosts.FindAsync(id);
+                if (post != null)
+                {
+                    posts.Add(MarketplacePostMapper.MapMarketplacePostToMarketplacePostDTO(post));
+                }
+            }
+            return posts;
         }
     }
 }

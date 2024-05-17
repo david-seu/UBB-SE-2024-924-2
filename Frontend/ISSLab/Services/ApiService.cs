@@ -198,8 +198,8 @@ namespace ISSLab.Services
             {
                 var data = new
                 {
-                    postId,
-                    userId
+                    userId,
+                    postId
                 };
 
                 HttpResponseMessage response = await httpClient.PostAsJsonAsync($"api/User/{userId}/cart/{postId}", data);

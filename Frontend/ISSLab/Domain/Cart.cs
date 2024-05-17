@@ -21,9 +21,6 @@ namespace ISSLab.Domain
 
         public Cart()
         {
-            groupId = Guid.NewGuid();
-            userId = Guid.NewGuid();
-            postsSavedInCart = new List<Guid>();
         }
 
         public Cart(Guid groupId, Guid userId)

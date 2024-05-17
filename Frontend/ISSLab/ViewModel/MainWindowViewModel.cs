@@ -112,8 +112,6 @@ namespace ISSLab.ViewModel
             {
                 Console.WriteLine($"Error while fetching the posts in the cart: {ex.Message}");
             }
-
-            apiService.Dispose();
         }
 
         public async void LoadPostsCommand(List<MarketplacePost> postsToLoad)

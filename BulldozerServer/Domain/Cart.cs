@@ -9,12 +9,10 @@ namespace BulldozerServer.Domain
 {
     public class Cart
     {
-        private Guid groupId;
         private Guid userId;
         private Guid marketplacePostId;
 
-        public Guid GroupId { get => groupId; }
-        public Guid UserId { get => userId; }
-        public Guid MarketplacePostId { get => marketplacePostId; }
+        public Guid UserId { get => userId; set => userId = value; }
+        public Guid MarketplacePostId { get => marketplacePostId; set => marketplacePostId = value; }
     }
 }
