@@ -34,8 +34,8 @@ namespace ISSLab.ViewModel
         {
             get; set;
         }
-
-        public GroupViewModel(Group selectedGroup)
+        private ApiService apiService;
+        public GroupViewModel(Group selectedGroup, ApiService apiService)
         {
             GroupThatIsEncapsulatedByThisInstanceOnViewModel = selectedGroup;
 
@@ -71,12 +71,11 @@ namespace ISSLab.ViewModel
             //    pollViewModels.Add(new PollViewModel(poll));
             // }
             CollectionOfViewModelsForEachIndividualPoll = new ObservableCollection<PollViewModel>(pollViewModels);
+            this.apiService = apiService;
         }
 
         public async void FetchPosts()
         {
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 List<GroupPost> groupPosts = await apiService.GetGroupPosts(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
@@ -96,8 +95,6 @@ namespace ISSLab.ViewModel
 
         public async void FetchRequestsToJoinGroup()
         {
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 List<Request> requestsToJoinGroup =
@@ -116,8 +113,6 @@ namespace ISSLab.ViewModel
 
         public async void FetchGroupMembers()
         {
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 List<User> groupMembers = await apiService.GetGroupMembers(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
@@ -134,8 +129,6 @@ namespace ISSLab.ViewModel
 
         public async void FetchPolls()
         {
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 List<Poll> groupPolls = await apiService.GetGroupPolls(GroupThatIsEncapsulatedByThisInstanceOnViewModel.GroupId);
