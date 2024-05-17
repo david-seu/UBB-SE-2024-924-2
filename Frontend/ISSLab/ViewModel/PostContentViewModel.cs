@@ -31,7 +31,8 @@ namespace ISSLab.ViewModel
         private string bidPriceVisible;
         private DispatcherTimer timer;
         public IChatFactory OurChatFactory { get; }
-        public PostContentViewModel(MarketplacePost marketplacePost, User user, Guid accountId, Guid groupId, IChatFactory chatFactory) : base()
+        private ApiService apiService;
+        public PostContentViewModel(MarketplacePost marketplacePost, User user, Guid accountId, Guid groupId, IChatFactory chatFactory, ApiService apiService) : base()
         {
             // this.userService = userService;
             this.GroupId = groupId;
@@ -62,6 +63,7 @@ namespace ISSLab.ViewModel
             timer.Tick += Timer_Tick;
             timer.Start();
             this.OurChatFactory = chatFactory;
+            this.apiService = apiService;
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -230,8 +232,6 @@ namespace ISSLab.ViewModel
 
         public async void AddPostToFavorites()
         {
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 await apiService.AddPostToFavorite(this.MarketplacePost.MarketplacePostId, this.AccountId);
@@ -245,8 +245,6 @@ namespace ISSLab.ViewModel
 
         public async void AddPostToCart()
         {
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 await apiService.AddPostToCart(this.MarketplacePost.MarketplacePostId, this.AccountId);

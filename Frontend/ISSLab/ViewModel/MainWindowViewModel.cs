@@ -24,8 +24,8 @@ namespace ISSLab.ViewModel
         private Guid groupId;
         private ICreatePostViewModel postCreationViewModel;
         private IChatFactory chatFactory;
-
-        public MainWindowViewModel(Guid userId, Guid groupId, IChatFactory chatFactory)
+        private ApiService apiService;
+        public MainWindowViewModel(Guid userId, Guid groupId, IChatFactory chatFactory, ApiService apiService)
         {
             // this.postService = givenPostService;
             // this.userService = givenUserService;
@@ -35,7 +35,8 @@ namespace ISSLab.ViewModel
 
             shownPosts = new ObservableCollection<IPostContentViewModel>();
 
-            postCreationViewModel = new CreatePostViewModel(userId, groupId);
+            postCreationViewModel = new CreatePostViewModel(userId, groupId, apiService);
+            this.apiService = apiService;
 
             // LoadPostsCommand(postService.GetPosts());
             ChangeToMarketPlace();
@@ -71,7 +72,6 @@ namespace ISSLab.ViewModel
 
         public async void ChangeToFavorites()
         {
-            ApiService apiService = ApiService.Instance;
             try
             {
                 List<MarketplacePost> favoritedPosts = await apiService.GetFavouritePosts(this.userId);
@@ -85,7 +85,6 @@ namespace ISSLab.ViewModel
 
         public async void ChangeToMarketPlace()
         {
-            ApiService apiService = ApiService.Instance;
             try
             {
                 List<MarketplacePost> posts = await apiService.GetMarketplacePosts();
@@ -99,8 +98,6 @@ namespace ISSLab.ViewModel
 
         public async void ChangeToCart()
         {
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 List<MarketplacePost> cart = await apiService.GetPostsFromCart(userId);
@@ -116,7 +113,6 @@ namespace ISSLab.ViewModel
 
         public async void LoadPostsCommand(List<MarketplacePost> postsToLoad)
         {
-            ApiService apiService = ApiService.Instance;
             shownPosts.Clear();
             foreach (MarketplacePost currentPostToLoad in postsToLoad)
             {
@@ -172,8 +168,6 @@ namespace ISSLab.ViewModel
 
         public async void FetchGroups()
         {
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 List<Group> groups = await apiService.GetGroupsAsync();

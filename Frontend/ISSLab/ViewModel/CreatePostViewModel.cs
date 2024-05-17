@@ -19,14 +19,16 @@ namespace ISSLab.ViewModel
         private string donationLink;
         private string isAuction;
         private string minimumBid;
+        private ApiService apiService;
 
-        public CreatePostViewModel(Guid accountId, Guid groupId) : base()
+        public CreatePostViewModel(Guid accountId, Guid groupId, ApiService apiService) : base()
         {
             // this.postService = postService;
             this.groupId = groupId;
             this.accountId = accountId;
             IsDonation = Constants.COLLAPSED_VISIBILITY;
             IsAuction = Constants.COLLAPSED_VISIBILITY;
+            this.apiService = apiService;
         }
 
         private string type;
@@ -277,7 +279,6 @@ namespace ISSLab.ViewModel
                 Description, Constants.EMPTY_STRING, Constants.EMPTY_STRING, DateTime.Now, DateTime.Now, true, true, donationLink, Price);
             // postService.AddPost(donationMarketplacePost);
             // Getting the ApiService instance
-            ApiService apiService = ApiService.Instance;
             try
             {
                 // Calling the AddPostAsync method
@@ -302,8 +303,6 @@ namespace ISSLab.ViewModel
             post.Type = "NormalPost";
             // postService.AddPost(fixedPriceMarketplace);
             // Getting the ApiService instance
-            ApiService apiService = ApiService.Instance;
-
             try
             {
                 // Calling the AddPostAsync method
