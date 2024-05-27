@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ISSLab;
+using ISSLab.Services;
 using ISSLab.ViewModel;
 
 namespace ISSLab.View
@@ -23,8 +24,11 @@ namespace ISSLab.View
     /// </summary>
         public partial class GroupView : UserControl
         {
-        public GroupView()
+        private IApiService apiService;
+
+        public GroupView(IApiService apiService)
         {
+            this.apiService = apiService;
             InitializeComponent();
         }
         private void GroupSettingsButton_Click(object sender, RoutedEventArgs e)
@@ -65,8 +69,8 @@ namespace ISSLab.View
             Guid groupId = parentWindow.GetGroupId();
 
             IChatFactory chatFactory = new ChatFactory();
-            IMainWindowViewModel mainWindowViewModel = new MainWindowViewModel(userId, groupId, chatFactory);
-            MainWindow mainWindow = new MainWindow(mainWindowViewModel);
+            IMainWindowViewModel mainWindowViewModel = new MainWindowViewModel(userId, groupId, chatFactory, apiService);
+            MainWindow mainWindow = new MainWindow(mainWindowViewModel, apiService);
             mainWindow.Show();
 
             parentWindow.Close();

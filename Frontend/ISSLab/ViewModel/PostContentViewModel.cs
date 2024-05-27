@@ -31,8 +31,8 @@ namespace ISSLab.ViewModel
         private string bidPriceVisible;
         private DispatcherTimer timer;
         public IChatFactory OurChatFactory { get; }
-        private ApiService apiService;
-        public PostContentViewModel(MarketplacePost marketplacePost, User user, Guid accountId, Guid groupId, IChatFactory chatFactory, ApiService apiService) : base()
+        private IApiService apiService;
+        public PostContentViewModel(MarketplacePost marketplacePost, User user, Guid accountId, Guid groupId, IChatFactory chatFactory, IApiService apiService) : base()
         {
             // this.userService = userService;
             this.GroupId = groupId;

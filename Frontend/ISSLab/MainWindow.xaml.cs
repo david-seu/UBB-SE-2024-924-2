@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ISSLab.Services;
 using ISSLab.View;
 using ISSLab.ViewModel;
 
@@ -19,8 +20,9 @@ namespace ISSLab
     public partial class MainWindow : Window
     {
         private IMainWindowViewModel viewModel;
+        private IApiService apiService;
 
-        public MainWindow(IMainWindowViewModel viewModel)
+        public MainWindow(IMainWindowViewModel viewModel, IApiService apiService)
         {
             InitializeComponent();
 
@@ -49,7 +51,7 @@ namespace ISSLab
 
         private void OnClickBackToGroupPage(object sender, RoutedEventArgs e)
         {
-            var groupWindow = new MainWindowGroupView();
+            var groupWindow = new MainWindowGroupView(apiService);
             groupWindow.Show();
             this.Hide();
         }

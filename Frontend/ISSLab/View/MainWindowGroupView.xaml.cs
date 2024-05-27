@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ISSLab.Domain;
 using ISSLab.ViewModel;
+using Autofac;
+using ISSLab.Services;
 
 namespace ISSLab.View
 {
@@ -22,9 +24,10 @@ namespace ISSLab.View
     /// </summary>
     public partial class MainWindowGroupView : Window
     {
-        public MainWindowGroupView()
+        private IApiService apiService;
+        public MainWindowGroupView(IApiService apiService)
         {
-            DataContext = new MainWindowViewModel();
+            DataContext = new MainWindowViewModel(apiService);
             InitializeComponent();
         }
 
@@ -62,7 +65,7 @@ namespace ISSLab.View
                 if (DataContext is MainWindowViewModel mainViewModel)
                 {
                     mainViewModel.CurrentlySelectedGroupMarketplace = selectedGroup;
-                    GroupViewModel viewModelForSelectedGroup = new GroupViewModel(selectedGroup);
+                    GroupViewModel viewModelForSelectedGroup = new GroupViewModel(selectedGroup, apiService);
                     viewModelForSelectedGroup.PropertyChanged += GroupViewModel_PropertyChanged;
                     mainViewModel.ViewModelCorrespondingToTheCurrentlySelectedGroup = viewModelForSelectedGroup;
                 }

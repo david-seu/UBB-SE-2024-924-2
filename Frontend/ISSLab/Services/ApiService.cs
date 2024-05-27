@@ -14,13 +14,13 @@ using ISSLab.Services;
 
 namespace ISSLab.Services
 {
-    public class ApiService
+    public class ApiService : IApiService
     {
         // All operations should use the same instance of HttpClient (Singleton)
         private static ApiService instance;
         private readonly HttpClient httpClient;
 
-        private ApiService()
+        public ApiService()
         {
             httpClient = new HttpClient();
             // TODO: Use actual server port number here
@@ -29,19 +29,6 @@ namespace ISSLab.Services
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue(
                     "application/json")); // Setting this header tells the server to send data in JSON format
-        }
-
-        public static ApiService Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new ApiService();
-                }
-
-                return instance;
-            }
         }
 
         public async Task<Uri> AddMarketplacePostAsync(MarketplacePost post)
@@ -367,7 +354,7 @@ namespace ISSLab.Services
 
         public void Dispose()
         {
-                httpClient.Dispose();
+            httpClient.Dispose();
         }
     }
 }

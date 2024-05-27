@@ -19,9 +19,9 @@ namespace ISSLab.ViewModel
         private string donationLink;
         private string isAuction;
         private string minimumBid;
-        private ApiService apiService;
+        private IApiService apiService;
 
-        public CreatePostViewModel(Guid accountId, Guid groupId, ApiService apiService) : base()
+        public CreatePostViewModel(Guid accountId, Guid groupId, IApiService apiService) : base()
         {
             // this.postService = postService;
             this.groupId = groupId;

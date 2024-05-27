@@ -2,6 +2,8 @@
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Windows;
+using Autofac;
+using Autofac.Features.ResolveAnything;
 using ISSLab.Domain;
 using ISSLab.Services;
 using ISSLab.ViewModel;
@@ -24,6 +26,15 @@ namespace ISSLab
 
             IChatFactory chatFactory = new ChatFactory();
 
+            var builder = new ContainerBuilder();
+
+            builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
+
+            builder.RegisterType<ApiService>().As<IApiService>().SingleInstance();
+            builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>().SingleInstance();
+
+            IContainer container = builder.Build();
+
             // User connectedUser = new User(ownerId, "Soundboard1", "Dorian", DateOnly.Parse("11.12.2003"), "../Resources/Images/Dorian.jpeg", "fsdgfd", DateTime.Parse("10.04.2024"), new List<Guid>(), new List<Guid>(), new List<Cart>(), new List<UsersFavoritePosts>(), new List<Guid>(), 0);
             // User userOne = new User("Vini", "Vinicius Junior", DateOnly.Parse("11.12.2003"), "../Resources/Images/Vini.png", "fdsfsdfds");
             // User userTwo = new User("DDoorian", "Pop Dorian", DateOnly.Parse("12.12.2003"), "../Resources/Images/Dorian.jpeg", "bcvbc");
@@ -33,8 +44,7 @@ namespace ISSLab
 
             // IPostService postService = new PostService(postRepository);
             // IUserService userService = new UserService(userRepository, postRepository);
-            IMainWindowViewModel mainWindowViewModel = new MainWindowViewModel(userId, groupId, chatFactory);
-            MainWindow mainWindow = new MainWindow(mainWindowViewModel);
+            MainWindow mainWindow = container.Resolve<MainWindow>();
             mainWindow.Show();
         }
 

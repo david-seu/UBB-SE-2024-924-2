@@ -34,8 +34,8 @@ namespace ISSLab.ViewModel
         {
             get; set;
         }
-        private ApiService apiService;
-        public GroupViewModel(Group selectedGroup, ApiService apiService)
+        private IApiService apiService;
+        public GroupViewModel(Group selectedGroup, IApiService apiService)
         {
             GroupThatIsEncapsulatedByThisInstanceOnViewModel = selectedGroup;
 

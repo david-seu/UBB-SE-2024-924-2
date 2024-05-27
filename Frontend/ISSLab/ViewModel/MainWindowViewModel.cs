@@ -24,8 +24,8 @@ namespace ISSLab.ViewModel
         private Guid groupId;
         private ICreatePostViewModel postCreationViewModel;
         private IChatFactory chatFactory;
-        private ApiService apiService;
-        public MainWindowViewModel(Guid userId, Guid groupId, IChatFactory chatFactory, ApiService apiService)
+        private IApiService apiService;
+        public MainWindowViewModel(Guid userId, Guid groupId, IChatFactory chatFactory, IApiService apiService)
         {
             // this.postService = givenPostService;
             // this.userService = givenUserService;
@@ -119,7 +119,7 @@ namespace ISSLab.ViewModel
                 try
                 {
                     User reveivedUser = await apiService.GetUserById(currentPostToLoad.AuthorId.Value);
-                    shownPosts.Add(new PostContentViewModel(currentPostToLoad, reveivedUser, this.userId, this.groupId, this.chatFactory));
+                    shownPosts.Add(new PostContentViewModel(currentPostToLoad, reveivedUser, this.userId, this.groupId, this.chatFactory, apiService));
                 }
                 catch (Exception ex)
                 {
@@ -133,7 +133,7 @@ namespace ISSLab.ViewModel
         // main window view model from the other project
         public ObservableCollection<Group> CollectionOfActiveGroups { get; set; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IApiService apiService)
         {
             // string connection = "your connection string goes here";
             // SqlConnection sqlConnection = new SqlConnection(connection);
@@ -141,6 +141,7 @@ namespace ISSLab.ViewModel
             // GroupRepository groupRepository = new GroupRepository(sqlConnection);
             // GroupMembershipRepository groupMembershipRepository = new GroupMembershipRepository(sqlConnection);
             // RequestsRepository requestsRepository = new RequestsRepository(sqlConnection);
+            this.apiService = apiService;
             Guid idOfCurrentMockUser = new Guid("44d5aa9a-b0f4-4e36-a21e-bdc33b97b5a5");
             IdOfActiveUser = idOfCurrentMockUser;
             User mockGroupMember = new User(idOfCurrentMockUser, "Dorian", "admin", "dorian@ubb.ro", "0725702312", "No paper, no pencil but I am still drawing attention.");
